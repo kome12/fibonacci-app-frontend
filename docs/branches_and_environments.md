@@ -12,7 +12,7 @@ The naming rule is as follows,
 
 ```
 feature-xxxxx-xxxxx(add something that describes the new feature)
-ie: `feature-filter-locations-by-restaurants`
+ie: `feature-add-gardens`
 ```
 
 Also don't forget to create an issue for the respective feature you are working on, and attach the branch name, so the whole team can see in which branch you are working.
