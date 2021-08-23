@@ -2,8 +2,8 @@
 
 | Environment | Branch  | URL |
 | ----------- | ------- | --- |
-| Staging     | staging | TBD |
-| Production  | main    | TBD |
+| Staging     | staging | https://the-fibonacci-app-staging.herokuapp.com/ |
+| Production  | main    | https://the-fibonacci-app.herokuapp.com/ |
 
 ## Development
 
