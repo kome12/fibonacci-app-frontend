@@ -9,7 +9,7 @@ import { GardenView } from './pages/GardenView'
 import { Home } from './pages/Home'
 import { MyGardens } from './pages/MyGardens'
 
-function App() {
+const App = () => {
   return (
     <div className='App'>
       <RecoilRoot>
