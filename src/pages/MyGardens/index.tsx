@@ -1,10 +1,7 @@
-import { Header } from "../../components/Header";
-
-export const MyGardens = ()  => {
+export const MyGardens = () => {
   return (
     <div>
-      <Header />
-       <h2>My Gardens</h2>
+      <h2>My Gardens</h2>
     </div>
   )
 }
