@@ -5,11 +5,11 @@ import {
     Route,
     Link
   } from "react-router-dom";
-import Home from "./components/Home";
-import MyGardens from "./components/MyGardens";
-import GardenView from "./components/GardenView";
-import CreateGarden from "./components/CreateGarden";
-import Button from '@material-ui/core/Button';
+import { Home } from "./pages/Home";
+import { MyGardens } from "./pages/MyGardens/index";
+import { GardenView } from "./pages/GardenView/index";
+import { CreateGarden } from "./pages/CreateGarden/index";
+import Button from '@material-ui/core/Button/index';
 import './App.css';
 
 const App = () => {
