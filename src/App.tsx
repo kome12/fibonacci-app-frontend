@@ -2,7 +2,6 @@ import Button from '@material-ui/core/Button'
 import React from 'react'
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
-import './App.css'
 import { Header } from './components/Header'
 import { CreateGarden } from './pages/CreateGarden'
 import { GardenView } from './pages/GardenView'
@@ -11,7 +10,7 @@ import { MyGardens } from './pages/MyGardens'
 
 const App = () => {
   return (
-    <div className='App'>
+    <div>
       <RecoilRoot>
         <Router>
           <Header />
