@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SunflowerLogo from "../../img/sunflowerlogo.png";
-import { ReactComponent as Hamburger } from "../../img/hamburger.svg";
+import { ReactComponent as Hamburger } from "../assets/hamburger.svg";
 import "./Header.css";
 
 export const Header = () => {
