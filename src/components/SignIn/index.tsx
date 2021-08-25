@@ -4,7 +4,7 @@ import firebase from '../../utils/firebase'
 
 const uiConfig = {
   signInFlow: 'popup',
-  signInSuccessUrl: '/',
+  signInSuccessUrl: '/myGardens',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     // MEMO: Uncomment when needed other auth provider

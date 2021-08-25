@@ -1,14 +1,14 @@
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import SunflowerLogo from '../../assets/sunflowerlogo.png'
 import { useFirebaseAuth } from '../SignIn/useFirebaseAuth'
 import { ReactComponent as Hamburger } from './assets/hamburger.svg'
 import './Header.css'
 
 export const Header = () => {
-  const { renderSignIn, logout } = useFirebaseAuth()
+  const { logout } = useFirebaseAuth()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -19,6 +19,11 @@ export const Header = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const handleLogout = useCallback(async () => {
+    handleClose()
+    logout()
+  }, [])
 
   return (
     <div className='header-container'>
@@ -40,8 +45,7 @@ export const Header = () => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem onClick={logout}>Logout</MenuItem>
-        <MenuItem>{renderSignIn()}</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
       <img
         className='sunflower-logo'

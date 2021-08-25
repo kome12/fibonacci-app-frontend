@@ -1,26 +1,26 @@
 import { useCallback, useEffect } from 'react'
-import { SignIn } from '.'
+import { useHistory } from 'react-router-dom'
 import fb from '../../utils/firebase'
 
 export const useFirebaseAuth = () => {
-  const renderSignIn = useCallback(() => {
-    return <SignIn />
+  const history = useHistory()
+
+  const logout = useCallback(async () => {
+    await fb.auth().signOut()
+    history.push('/')
   }, [])
 
-  const logout = useCallback(() => {
-    fb.auth().signOut()
-  }, [])
-
+  // Listen to the Firebase Auth state and set user global state
   useEffect(() => {
-    const unsubscribe = fb.auth().onAuthStateChanged((user) => {
+    const unregisterAuthObserver = fb.auth().onAuthStateChanged((user) => {
       if (user) {
-        // User is logged in
-        console.log({ user }) // ユーザー情報が表示される
+        console.log({ user })
       }
-
-      unsubscribe()
     })
+
+    // Make sure we un-register Firebase observers when the component unmounts
+    return () => unregisterAuthObserver()
   }, [])
 
-  return { renderSignIn, logout } as const
+  return { logout } as const
 }
