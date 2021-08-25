@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/firestore'
+// import 'firebase/firestore'
 
 const clientCredentials = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -16,6 +16,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials)
 }
 
-export const db = firebase.firestore()
+// Uncomment out when need to use firestore DB
+// export const db = firebase.firestore()
 
 export default firebase
