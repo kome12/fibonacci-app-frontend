@@ -3,11 +3,13 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import { useCallback, useState } from 'react'
 import SunflowerLogo from '../../assets/sunflowerlogo.png'
+import { useUserState } from '../../store/user/useUserState'
 import { useFirebaseAuth } from '../SignIn/useFirebaseAuth'
 import { ReactComponent as Hamburger } from './assets/hamburger.svg'
 import './Header.css'
 
 export const Header = () => {
+  const { userData } = useUserState()
   const { logout } = useFirebaseAuth()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -45,7 +47,7 @@ export const Header = () => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        {userData && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
       </Menu>
       <img
         className='sunflower-logo'
