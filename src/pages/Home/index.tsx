@@ -1,10 +1,10 @@
-import { Header } from "../../components/Header";
+import { SignIn } from '../../components/SignIn'
 
-export const Home = ()  => {
+export const Home = () => {
   return (
     <div>
-      <Header />
       <h2>Home</h2>
+      <SignIn />
     </div>
   )
 }
