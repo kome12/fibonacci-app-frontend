@@ -2,13 +2,14 @@ import { useState } from "react";
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import SunflowerLogo from "../sunflowerlogo.png";
-import {ReactComponent as Hamburger} from "../hamburger.svg";
+import SunflowerLogo from "../img/sunflowerlogo.png";
+import {ReactComponent as Hamburger} from "../img/hamburger.svg";
+import "./Header.css";
 
-const Header = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+export const Header = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClick = (event: any) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -35,5 +36,3 @@ const Header = () => {
     </div>
   )
 };
-
-export default Header;
