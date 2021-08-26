@@ -42,7 +42,6 @@ async function request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        // 'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Origin': clientBaseURL(),
       },
       responseType: 'json',
