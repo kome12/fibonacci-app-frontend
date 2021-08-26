@@ -1,44 +1,24 @@
 import { useState } from "react";
-import { Header } from "../../components/Header";
 import { styled } from '@material-ui/core/styles';
-import { Button, Container, Modal } from "@material-ui/core";
+import { Button, Container, MobileStepper } from "@material-ui/core";
+
 import { UserRule } from "./components/UserRule";
-import { doc } from "prettier";
+import { NewGarden } from "./components/NewGarden";
+import "./CreateGardenPage.css";
 
 const CreateGardenContainer = styled(Container)({
   background: "#6ABC6880",
   borderRadius: 20,
   color: "white",
-  height: "60vh",
-  paddingTop: "1vh",
-});
-
-const CreateGardenButton = styled(Button)({
-  background: "#ff7f27d9",
-  borderRadius: 20,
-  color: "#ffffffff",
-  fontSize: "1.5rem",
-  fontWeight: "bold",
-  margin: "0.5rem",
-  width: "80%",
-});
-
-const CreateGardenButtonDisabled = styled(CreateGardenButton)({
-  background: "#ff7f27a6",
-  borderRadius: 20,
-  color: "#ffffffa6",
-  fontSize: "1.5rem",
-  fontWeight: "bold",
-  margin: "0.5rem",
-  width: "80%",
-});
-
-const CreateGardenModal = styled(Modal)({
-  background: "#ff7f27a6",
-  borderRadius: 20,
-  color: "#ffffffff",
+  display: "flex",
+  flexDirection: "column",
   height: "80vh",
-  width: "80vw",
+  paddingTop: "2%",
+});
+
+const CreateGardenStepper = styled(MobileStepper)({
+  background: "#6ABC6880",
+  borderRadius: 20,
 })
 
 export interface NewUserRule {
@@ -47,38 +27,42 @@ export interface NewUserRule {
 }
 
 export const CreateGarden = ()  => {
-  const [allowCreateGarden, setAllowCreateGarden] = useState<boolean>(false);
   const [userRules, setUserRules] = useState<NewUserRule[]>([]);
-  const [ruleModalOpen, setRuleModalOpen] = useState<boolean>(false);
+  const [activeStep, setActiveStep] = useState(0);
 
-  const handleModalOpen = () => {
-    setRuleModalOpen(true);
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleModalClose = () => {
-    setRuleModalOpen(false);
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
   return (
     <Container>
-      <Header />
       <CreateGardenContainer>
-        <h2>Create Garden</h2>
-        <h3>Current rules:</h3>
-        <div className="user-rules">
-          {userRules.length < 1 && <p>There are currently no rules set for this garden.</p>}
+        <div className="create-garden">
+          {activeStep === 0 && <NewGarden />}
+          {activeStep === 1 && userRules.length < 1 && <div><h3>Current rules:</h3><p>There are currently no rules set for this garden.</p></div>}
           {userRules.map((rule, idx) => <UserRule key={idx} name={rule.name} description={rule.description}/>)}
         </div>
-        <CreateGardenButton onClick={handleModalOpen}>+ Add rule</CreateGardenButton>
-        {allowCreateGarden ? <CreateGardenButton>Make Garden</CreateGardenButton> : 
-        <CreateGardenButtonDisabled disabled={true}>Make Garden</CreateGardenButtonDisabled>}
-        <CreateGardenModal 
-          open={ruleModalOpen}
-          onClose={handleModalClose}
-          aria-labelledby="add-rule-modal"
-          aria-describedby="add rule box"
-        >
-          <h2 id="add-rule-modal">Hello Modal</h2>
-        </CreateGardenModal>
+      <CreateGardenStepper
+        variant="progress"
+        steps={3}
+        position="static"
+        className="stepper"
+        activeStep={activeStep}
+        nextButton={
+          <Button size="medium" onClick={handleNext} disabled={activeStep === 2}>
+            Next
+          </Button>
+        }
+        backButton={
+          <Button size="medium" onClick={handleBack} disabled={activeStep === 0}>
+            Back
+          </Button>
+        }
+      />
       </CreateGardenContainer>
     </Container>
   )
