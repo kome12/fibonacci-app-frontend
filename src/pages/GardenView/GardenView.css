@@ -1,0 +1,22 @@
+.garden-view-container {
+  background-color: rgb(124, 197, 124);
+  padding: 3%;
+  line-height: 1.6rem;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+  border-radius: 20px;
+}
+
+.garden-container {
+  height: 100px;
+  width: 100px;
+  margin: auto;
+  border: 1px red solid;
+}
+.rules-container {
+  padding: 5%;
+  margin: auto;
+  background-color: white;
+  border-radius: 20px;
+}
