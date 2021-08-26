@@ -1,10 +1,13 @@
-import { Header } from "../../components/Header";
+import { SignIn } from '../../components/SignIn'
+import { useUserState } from '../../store/user/useUserState'
 
-export const Home = ()  => {
+export const Home = () => {
+  const { userData } = useUserState()
+
   return (
     <div>
-      <Header />
       <h2>Home</h2>
+      {!userData && <SignIn />}
     </div>
   )
 }
