@@ -3,7 +3,7 @@ import { NewUserRule } from "..";
 
 export const UserRule = ({ name, description }: NewUserRule) => {
   return (
-    <Box>
+    <Box color="secondary">
       <h3>{name}</h3>
       {description && <p>{description}</p>}
     </Box>
