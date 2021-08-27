@@ -20,3 +20,8 @@
   background-color: white;
   border-radius: 20px;
 }
+
+.centered {
+  padding: 2rem;
+  margin: auto;
+}

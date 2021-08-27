@@ -36,12 +36,18 @@ export const Header = () => {
 
   return (
     <div className='header-container'>
+      <img
+        className='sunflower-logo'
+        src={SunflowerLogo}
+        alt='fibonacci logo'
+      ></img>
       <Button
         aria-controls='simple-menu'
         aria-haspopup='true'
         onClick={handleClick}
       >
         <div style={{ color: '#ff7f27' }}>
+          <h1 className="italic">menu</h1>
           <Hamburger />
         </div>
       </Button>
@@ -56,11 +62,6 @@ export const Header = () => {
         <MenuItem className="menu-link" onClick={() => linkHandler("/createGarden")}>Create Garden</MenuItem>
         {userData && <MenuItem className="menu-link" onClick={handleLogout}>Logout</MenuItem>}
       </Menu>
-      <img
-        className='sunflower-logo'
-        src={SunflowerLogo}
-        alt='fibonacci logo'
-      ></img>
     </div>
   )
 }

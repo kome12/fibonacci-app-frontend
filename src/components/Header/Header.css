@@ -12,3 +12,8 @@
   color: #ff7f27d9;
   font-weight: bold;
 }
+
+.italic {
+  font-style: italic;
+  text-transform: lowercase;
+}
