@@ -13,15 +13,15 @@ const App = () => {
         <Router>
           <Header />
           <Switch>
-            <Route path='/myGardens' component={MyGardens} />
-            <Route path='/gardenView' component={GardenView} />
-            <Route path='/createGarden' component={CreateGarden} />
-            <Route path='/' component={Home} />
+            <Route path="/myGardens" component={MyGardens} />
+            <Route path="/gardenView/:gardenId" component={GardenView} />
+            <Route path="/createGarden" component={CreateGarden} />
+            <Route path="/" component={Home} />
           </Switch>
         </Router>
       </RecoilRoot>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
