@@ -1,12 +1,12 @@
-import Button from "@material-ui/core/Button";
-import React from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
-import { RecoilRoot } from "recoil";
-import { Header } from "./components/Header";
-import { CreateGarden } from "./pages/CreateGarden";
-import { GardenView } from "./pages/GardenView";
-import { Home } from "./pages/Home";
-import { MyGardens } from "./pages/MyGardens";
+// import Button from '@material-ui/core/Button'
+// import React from 'react'
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
+import { RecoilRoot } from 'recoil'
+import { Header } from './components/Header'
+import { CreateGarden } from './pages/CreateGarden'
+import { GardenView } from './pages/GardenView'
+import { Home } from './pages/Home'
+import { MyGardens } from './pages/MyGardens'
 
 const App = () => {
   return (
@@ -20,7 +20,7 @@ const App = () => {
             <Route path="/createGarden" component={CreateGarden} />
             <Route path="/" component={Home} />
           </Switch>
-          <nav>
+          {/* <nav>
             <ul>
               <li>
                 <Link to="/">
@@ -51,7 +51,7 @@ const App = () => {
                 </Link>
               </li>
             </ul>
-          </nav>
+          </nav> */}
         </Router>
       </RecoilRoot>
     </div>

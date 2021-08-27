@@ -1,0 +1,46 @@
+.garden-summary-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.garden-summary-container > h2 {
+  margin: 0.5rem 0;
+  font-size: 2.3rem;
+  text-align: center;
+}
+
+.garden-summary-container > button {
+  align-self: center;
+}
+
+.garden-summary-container > .garden-summary-details {
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0;
+}
+
+.garden-summary-name,
+.garden-summary-desc {
+  color: white;
+}
+
+.garden-summary-details > h3 > span {
+  font-size: 1.5rem;
+}
+
+.garden-summary-rules {
+  height: 15rem;
+  overflow-y: auto;
+  background-color: #6abc6880;
+  border-radius: 20px;
+}
+
+.garden-summary-rules::-webkit-scrollbar {
+  height: 0.1rem;
+  width: 0.25rem;
+  background-color: #ff7f2780;
+  border-radius: 20px;
+}
