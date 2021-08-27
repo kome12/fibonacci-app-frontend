@@ -1,3 +1,10 @@
+div > .MuiContainer-root {
+  display: flex;
+}
+.create-garden-root {
+  display: flex;
+  flex-direction: column;
+}
 .create-garden {
   height: 88%;
 }
