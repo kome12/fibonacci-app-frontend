@@ -6,6 +6,7 @@ import SunflowerLogo from '../../assets/sunflowerlogo.png'
 import { useUserState } from '../../store/user/useUserState'
 import { useFirebaseAuth } from '../SignIn/useFirebaseAuth'
 import { ReactComponent as Hamburger } from './assets/hamburger.svg'
+import { useHistory } from 'react-router'
 import './Header.css'
 
 export const Header = () => {
@@ -27,6 +28,12 @@ export const Header = () => {
     logout()
   }, [])
 
+  let history = useHistory();
+  const linkHandler = (page: string) => {
+    history.push(page);
+    handleClose();
+  }
+
   return (
     <div className='header-container'>
       <Button
@@ -45,9 +52,9 @@ export const Header = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        {userData && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
+        <MenuItem className="menu-link" onClick={() => linkHandler("/myGardens")}>My Gardens</MenuItem>
+        <MenuItem className="menu-link" onClick={() => linkHandler("/createGarden")}>Create Garden</MenuItem>
+        {userData && <MenuItem className="menu-link" onClick={handleLogout}>Logout</MenuItem>}
       </Menu>
       <img
         className='sunflower-logo'

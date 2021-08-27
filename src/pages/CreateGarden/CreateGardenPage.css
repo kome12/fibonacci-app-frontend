@@ -1,0 +1,25 @@
+div > .MuiContainer-root {
+  display: flex;
+}
+.create-garden-root {
+  display: flex;
+  flex-direction: column;
+}
+.create-garden {
+  height: 88%;
+}
+
+.stepper > button {
+  color: white;
+  font-weight: bold;
+}
+
+.stepper > div {
+  background-color: #ff7f2780;
+  height: 20%;
+  width: 65%;
+}
+
+.stepper > div > div {
+  background-color: #ff7f27d9;
+}
