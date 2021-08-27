@@ -54,10 +54,18 @@ export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler
       </div>
       <AddRuleContainer>
         <label className="rule-label" htmlFor="desc"><p>Name:</p></label>
-        <input className="garden-name" type="text" name="name" onChange={ruleNameChangeHandler} value={ruleName}/>
+        <input className="garden-name" 
+               type="text" name="name" 
+               onChange={ruleNameChangeHandler} 
+               value={ruleName}
+               autoComplete="off"/>
 
         <label className="rule-label" htmlFor="desc"><p>Description:</p></label>
-        <input className="garden-desc" type="text" name="desc" onChange={ruleDescChangeHandler} value={ruleDesc} />
+        <input className="garden-desc" 
+               type="text" name="desc" 
+               onChange={ruleDescChangeHandler} 
+               value={ruleDesc}
+               autoComplete="off" />
         <RuleButton size="large" onClick={addRuleHandler}>+ Add rule</RuleButton>
       </AddRuleContainer>
     </div>
