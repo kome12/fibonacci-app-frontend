@@ -1,0 +1,44 @@
+.add-rules-container > h3 {
+  margin: 0;
+}
+
+.user-rules {
+  height: 10rem;
+  overflow-y: auto;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+li {
+  display: list-item;
+  list-style: outside "\1F33B";
+  font-size: large;
+}
+
+.rule-li {
+  margin: 0 1rem 0 0;
+}
+
+.rule-p {
+  padding: 2% 0;
+  margin: 0;
+}
+
+.rule-label {
+  padding: 0 0 2%;
+  margin: 0;
+}
+
+.rule-label > p {
+  padding: 0 0 2%;
+  margin: 0;
+}
+
+input {
+  align-self: center;
+  margin: 2%;
+}
