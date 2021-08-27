@@ -6,7 +6,22 @@
 
 .new-garden-container > h2 {
   margin-top: 2%;
+  margin-top: 1rem;
   margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.new-garden-container > label > p {
+  margin-top: 2rem;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+}
+
+.new-garden-container > p {
+  align-self: flex-start;
+  color: #ff7f27d9;
+  margin-left: 2rem;
+  font-weight: bold;
 }
 
 input {
@@ -29,5 +44,5 @@ select:focus {
 label {
   align-self: flex-start;
   font-weight: bold;
-  margin-left: 2rem;
+  margin: 0 2rem;
 }
