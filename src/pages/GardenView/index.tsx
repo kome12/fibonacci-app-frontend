@@ -35,21 +35,10 @@ export const GardenView = () => {
 
     getDataFromBackend();
   }, []);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
   
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
   let history = useHistory();
   const linkHandler = (page: string) => {
     history.push(page);
-    handleClose();
   }
 
   return (

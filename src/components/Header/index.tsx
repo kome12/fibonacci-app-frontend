@@ -40,7 +40,7 @@ export const Header = () => {
         className='sunflower-logo'
         src={SunflowerLogo}
         alt='fibonacci logo'
-      ></img>
+      />
       <Button
         aria-controls='simple-menu'
         aria-haspopup='true'
