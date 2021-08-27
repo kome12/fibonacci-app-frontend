@@ -1,24 +1,12 @@
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Rule } from "../../models/rule.model";
 import "./GardenView.css";
 
 export const GardenView = () => {
-  const dummyRulesData = [
-    {
-      id: 1,
-      name: "Wake up at 7am",
-      description: "I got out of bed on time!",
-      gardenId: 1,
-    },
-    {
-      id: 2,
-      name: "Go to bed at 11pm",
-      description: "I got into bed on time!",
-      gardenId: 1,
-    },
-  ];
+  // TODO: FIX API CALL AFTER MVP
 
   // const [gardenByGardenIdApi, getGardenByGardenIdData] =
   //   useApi(getGardenByGardenId);
@@ -29,17 +17,16 @@ export const GardenView = () => {
 
   // const [garden, setGarden] = useState({});
   const [rules, setRules] = useState(Array<Rule>());
+  const { gardenId } = useParams<{ gardenId: string }>();
 
-  // same id to use 612789b765c2e6a7e7e76bd2
   useEffect(() => {
     const getDataFromBackend = async () => {
       // await getGardenByGardenIdData();
       // console.log("gardenByGardenIdApi:", gardenByGardenIdApi);
 
       // setRules(gardenByGardenIdApi.response?.rules || []);
-      const id = "612789b765c2e6a7e7e76bd2";
       const res = await axios.get(
-        `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/${id}`
+        `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/${gardenId}`
       );
       console.log("res in getDatafrombackend:", res);
       setRules(res.data?.rules || []);
