@@ -22,20 +22,28 @@ const CreateGardenStepper = styled(MobileStepper)({
 
 export const CreateGarden = ()  => {
   const [activeStep, setActiveStep] = useState(0);
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(() => e.target.value);
+    console.log(name, "yay lifted");
+  }
+  const descChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDesc(e.target.value);
+    console.log(desc, "yay lifted");
+  }
 
   return (
     <Container>
       <CreateGardenContainer>
         <div className="create-garden">
-          {activeStep === 0 && <NewGarden />}
+          {activeStep === 0 && <NewGarden nameChangeHandler={nameChangeHandler} name={name} descChangeHandler={descChangeHandler} desc={desc}/>}
           {activeStep === 1 && <AddRules />}
         </div>
       <CreateGardenStepper

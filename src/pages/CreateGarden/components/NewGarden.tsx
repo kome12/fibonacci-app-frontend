@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import "./NewGarden.css";
 
-export const NewGarden = () => {
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
-  const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(() => e.target.value);
-  }
-  const descChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDesc(e.target.value);
-  }
+interface NewGardenProps {
+  nameChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
+  name: string,
+  descChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
+  desc: string
+}
+
+export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc}:NewGardenProps) => {
+  
   return (
     <div className="new-garden-container">
       <h2>Create Garden</h2>
