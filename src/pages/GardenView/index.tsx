@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Rule } from "../../models/rule.model";
+import { useHistory } from 'react-router'
 import "./GardenView.css";
 
 export const GardenView = () => {
@@ -34,6 +35,11 @@ export const GardenView = () => {
 
     getDataFromBackend();
   }, []);
+  
+  let history = useHistory();
+  const linkHandler = (page: string) => {
+    history.push(page);
+  }
 
   return (
     <div className="garden-view-container">
@@ -46,12 +52,15 @@ export const GardenView = () => {
           return (
             <div key={index}>
               <div className="rule-name">{rule.name}</div>
-              <Button variant="contained">
+              <Button variant="contained" color="secondary">
                 <div className="rule-description">{rule.description}</div>
               </Button>
             </div>
           );
         })}
+      </div>
+      <div className="centered">
+        <Button variant="contained" onClick={() => linkHandler("/myGardens")}>Go back to My Gardens</Button>
       </div>
     </div>
   );
