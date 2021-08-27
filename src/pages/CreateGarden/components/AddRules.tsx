@@ -1,7 +1,8 @@
+import React from "react";
 import { Button, Container } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
-import React, { useState } from "react";
 import { UserRule } from "./UserRule";
+import { NewUserRule } from "..";
 import "./AddRules.css";
 
 const AddRuleContainer = styled(Container)({
@@ -10,7 +11,7 @@ const AddRuleContainer = styled(Container)({
   display: "flex",
   flexDirection: "column",
   height: "40%",
-  marginTop: "15%",
+  marginTop: "12%",
 })
 
 const RuleButton = styled(Button)({
@@ -23,31 +24,16 @@ const RuleButton = styled(Button)({
   width: "50%",
 })
 
-export interface NewUserRule {
-  name: String,
-  description?: String,
+interface AddRulesProps {
+  ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
+  ruleName: string,
+  ruleDescChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
+  ruleDesc: string,
+  addRuleHandler: React.MouseEventHandler<HTMLButtonElement>,
+  userRules: NewUserRule[]
 }
 
-export const AddRules = () => {
-  const [ruleName, setRuleName] = useState("");
-  const [ruleDesc, setRuleDesc] = useState("");
-  const [userRules, setUserRules] = useState<NewUserRule[]>([]);
-
-  const ruleNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRuleName(() => e.target.value);
-  }
-  const ruleDescChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRuleDesc(e.target.value);
-  }
-
-  const addRuleHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const newRule = {
-      name: ruleName,
-      description: ruleDesc,
-    }
-    setUserRules(rules => [...rules, newRule]);
-  }
-
+export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}: AddRulesProps) => {
   return (
     <div className="add-rules-container">
       <h2>Add rules</h2>
@@ -55,9 +41,14 @@ export const AddRules = () => {
       <div className="user-rules">
         {
         userRules.length < 1 ? 
-        <div><p className="no-rules">There are currently no rules for this garden.</p></div> :
+        <div className="no-rules-container">
+          <p className="no-rules">There are currently no rules for this garden.</p>
+        </div> :
           <ul>
-            {userRules.map((rule, idx) => <li className="rule-li" key={idx}><UserRule name={rule.name} description={rule.description}/></li>)}
+            {userRules.map((rule, idx) => 
+              <li className="rule-li" key={idx}>
+                <UserRule name={rule.name} description={rule.description}/>
+              </li>)}
           </ul>
         }
       </div>
