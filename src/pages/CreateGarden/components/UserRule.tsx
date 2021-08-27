@@ -1,5 +1,5 @@
 import { Box } from "@material-ui/core";
-import { NewUserRule } from "./AddRules";
+import { NewUserRule } from "..";
 import "./UserRule.css";
 
 export const UserRule = ({ name, description }: NewUserRule) => {
