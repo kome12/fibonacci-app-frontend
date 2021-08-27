@@ -1,5 +1,6 @@
 export interface Rule {
-  _id: string;
+  _id?: string;
   name: string;
   description: string;
+  gardenId: string;
 }

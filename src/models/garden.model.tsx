@@ -1,7 +1,7 @@
 import { Rule } from "./rule.model";
 
 export interface Garden {
-  _id: string;
+  _id?: string;
   name: string;
   description: string;
   userFireBaseId: string;
