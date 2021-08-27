@@ -4,7 +4,10 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import axios from "axios";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useUserState } from "../../store/user/useUserState";
 import gardenImage from "./assets/garden1.jpg";
 import "./MyGardens.css";
 
@@ -25,6 +28,18 @@ export const MyGardens = () => {
     { name: "My Exercise Garden", id: 2, description: "If I move myself" },
   ];
   const classes = useStyles();
+  const { userData } = useUserState();
+
+  useEffect(() => {
+    const getDataFromBackend = async () => {
+      const res = await axios.get(
+        `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/userid/${userData?.id}`
+      );
+      console.log("res in MyGardens:", res);
+    };
+
+    getDataFromBackend();
+  }, []);
 
   return (
     <div className="my-gardens-container">
