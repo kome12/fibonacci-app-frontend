@@ -55,9 +55,9 @@ export const AddRules = () => {
       <div className="user-rules">
         {
         userRules.length < 1 ? 
-        <div><p>There are currently no rules set for this garden.</p></div> :
+        <div><p className="no-rules">There are currently no rules for this garden.</p></div> :
           <ul>
-            {userRules.map((rule, idx) => <li className="rule-li"><UserRule key={idx} name={rule.name} description={rule.description}/></li>)}
+            {userRules.map((rule, idx) => <li className="rule-li" key={idx}><UserRule name={rule.name} description={rule.description}/></li>)}
           </ul>
         }
       </div>
