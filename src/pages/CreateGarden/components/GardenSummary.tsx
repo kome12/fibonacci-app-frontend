@@ -27,8 +27,8 @@ export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHa
     <Container className="garden-summary-container">
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
-        <h3>Name: <span className="garden-name">{gardenName}</span></h3>
-        <h3>Description: <span className="garden-desc">{gardenDesc}</span></h3>
+        <h3>Name: <span className="garden-summary-name">{gardenName}</span></h3>
+        <h3>Description: <span className="garden-summary-desc">{gardenDesc}</span></h3>
       </Container>
       <Container className="garden-summary-rules">
         <ul>
