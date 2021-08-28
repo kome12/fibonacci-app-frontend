@@ -22,7 +22,7 @@ export const GardenView = () => {
   // const [garden, setGarden] = useState({});
   const { userData } = useUserState();
   const [rules, setRules] = useState(Array<Rule>());
-  // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
+  const [completedTasks, setCompletedTasks] = useState([]);
   const { gardenId } = useParams<{ gardenId: string }>();
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
@@ -37,11 +37,10 @@ export const GardenView = () => {
         `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/${gardenId}`
       );
       console.log("res in getDatafrombackend:", res);
-      const rules = res.data?.rules || [];
-      setRules(rules);
 
+      setRules(res.data?.rules || []);
+      setCompletedTasks(res.data?.completedTasks || []);
       const completedTasks = res.data?.completedTasks || [];
-      // setCompletedTasks(completedTasks);
 
       checkCompletedTaskStatus(rules, completedTasks);
       setGetData(false);
@@ -103,7 +102,10 @@ export const GardenView = () => {
   return (
     <div className="garden-view-container">
       <h1>Garden View</h1>
-      <div className="garden-container">Garden Box</div>
+      <div className="garden-container">
+        {completedTasks.length === 0 ?
+          <div><h2>You have no flowers yet!</h2></div> : <div>{completedTasks.map((task, index) => "🌱")}</div>}
+      </div>
       <div className="rules-container">
         <h2>Daily Goals:</h2>
         {rules.map((rule, index) => {
