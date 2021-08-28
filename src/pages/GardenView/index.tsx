@@ -18,6 +18,7 @@ export const GardenView = () => {
 
   // const [garden, setGarden] = useState({});
   const [rules, setRules] = useState(Array<Rule>());
+  const [completedTasks, setCompletedTasks] = useState([]);
   const { gardenId } = useParams<{ gardenId: string }>();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const GardenView = () => {
       );
       console.log("res in getDatafrombackend:", res);
       setRules(res.data?.rules || []);
+      setCompletedTasks(res.data?.completedTasks || []);
     };
 
     getDataFromBackend();
@@ -44,7 +46,10 @@ export const GardenView = () => {
   return (
     <div className="garden-view-container">
       <h1>Garden View</h1>
-      <div className="garden-container">Garden Box</div>
+      <div className="garden-container">
+        {completedTasks.length === 0 ?
+          <div><h2>You have no flowers yet!</h2></div> : <div>{completedTasks.map((task, index) => "🌱")}</div>}
+      </div>
       <div className="rules-container">
         <h2>Daily Goals:</h2>
         {rules.map((rule, index) => {
