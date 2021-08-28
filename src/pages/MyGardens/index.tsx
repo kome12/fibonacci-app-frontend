@@ -38,7 +38,7 @@ export const MyGardens = () => {
     };
 
     getDataFromBackend();
-  }, [userData]);
+  }, []);
 
   return (
     <div className="my-gardens-container">
@@ -46,7 +46,7 @@ export const MyGardens = () => {
       <div className="gardens-view">
         {myGardens.map((garden, index) => {
           return (
-            <Link to={`/gardenView/${garden._id}`} key={index}>
+            <Link to={`/user/gardenView/${garden._id}`} key={index}>
               <Card className={`garden-card ${classes.root}`}>
                 <CardActionArea>
                   <CardMedia
