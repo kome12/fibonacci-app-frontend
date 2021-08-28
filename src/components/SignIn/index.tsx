@@ -1,10 +1,10 @@
-import React from 'react'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import firebase from '../../utils/firebase'
+import React from "react";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import firebase from "../../utils/firebase";
 
 const uiConfig = {
-  signInFlow: 'popup',
-  signInSuccessUrl: '/myGardens',
+  signInFlow: "popup",
+  signInSuccessUrl: "/user/myGardens",
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     // MEMO: Uncomment when needed other auth provider
@@ -15,12 +15,12 @@ const uiConfig = {
     // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
     // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
   ],
-}
+};
 
 export const SignIn: React.FC = () => {
   return (
     <div>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
-  )
-}
+  );
+};

@@ -91,7 +91,7 @@ export const CreateGarden = () => {
             const newRule: Rule = {
               name: userRule.name,
               description: userRule.description ?? "",
-              gardenId: gardenId,
+              gardenId,
             };
             return newRule;
           }
@@ -101,7 +101,7 @@ export const CreateGarden = () => {
           `https://the-fibonacci-api-staging.herokuapp.com/api/v1/rules/bulk`,
           populateRulesWithGardendId
         );
-        history.push(`/gardenView/${gardenId}`);
+        history.push(`/user/gardenView/${gardenId}`);
       }
     };
 
