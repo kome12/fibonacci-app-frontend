@@ -33,7 +33,7 @@ export const MyGardens = () => {
         const res = await axios.get(
           `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/userid/${userData?.id}`
         );
-        setMyGardens(res.data);
+        setMyGardens(res.data || []);
       }
     };
 
