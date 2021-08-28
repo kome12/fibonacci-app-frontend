@@ -70,7 +70,7 @@ export const GardenView = () => {
         'https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks',
         completedTask
       )
-      console.log('completedTask response:', res)
+      // console.log('completedTask response:', res)
       setGetData(true)
     }
 
@@ -130,7 +130,10 @@ export const GardenView = () => {
         })}
       </div>
       <div className='centered'>
-        <Button variant='contained' onClick={() => linkHandler('/myGardens')}>
+        <Button
+          variant='contained'
+          onClick={() => linkHandler('/user/myGardens')}
+        >
           Go back to My Gardens
         </Button>
       </div>
