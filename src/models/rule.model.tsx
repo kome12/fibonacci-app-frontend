@@ -4,3 +4,5 @@ export interface Rule {
   description: string;
   gardenId: string;
 }
+
+// TODO: Add interface for CreateRule
