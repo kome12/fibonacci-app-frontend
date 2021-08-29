@@ -1,0 +1,24 @@
+.splash-page {
+  margin: auto;
+  text-align: center;
+}
+
+.ni-wa-container {
+  background-color: rgb(170, 226, 170);
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+
+.ni-wa-character {
+  margin-bottom: 0rem;
+}
+
+.ni-wa {
+  font-size: 7rem;
+  line-height: 1rem;
+}
+
+.ni-wa-definition {
+  color: black;
+}
