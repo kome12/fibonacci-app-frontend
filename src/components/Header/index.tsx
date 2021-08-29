@@ -3,8 +3,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import SunflowerLogo from "../../assets/sunflowerlogo.png";
-import MyNiwaLogo from "./assets/myniwa.svg"
+import MyNiwaLogo from "./assets/borderlessmyniwa.svg";
 import { useUserState } from "../../store/user/useUserState";
 import { useFirebaseAuth } from "../SignIn/useFirebaseAuth";
 import { ReactComponent as Hamburger } from "./assets/hamburger.svg";
@@ -47,7 +46,7 @@ export const Header = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <div style={{ color: "#ff7f27" }}>
+        <div style={{ color: "#000000" }}>
           <h1 className="italic">menu</h1>
           <Hamburger />
         </div>
