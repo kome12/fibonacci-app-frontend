@@ -8,14 +8,16 @@
   max-width: 480px;
   margin: 0 auto;
   border-radius: 20px;
+  min-height: 40rem;
 }
 
 .ni-wa-character {
-  margin-bottom: 0rem;
+  width: 375px;
+  margin: auto;
 }
 
 .ni-wa {
-  font-size: 7rem;
+  font-size: 6rem;
   line-height: 1rem;
 }
 

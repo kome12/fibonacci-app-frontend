@@ -22,7 +22,7 @@ export const Home = () => {
       <div className="ni-wa-container">
         <Niwa className="ni-wa-character" />
         <h1 className="ni-wa">ni•wa</h1>
-        <h3 className="ni-wa-definition">a garden, yard, courtyard</h3>
+        <h3 className="ni-wa-definition">a garden or courtyard</h3>
         {!userData && <SignIn />}
       </div>
     </div>
