@@ -100,8 +100,9 @@ export const GardenView = () => {
   };
 
   return (
-    <div className="garden-view-container">
+    <div className="garden-parent-container">
       <h1>Garden View</h1>
+      <div className="garden-view-container">
       <div className="garden-container">
         {completedTasks.length === 0 ?
           <div><h2>You have no flowers yet!</h2></div> : <div>{completedTasks.map((task, index) => "🌱")}</div>}
@@ -125,10 +126,11 @@ export const GardenView = () => {
         })}
       </div>
       <div className="centered">
-        <Button variant="contained" onClick={() => linkHandler("/myGardens")}>
+        <Button variant="contained" onClick={() => linkHandler("/user/myGardens")}>
           Go back to My Gardens
         </Button>
       </div>
+    </div>
     </div>
   );
 };
