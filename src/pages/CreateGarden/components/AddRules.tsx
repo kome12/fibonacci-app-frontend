@@ -46,7 +46,7 @@ export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleNa
         </div> :
           <ul>
             {userRules.map((rule, idx) => 
-              <li className="rule-li" key={idx}>
+              <li className="rule-li" key={`${rule.name}-${idx}`}>
                 <UserRule name={rule.name} description={rule.description}/>
               </li>)}
           </ul>
