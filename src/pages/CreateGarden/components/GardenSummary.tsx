@@ -22,7 +22,7 @@ interface GardenSummaryProps {
   createGardenHandler: React.MouseEventHandler<HTMLButtonElement>
 }
 
-export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler}: GardenSummaryProps) => {
+export const GardenSummary: React.FC<GardenSummaryProps> = ({gardenName, gardenDesc, userRules, createGardenHandler}) => {
   return (
     <Container className="garden-summary-container">
       <h2>Garden Summary</h2>
