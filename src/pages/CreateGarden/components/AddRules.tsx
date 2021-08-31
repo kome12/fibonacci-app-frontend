@@ -33,7 +33,7 @@ interface AddRulesProps {
   userRules: NewUserRule[]
 }
 
-export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}: AddRulesProps) => {
+export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}) => {
   return (
     <div className="add-rules-container">
       <h2>Add rules</h2>
@@ -46,7 +46,7 @@ export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler
         </div> :
           <ul>
             {userRules.map((rule, idx) => 
-              <li className="rule-li" key={idx}>
+              <li className="rule-li" key={`${rule.name}-${idx}`}>
                 <UserRule name={rule.name} description={rule.description}/>
               </li>)}
           </ul>
