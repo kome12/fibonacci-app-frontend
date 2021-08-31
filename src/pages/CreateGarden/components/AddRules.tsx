@@ -4,6 +4,7 @@ import { styled } from "@material-ui/styles";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import "./AddRules.css";
+import { motion } from "framer-motion";
 
 const AddRuleContainer = styled(Container)({
   background: "#6ABC6880",
@@ -35,7 +36,9 @@ interface AddRulesProps {
 
 export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}: AddRulesProps) => {
   return (
-    <div className="add-rules-container">
+    <Container className="add-rules-container" component={motion.div} initial={{ opacity: 0, x: 200 }}
+    animate={{ opacity: 1, x: 0}}
+    exit={{ opacity: 0, x: -200 }}>
       <h2>Add rules</h2>
       <h3>Current rules:</h3>
       <div className="user-rules">
@@ -68,6 +71,6 @@ export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler
                autoComplete="off" />
         <RuleButton size="large" onClick={addRuleHandler}>+ Add rule</RuleButton>
       </AddRuleContainer>
-    </div>
+    </Container>
   )
 }

@@ -1,3 +1,5 @@
+import { Container } from "@material-ui/core";
+import { motion } from "framer-motion";
 import React from "react";
 import "./NewGarden.css";
 
@@ -11,7 +13,11 @@ interface NewGardenProps {
 export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc}:NewGardenProps) => {
   
   return (
-    <div className="new-garden-container">
+    <Container className="new-garden-container" 
+               component={motion.div}
+               initial={{ opacity: 0, x: 200 }}
+               animate={{ opacity: 1, x: 0}}
+               exit={{ opacity: 0, x: -200 }}>
       <h2>Create Garden</h2>
         <label htmlFor="desc"><p>Name:</p></label>
         <p>Give your Garden a name! *required</p>
@@ -30,6 +36,6 @@ export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc}:New
                onChange={descChangeHandler} 
                value={desc}
                autoComplete="off" />
-    </div>
+    </Container>
   )
 }

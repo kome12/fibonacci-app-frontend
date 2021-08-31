@@ -2,6 +2,7 @@ import { Button, Container, styled } from "@material-ui/core";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import "./GardenSummary.css";
+import { motion } from "framer-motion";
 
 const CreateGardenButton = styled(Button)({
   alignSelf: "center",
@@ -24,7 +25,9 @@ interface GardenSummaryProps {
 
 export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler}: GardenSummaryProps) => {
   return (
-    <Container className="garden-summary-container">
+    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: 200 }}
+    animate={{ opacity: 1, x: 0}}
+    exit={{ opacity: 0, x: -200 }}>
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
         <h3>Name: <span className="garden-summary-name">{gardenName}</span></h3>

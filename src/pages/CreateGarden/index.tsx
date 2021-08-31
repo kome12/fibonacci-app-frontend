@@ -9,6 +9,7 @@ import { useUserState } from "../../store/user/useUserState";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
+import { AnimatePresence, motion } from "framer-motion";
 import "./CreateGardenPage.css";
 
 const CreateGardenContainer = styled(Container)({
@@ -107,11 +108,12 @@ export const CreateGarden = () => {
 
     createGardenAndRules();
   };
-
+ 
   return (
-    <Container className="create-garden-root">
+    <Container className="create-garden-root" component={motion.div}>
       <CreateGardenContainer>
         <div className="create-garden">
+        <AnimatePresence>
           {activeStep === 0 && (
             <NewGarden
               nameChangeHandler={nameChangeHandler}
@@ -119,7 +121,7 @@ export const CreateGarden = () => {
               descChangeHandler={descChangeHandler}
               desc={desc}
             />
-          )}
+            )}
           {activeStep === 1 && (
             <AddRules
               ruleNameChangeHandler={ruleNameChangeHandler}
@@ -128,16 +130,17 @@ export const CreateGarden = () => {
               ruleDesc={ruleDesc}
               addRuleHandler={addRuleHandler}
               userRules={userRules}
-            />
-          )}
+              />
+              )}
           {activeStep === 2 && (
             <GardenSummary
-              gardenName={name}
-              gardenDesc={desc}
-              userRules={userRules}
-              createGardenHandler={createGardenHandler}
+            gardenName={name}
+            gardenDesc={desc}
+            userRules={userRules}
+            createGardenHandler={createGardenHandler}
             />
-          )}
+            )}
+            </AnimatePresence>
         </div>
         <CreateGardenStepper
           variant="progress"
@@ -147,27 +150,27 @@ export const CreateGarden = () => {
           activeStep={activeStep}
           nextButton={
             <Button
-              size="medium"
-              onClick={handleNext}
-              disabled={
-                activeStep === 2 ||
-                name.length < 1 ||
-                (activeStep === 1 && userRules.length < 1)
-              }
+            size="medium"
+            onClick={handleNext}
+            disabled={
+              activeStep === 2 ||
+              name.length < 1 ||
+              (activeStep === 1 && userRules.length < 1)
+            }
             >
               Next
             </Button>
           }
           backButton={
             <Button
-              size="medium"
-              onClick={handleBack}
-              disabled={activeStep === 0}
+            size="medium"
+            onClick={handleBack}
+            disabled={activeStep === 0}
             >
               Back
             </Button>
           }
-        />
+          />
       </CreateGardenContainer>
     </Container>
   );
