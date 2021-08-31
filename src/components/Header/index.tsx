@@ -3,7 +3,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import MyNiwaLogo from "./assets/redniwa.svg";
+import MyNiwaLogo from "./assets/myniwa.svg";
 import { useUserState } from "../../store/user/useUserState";
 import { useFirebaseAuth } from "../SignIn/useFirebaseAuth";
 import { ReactComponent as Hamburger } from "./assets/hamburger.svg";
