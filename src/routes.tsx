@@ -25,8 +25,7 @@ export const Routes = () => {
               component={GardenView}
               exact
             />
-            <Route path='/user/createGarden' component={CreateGarden} exact />
-            {/* <Route component={NotFound} /> */}
+            <Route path="/user/createGarden" component={CreateGarden} exact />
           </Route>
         )}
         <Route path='/' component={Home} />

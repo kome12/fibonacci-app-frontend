@@ -3,9 +3,14 @@
   padding: 3%;
   line-height: 1.6rem;
   justify-content: center;
-  width: 80%;
+  width: 92%;
   margin: auto;
   border-radius: 20px;
+}
+
+.garden-parent-container {
+  padding: 0 10%;
+  line-height: 1.6rem;
 }
 
 .garden-container {
