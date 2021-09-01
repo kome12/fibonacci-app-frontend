@@ -45,40 +45,42 @@ export const MyGardens = () => {
   }, []);
 
   return (
-    <div className="my-gardens-container">
+    <>
       <Header />
-      <LoadingWrapper isLoading={isFetchingGardens}>
-        <h1>My Gardens</h1>
-        <div className="gardens-view">
-          {myGardens.map((garden, index) => {
-            return (
-              <Link to={`/user/gardenView/${garden._id}`} key={index}>
-                <Card className={`garden-card ${classes.root}`}>
-                  <CardActionArea>
-                    <CardMedia
-                      className={classes.media}
-                      image={gardenImage}
-                      title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {garden.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        {garden.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
-      </LoadingWrapper>
-    </div>
+      <div className="my-gardens-container">
+        <LoadingWrapper isLoading={isFetchingGardens}>
+          <h1>My Gardens</h1>
+          <div className="gardens-view">
+            {myGardens.map((garden, index) => {
+              return (
+                <Link to={`/user/gardenView/${garden._id}`} key={index}>
+                  <Card className={`garden-card ${classes.root}`}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={gardenImage}
+                        title="Contemplative Reptile"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {garden.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          {garden.description}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        </LoadingWrapper>
+      </div>
+    </>
   );
 };
