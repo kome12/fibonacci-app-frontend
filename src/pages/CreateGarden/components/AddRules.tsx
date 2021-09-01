@@ -4,6 +4,7 @@ import { styled } from "@material-ui/styles";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import "./AddRules.css";
+import { motion } from "framer-motion";
 
 const AddRuleContainer = styled(Container)({
   background: "#6ABC6880",
@@ -25,18 +26,23 @@ const RuleButton = styled(Button)({
 });
 
 interface AddRulesProps {
-  ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
-  ruleName: string;
-  ruleDescChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
-  ruleDesc: string;
-  addRuleHandler: React.MouseEventHandler<HTMLButtonElement>;
-  userRules: NewUserRule[];
+  ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
+  ruleName: string,
+  ruleDescChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
+  ruleDesc: string,
+  addRuleHandler: React.MouseEventHandler<HTMLButtonElement>,
+  userRules: NewUserRule[],
+  animDirection: "left" | "right"
 }
 
-
 export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}) => {
+  const initDir = animDirection === "left" ? "5vw" : "-5vw";
+  const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <div className="add-rules-container">
+    <Container className="add-rules-container" component={motion.div} initial={{ opacity: 0, x: initDir }}
+    animate={{ opacity: 1, x: 0}}
+    transition={{ duration: 0.6 }}
+    exit={{ opacity: 0, x: exitDir }}>
       <h2>Add rules</h2>
       <h3>Current rules:</h3>
       <div className="user-rules">
@@ -83,6 +89,7 @@ export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleNa
           + Add rule
         </RuleButton>
       </AddRuleContainer>
-    </div>
-  );
-};
+    </Container>
+  )
+}
+

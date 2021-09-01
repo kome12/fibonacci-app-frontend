@@ -2,6 +2,7 @@ import { Button, Container, styled } from "@material-ui/core";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import "./GardenSummary.css";
+import { motion } from "framer-motion";
 
 const CreateGardenButton = styled(Button)({
   alignSelf: "center",
@@ -16,15 +17,21 @@ const CreateGardenButton = styled(Button)({
 });
 
 interface GardenSummaryProps {
-  gardenName: string;
-  gardenDesc: string;
-  userRules: NewUserRule[];
-  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>;
+  gardenName: string,
+  gardenDesc: string,
+  userRules: NewUserRule[],
+  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>,
+  animDirection: "left" | "right"
 }
 
 export const GardenSummary: React.FC<GardenSummaryProps> = ({gardenName, gardenDesc, userRules, createGardenHandler}) => {
+  const initDir = animDirection === "left" ? "5vw" : "-5vw";
+  const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <Container className="garden-summary-container">
+    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: initDir }}
+    animate={{ opacity: 1, x: 0}}
+    transition={{ duration: 0.6 }}
+    exit={{ opacity: 0, x: exitDir }}>
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
         <h3>
