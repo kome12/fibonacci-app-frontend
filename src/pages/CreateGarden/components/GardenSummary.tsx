@@ -13,32 +13,44 @@ const CreateGardenButton = styled(Button)({
   margin: "10% 2rem 5%",
   height: "10%",
   width: "80%",
-})
+});
 
 interface GardenSummaryProps {
-  gardenName: string,
-  gardenDesc: string,
-  userRules: NewUserRule[],
-  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>
+  gardenName: string;
+  gardenDesc: string;
+  userRules: NewUserRule[];
+  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler}: GardenSummaryProps) => {
+export const GardenSummary = ({
+  gardenName,
+  gardenDesc,
+  userRules,
+  createGardenHandler,
+}: GardenSummaryProps) => {
   return (
     <Container className="garden-summary-container">
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
-        <h3>Name: <span className="garden-summary-name">{gardenName}</span></h3>
-        <h3>Description: <span className="garden-summary-desc">{gardenDesc}</span></h3>
+        <h3>
+          Name: <span className="garden-summary-name">{gardenName}</span>
+        </h3>
+        <h3>
+          Description: <span className="garden-summary-desc">{gardenDesc}</span>
+        </h3>
       </Container>
       <Container className="garden-summary-rules">
         <ul>
-          {userRules.map((rule, idx) => 
+          {userRules.map((rule, idx) => (
             <li className="rule-li" key={idx}>
-              <UserRule name={rule.name} description={rule.description}/>
-            </li>)}
+              <UserRule name={rule.name} description={rule.description} />
+            </li>
+          ))}
         </ul>
       </Container>
-      <CreateGardenButton onClick={createGardenHandler}>+ Create Garden</CreateGardenButton>
+      <CreateGardenButton onClick={createGardenHandler}>
+        + Create Garden
+      </CreateGardenButton>
     </Container>
-  )
-}
+  );
+};

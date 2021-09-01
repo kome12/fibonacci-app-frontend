@@ -8,5 +8,5 @@ export const UserRule = ({ name, description }: NewUserRule) => {
       <h3>{name}</h3>
       {description && <p>{description}</p>}
     </Box>
-  )
-}
+  );
+};
