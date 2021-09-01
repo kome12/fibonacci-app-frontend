@@ -8,5 +8,5 @@ export const UserRule: React.FC<NewUserRule> = ({ name, description }) => {
       <h3>{name}</h3>
       {description && <p>{description}</p>}
     </Box>
-  )
-}
+  );
+};

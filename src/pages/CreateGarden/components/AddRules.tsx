@@ -4,6 +4,7 @@ import { styled } from "@material-ui/styles";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import "./AddRules.css";
+import { motion } from "framer-motion";
 
 const AddRuleContainer = styled(Container)({
   background: "#6ABC6880",
@@ -12,7 +13,7 @@ const AddRuleContainer = styled(Container)({
   flexDirection: "column",
   height: "40%",
   marginTop: "12%",
-})
+});
 
 const RuleButton = styled(Button)({
   alignSelf: "center",
@@ -22,7 +23,7 @@ const RuleButton = styled(Button)({
   fontWeight: "bold",
   margin: "2% 0 2%",
   width: "50%",
-})
+});
 
 interface AddRulesProps {
   ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
@@ -30,44 +31,65 @@ interface AddRulesProps {
   ruleDescChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
   ruleDesc: string,
   addRuleHandler: React.MouseEventHandler<HTMLButtonElement>,
-  userRules: NewUserRule[]
+  userRules: NewUserRule[],
+  animDirection: "left" | "right"
 }
 
 export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}) => {
+  const initDir = animDirection === "left" ? "5vw" : "-5vw";
+  const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <div className="add-rules-container">
+    <Container className="add-rules-container" component={motion.div} initial={{ opacity: 0, x: initDir }}
+    animate={{ opacity: 1, x: 0}}
+    transition={{ duration: 0.6 }}
+    exit={{ opacity: 0, x: exitDir }}>
       <h2>Add rules</h2>
       <h3>Current rules:</h3>
       <div className="user-rules">
-        {
-        userRules.length < 1 ? 
-        <div className="no-rules-container">
-          <p className="no-rules">There are currently no rules for this garden.</p>
-        </div> :
+        {userRules.length < 1 ? (
+          <div className="no-rules-container">
+            <p className="no-rules">
+              There are currently no rules for this garden.
+            </p>
+          </div>
+        ) : (
           <ul>
             {userRules.map((rule, idx) => 
               <li className="rule-li" key={`${rule.name}-${idx}`}>
                 <UserRule name={rule.name} description={rule.description}/>
               </li>)}
           </ul>
-        }
+        )}
       </div>
       <AddRuleContainer>
-        <label className="rule-label" htmlFor="desc"><p>Name:</p></label>
-        <input className="garden-name" 
-               type="text" name="name" 
-               onChange={ruleNameChangeHandler} 
-               value={ruleName}
-               autoComplete="off"/>
+        <label className="rule-label" htmlFor="desc">
+          <p>Name:</p>
+        </label>
+        <input
+          className="garden-name"
+          type="text"
+          name="name"
+          onChange={ruleNameChangeHandler}
+          value={ruleName}
+          autoComplete="off"
+        />
 
-        <label className="rule-label" htmlFor="desc"><p>Description:</p></label>
-        <input className="garden-desc" 
-               type="text" name="desc" 
-               onChange={ruleDescChangeHandler} 
-               value={ruleDesc}
-               autoComplete="off" />
-        <RuleButton size="large" onClick={addRuleHandler}>+ Add rule</RuleButton>
+        <label className="rule-label" htmlFor="desc">
+          <p>Description:</p>
+        </label>
+        <input
+          className="garden-desc"
+          type="text"
+          name="desc"
+          onChange={ruleDescChangeHandler}
+          value={ruleDesc}
+          autoComplete="off"
+        />
+        <RuleButton size="large" onClick={addRuleHandler}>
+          + Add rule
+        </RuleButton>
       </AddRuleContainer>
-    </div>
+    </Container>
   )
 }
+
