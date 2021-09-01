@@ -6,10 +6,13 @@ import { useHistory } from 'react-router'
 import { useParams } from 'react-router-dom'
 import { CompletedTask } from '../../models/completedTask.model'
 import { Rule } from '../../models/rule.model'
-import { useUserState } from '../../store/user/useUserState'
+import { useUserState } from '../../store/user/useUserState';
+import Card from '@material-ui/core/Card';
 import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
-import './GardenView.css'
+import CloseIcon from '@material-ui/icons/Close';
+import UndoIcon from '@material-ui/icons/Undo';
+import './GardenView.css';
 
 export const GardenView = () => {
   // TODO: FIX API CALL AFTER MVP
@@ -51,7 +54,7 @@ export const GardenView = () => {
     if (getData) {
       getDataFromBackend()
     }
-  }, [gardenId, getData])
+  }, [rules, gardenId, getData])
 
   let history = useHistory()
   const linkHandler = (page: string) => {
@@ -72,7 +75,6 @@ export const GardenView = () => {
         'https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks',
         completedTask
       )
-      // console.log('completedTask response:', res)
       setGetData(true)
     }
 
@@ -80,6 +82,7 @@ export const GardenView = () => {
   }
 
   const handleDelete = () => {
+    // TODO: Implement delete task
     console.log("Needs implementation")
   }
 
@@ -105,7 +108,7 @@ export const GardenView = () => {
     setRulesStatus(currentRulesStatus)
   }
 
-  const handleChipColor = (bool) => {
+  const handleChipColor = (bool: boolean) => {
     return bool ? "primary" : "secondary"
   }
 
@@ -121,19 +124,23 @@ export const GardenView = () => {
         <h2>Daily Goals:</h2>
         {rules.map((rule, index) => {
           return (
-            <div key={index}>
-              <Chip
-                icon={<DoneIcon />}
-                label={rule.name}
-                clickable
-                color={handleChipColor(rulesStatus[index])}
-                onClick={(e) => completeTaskHandler(rule)}
-                disabled={rulesStatus[index]}                
-                onDelete={handleDelete}
-              />
-              {rule.description ? (<div className="rule-description">{rule.description}</div>) : <div></div>
-              }
-            </div>
+            <Card variant="outlined">
+              <div key={index}>
+                <Chip
+                  icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
+                  label={rule.name}
+                  clickable
+                  color={handleChipColor(rulesStatus[index])}
+                  onClick={(e) => {
+                    completeTaskHandler(rule);
+                  }}
+                  onDelete={handleDelete}
+                  deleteIcon={<UndoIcon />}
+                />
+                {rule.description ? (<div className="rule-description">{rule.description}</div>) : <div></div>
+                }
+              </div>
+            </Card>
           )
         })}
       </div>
