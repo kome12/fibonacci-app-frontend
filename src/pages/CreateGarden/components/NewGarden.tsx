@@ -8,12 +8,8 @@ interface NewGardenProps {
   desc: string;
 }
 
-export const NewGarden = ({
-  nameChangeHandler,
-  name,
-  descChangeHandler,
-  desc,
-}: NewGardenProps) => {
+
+export const NewGarden: React.FC<NewGardenProps> = ({nameChangeHandler, name, descChangeHandler, desc}) => {
   return (
     <div className="new-garden-container">
       <h2>Create Garden</h2>

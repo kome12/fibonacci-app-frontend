@@ -22,12 +22,7 @@ interface GardenSummaryProps {
   createGardenHandler: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const GardenSummary = ({
-  gardenName,
-  gardenDesc,
-  userRules,
-  createGardenHandler,
-}: GardenSummaryProps) => {
+export const GardenSummary: React.FC<GardenSummaryProps> = ({gardenName, gardenDesc, userRules, createGardenHandler}) => {
   return (
     <Container className="garden-summary-container">
       <h2>Garden Summary</h2>
@@ -41,11 +36,10 @@ export const GardenSummary = ({
       </Container>
       <Container className="garden-summary-rules">
         <ul>
-          {userRules.map((rule, idx) => (
-            <li className="rule-li" key={idx}>
-              <UserRule name={rule.name} description={rule.description} />
-            </li>
-          ))}
+          {userRules.map((rule, idx) => 
+            <li className="rule-li" key={`${rule.name}-${idx}`}>
+              <UserRule name={rule.name} description={rule.description}/>
+            </li>)}
         </ul>
       </Container>
       <CreateGardenButton onClick={createGardenHandler}>

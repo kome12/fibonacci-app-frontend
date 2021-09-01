@@ -100,16 +100,12 @@ export const GardenView = () => {
   };
 
   return (
-    <div className="garden-view-container">
+    <div className="garden-parent-container">
       <h1>Garden View</h1>
+      <div className="garden-view-container">
       <div className="garden-container">
-        {completedTasks.length === 0 ? (
-          <div>
-            <h2>You have no flowers yet!</h2>
-          </div>
-        ) : (
-          <div>{completedTasks.map((task, index) => "🌻 ")}</div>
-        )}
+        {completedTasks.length === 0 ?
+          <div><h2>You have no flowers yet!</h2></div> : <div>{completedTasks.map((task, index) => "🌱")}</div>}
       </div>
       <div className="rules-container">
         <h2>Daily Goals:</h2>

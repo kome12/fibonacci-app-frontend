@@ -1,5 +1,8 @@
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
+import { ReactComponent as Niwa } from "./assets/niwa.svg";
+import "./home.css";
+
 
 export const Home = () => {
   const { userData } = useUserState();
@@ -15,9 +18,13 @@ export const Home = () => {
   // }, []);
 
   return (
-    <div>
-      <h2>Home</h2>
-      {!userData && <SignIn />}
+    <div className="splash-page">
+      <div className="ni-wa-container">
+        <Niwa className="ni-wa-character" />
+        <h1 className="ni-wa">ni•wa</h1>
+        <h3 className="ni-wa-definition">a garden or courtyard</h3>
+        {!userData && <SignIn />}
+      </div>
     </div>
   );
 };
