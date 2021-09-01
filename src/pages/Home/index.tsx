@@ -1,3 +1,4 @@
+import { Header } from "../../components/Header";
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
 import { ReactComponent as Niwa } from "./assets/niwa.svg";
@@ -17,13 +18,16 @@ export const Home = () => {
   // }, []);
 
   return (
-    <div className="splash-page">
-      <div className="ni-wa-container">
-        <Niwa className="ni-wa-character" />
-        <h1 className="ni-wa">ni•wa</h1>
-        <h3 className="ni-wa-definition">a garden or courtyard</h3>
-        {!userData.isLoggedIn && <SignIn />}
+    <>
+      <Header />
+      <div className="splash-page">
+        <div className="ni-wa-container">
+          <Niwa className="ni-wa-character" />
+          <h1 className="ni-wa">ni•wa</h1>
+          <h3 className="ni-wa-definition">a garden or courtyard</h3>
+          {!userData.isLoggedIn && <SignIn />}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
