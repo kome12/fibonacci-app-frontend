@@ -1,13 +1,15 @@
+import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { useUserState } from "../../store/user/useUserState";
 import { logout } from "../SignIn/useFirebaseAuth";
 import { ReactComponent as Hamburger } from "./assets/hamburger.svg";
 import MyNiwaLogo from "./assets/myniwa.svg";
-import "./Header.css";
+import styles from "./Header.module.css";
 
 export const Header = () => {
   const history = useHistory();
@@ -35,15 +37,17 @@ export const Header = () => {
   };
 
   return (
-    <div className="header-container">
-      <img className="my-niwa-logo" src={MyNiwaLogo} alt="my niwa logo" />
+    <AppBar position="static" className={styles.header}>
+      <Link to="/">
+        <img className={styles.logo} src={MyNiwaLogo} alt="my niwa logo" />
+      </Link>
+
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
       >
         <div style={{ color: "#000000" }}>
-          <h1 className="italic">menu</h1>
           <Hamburger />
         </div>
       </Button>
@@ -72,6 +76,6 @@ export const Header = () => {
           </MenuItem>
         )}
       </Menu>
-    </div>
+    </AppBar>
   );
 };
