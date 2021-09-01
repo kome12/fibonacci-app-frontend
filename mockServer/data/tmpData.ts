@@ -1,1 +1,1 @@
-export const tmpData = { hello: 'world' }
+export const tmpData = { hello: "world" };
