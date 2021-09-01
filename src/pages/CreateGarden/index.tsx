@@ -36,6 +36,7 @@ export const CreateGarden = () => {
   const { userData } = useUserState();
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
+  // TODO: Refactor animation code
   const [animDirection, setAnimDirection] = useState<"left" | "right">("right");
   const handleNext = () => {
     setAnimDirection("left");
