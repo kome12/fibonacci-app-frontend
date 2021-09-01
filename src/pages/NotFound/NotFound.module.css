@@ -5,10 +5,15 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding-top: 80px;
 }
 
 .wrapper > h1 {
   width: 90%;
   margin: 0 auto 15px;
   font-size: 1.8em;
+}
+
+.button {
+  margin-top: 20px;
 }
