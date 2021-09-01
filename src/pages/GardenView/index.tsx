@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import * as moment from "moment";
-import React, { useEffect, useState } from "react";
+import { isSameDay } from "date-fns";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { CompletedTask } from "../../models/completedTask.model";
@@ -11,6 +11,7 @@ import "./GardenView.css";
 
 export const GardenView = () => {
   // TODO: FIX API CALL AFTER MVP
+  // TODO: Need to be refactor
 
   // const [gardenByGardenIdApi, getGardenByGardenIdData] =
   //   useApi(getGardenByGardenId);
@@ -61,7 +62,7 @@ export const GardenView = () => {
       ruleId: rule._id || "",
       // TODO: Fix when backend updates schema for completedTask's fireBaseUserId
       fireBaseUserId: userData?.id || "",
-      date: moment.utc().startOf("day").toDate(),
+      date: new Date(),
       rewardTypeId: "61274429d20570644762b99b",
     };
 
@@ -82,8 +83,6 @@ export const GardenView = () => {
 
     currentCompletedTasks: Array<CompletedTask>
   ) => {
-    const today: moment.Moment = moment.utc();
-
     const currentRulesStatus: Array<boolean> = currentRules.map(
       (rule: Rule) => {
         const filteredCompletedTasks: Array<CompletedTask> =
@@ -91,9 +90,9 @@ export const GardenView = () => {
             return completedTask.ruleId === rule._id;
           });
 
-        return filteredCompletedTasks.some((completedTask: CompletedTask) =>
-          moment.utc(completedTask.date).isSame(today, "day")
-        );
+        return filteredCompletedTasks.some((completedTask: CompletedTask) => {
+          return isSameDay(new Date(), new Date(completedTask.date));
+        });
       }
     );
     setRulesStatus(currentRulesStatus);
