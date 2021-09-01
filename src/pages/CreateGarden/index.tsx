@@ -36,10 +36,13 @@ export const CreateGarden = () => {
   const { userData } = useUserState();
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
+  const [animDirection, setAnimDirection] = useState<"left" | "right">("right");
   const handleNext = () => {
+    setAnimDirection("left");
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
   const handleBack = () => {
+    setAnimDirection("right");
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   const [name, setName] = useState("");
@@ -120,6 +123,7 @@ export const CreateGarden = () => {
               name={name}
               descChangeHandler={descChangeHandler}
               desc={desc}
+              animDirection={animDirection}
             />
             )}
           {activeStep === 1 && (
@@ -130,6 +134,7 @@ export const CreateGarden = () => {
               ruleDesc={ruleDesc}
               addRuleHandler={addRuleHandler}
               userRules={userRules}
+              animDirection={animDirection}
               />
               )}
           {activeStep === 2 && (
@@ -138,6 +143,7 @@ export const CreateGarden = () => {
             gardenDesc={desc}
             userRules={userRules}
             createGardenHandler={createGardenHandler}
+            animDirection={animDirection}
             />
             )}
             </AnimatePresence>

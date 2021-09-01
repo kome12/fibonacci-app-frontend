@@ -20,15 +20,18 @@ interface GardenSummaryProps {
   gardenName: string,
   gardenDesc: string,
   userRules: NewUserRule[],
-  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>
+  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>,
+  animDirection: "left" | "right"
 }
 
-export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler}: GardenSummaryProps) => {
+export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler, animDirection}: GardenSummaryProps) => {
+  const initDir = animDirection === "left" ? "5vw" : "-5vw";
+  const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: "5vw" }}
+    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: initDir }}
     animate={{ opacity: 1, x: 0}}
     transition={{ duration: 0.6 }}
-    exit={{ opacity: 0, x: "-5vw" }}>
+    exit={{ opacity: 0, x: exitDir }}>
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
         <h3>Name: <span className="garden-summary-name">{gardenName}</span></h3>

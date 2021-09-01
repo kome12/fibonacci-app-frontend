@@ -7,18 +7,20 @@ interface NewGardenProps {
   nameChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
   name: string,
   descChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
-  desc: string
+  desc: string,
+  animDirection: "left" | "right"
 }
 
-export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc}:NewGardenProps) => {
-  
+export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc, animDirection}:NewGardenProps) => {
+  const initDir = animDirection === "left" ? "5vw" : "-5vw";
+  const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
     <Container className="new-garden-container" 
                component={motion.div}
-               initial={{ opacity: 0, x: "5vw" }}
+               initial={{ opacity: 0, x: initDir }}
                animate={{ opacity: 1, x: 0}}
                transition={{ duration: 0.6 }}
-               exit={{ opacity: 0, x: "-5vw" }}>
+               exit={{ opacity: 0, x: exitDir }}>
       <h2>Create Garden</h2>
         <label htmlFor="desc"><p>Name:</p></label>
         <p>Give your Garden a name! *required</p>
