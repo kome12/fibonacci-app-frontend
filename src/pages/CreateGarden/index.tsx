@@ -76,7 +76,7 @@ export const CreateGarden = () => {
     setRuleDesc("");
   };
 
-  const createGardenHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const createGardenHandler = () => {
     const createGardenAndRules = async () => {
       // TODO: FIX the endpoint
       const newGarden: Garden = {

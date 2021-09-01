@@ -14,7 +14,7 @@ const CreateGardenButton = styled(Button)({
   margin: "10% 2rem 5%",
   height: "10%",
   width: "80%",
-})
+});
 
 interface GardenSummaryProps {
   gardenName: string,
@@ -24,7 +24,7 @@ interface GardenSummaryProps {
   animDirection: "left" | "right"
 }
 
-export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler, animDirection}: GardenSummaryProps) => {
+export const GardenSummary: React.FC<GardenSummaryProps> = ({gardenName, gardenDesc, userRules, createGardenHandler}) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
@@ -34,18 +34,24 @@ export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHa
     exit={{ opacity: 0, x: exitDir }}>
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
-        <h3>Name: <span className="garden-summary-name">{gardenName}</span></h3>
-        <h3>Description: <span className="garden-summary-desc">{gardenDesc}</span></h3>
+        <h3>
+          Name: <span className="garden-summary-name">{gardenName}</span>
+        </h3>
+        <h3>
+          Description: <span className="garden-summary-desc">{gardenDesc}</span>
+        </h3>
       </Container>
       <Container className="garden-summary-rules">
         <ul>
           {userRules.map((rule, idx) => 
-            <li className="rule-li" key={idx}>
+            <li className="rule-li" key={`${rule.name}-${idx}`}>
               <UserRule name={rule.name} description={rule.description}/>
             </li>)}
         </ul>
       </Container>
-      <CreateGardenButton onClick={createGardenHandler}>+ Create Garden</CreateGardenButton>
+      <CreateGardenButton onClick={createGardenHandler}>
+        + Create Garden
+      </CreateGardenButton>
     </Container>
-  )
-}
+  );
+};

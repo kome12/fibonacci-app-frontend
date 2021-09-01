@@ -11,7 +11,7 @@ interface NewGardenProps {
   animDirection: "left" | "right"
 }
 
-export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc, animDirection}:NewGardenProps) => {
+export const NewGarden: React.FC<NewGardenProps> = ({nameChangeHandler, name, descChangeHandler, desc}) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
@@ -22,15 +22,18 @@ export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc, ani
                transition={{ duration: 0.6 }}
                exit={{ opacity: 0, x: exitDir }}>
       <h2>Create Garden</h2>
-        <label htmlFor="desc"><p>Name:</p></label>
-        <p>Give your Garden a name! *required</p>
-        <input className="garden-name" 
-               type="text" 
-               name="name" 
-               onChange={nameChangeHandler} 
-               value={name}
-               autoComplete="off"/>
-
+      <label htmlFor="desc">
+        <p>Name:</p>
+      </label>
+      <p>Give your Garden a name! *required</p>
+      <input
+        className="garden-name"
+        type="text"
+        name="name"
+        onChange={nameChangeHandler}
+        value={name}
+        autoComplete="off"
+      />
         <label htmlFor="desc"><p>Description:</p></label>
         <p>Add a description! (optional)</p>
         <input className="garden-desc" 
