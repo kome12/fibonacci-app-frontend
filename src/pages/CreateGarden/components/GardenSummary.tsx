@@ -17,21 +17,31 @@ const CreateGardenButton = styled(Button)({
 });
 
 interface GardenSummaryProps {
-  gardenName: string,
-  gardenDesc: string,
-  userRules: NewUserRule[],
-  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>,
-  animDirection: "left" | "right"
+  gardenName: string;
+  gardenDesc: string;
+  userRules: NewUserRule[];
+  createGardenHandler: React.MouseEventHandler<HTMLButtonElement>;
+  animDirection: "left" | "right";
 }
 
-export const GardenSummary: React.FC<GardenSummaryProps> = ({gardenName, gardenDesc, userRules, createGardenHandler}) => {
+export const GardenSummary: React.FC<GardenSummaryProps> = ({
+  gardenName,
+  gardenDesc,
+  userRules,
+  createGardenHandler,
+  animDirection,
+}) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: initDir }}
-    animate={{ opacity: 1, x: 0}}
-    transition={{ duration: 0.6 }}
-    exit={{ opacity: 0, x: exitDir }}>
+    <Container
+      className="garden-summary-container"
+      component={motion.div}
+      initial={{ opacity: 0, x: initDir }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6 }}
+      exit={{ opacity: 0, x: exitDir }}
+    >
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
         <h3>
@@ -43,10 +53,11 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({gardenName, gardenD
       </Container>
       <Container className="garden-summary-rules">
         <ul>
-          {userRules.map((rule, idx) => 
+          {userRules.map((rule, idx) => (
             <li className="rule-li" key={`${rule.name}-${idx}`}>
-              <UserRule name={rule.name} description={rule.description}/>
-            </li>)}
+              <UserRule name={rule.name} description={rule.description} />
+            </li>
+          ))}
         </ul>
       </Container>
       <CreateGardenButton onClick={createGardenHandler}>

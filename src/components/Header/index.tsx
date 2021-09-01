@@ -36,11 +36,7 @@ export const Header = () => {
 
   return (
     <div className="header-container">
-      <img
-        className="my-niwa-logo"
-        src={MyNiwaLogo}
-        alt="my niwa logo"
-      />
+      <img className="my-niwa-logo" src={MyNiwaLogo} alt="my niwa logo" />
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"

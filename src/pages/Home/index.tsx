@@ -3,7 +3,6 @@ import { useUserState } from "../../store/user/useUserState";
 import { ReactComponent as Niwa } from "./assets/niwa.svg";
 import "./home.css";
 
-
 export const Home = () => {
   const { userData } = useUserState();
 

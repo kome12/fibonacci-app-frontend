@@ -26,23 +26,35 @@ const RuleButton = styled(Button)({
 });
 
 interface AddRulesProps {
-  ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
-  ruleName: string,
-  ruleDescChangeHandler: React.ChangeEventHandler<HTMLInputElement>,
-  ruleDesc: string,
-  addRuleHandler: React.MouseEventHandler<HTMLButtonElement>,
-  userRules: NewUserRule[],
-  animDirection: "left" | "right"
+  ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
+  ruleName: string;
+  ruleDescChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
+  ruleDesc: string;
+  addRuleHandler: React.MouseEventHandler<HTMLButtonElement>;
+  userRules: NewUserRule[];
+  animDirection: "left" | "right";
 }
 
-export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}) => {
+export const AddRules: React.FC<AddRulesProps> = ({
+  ruleNameChangeHandler,
+  ruleName,
+  ruleDescChangeHandler,
+  ruleDesc,
+  addRuleHandler,
+  userRules,
+  animDirection,
+}) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <Container className="add-rules-container" component={motion.div} initial={{ opacity: 0, x: initDir }}
-    animate={{ opacity: 1, x: 0}}
-    transition={{ duration: 0.6 }}
-    exit={{ opacity: 0, x: exitDir }}>
+    <Container
+      className="add-rules-container"
+      component={motion.div}
+      initial={{ opacity: 0, x: initDir }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6 }}
+      exit={{ opacity: 0, x: exitDir }}
+    >
       <h2>Add rules</h2>
       <h3>Current rules:</h3>
       <div className="user-rules">
@@ -54,10 +66,11 @@ export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleNa
           </div>
         ) : (
           <ul>
-            {userRules.map((rule, idx) => 
+            {userRules.map((rule, idx) => (
               <li className="rule-li" key={`${rule.name}-${idx}`}>
-                <UserRule name={rule.name} description={rule.description}/>
-              </li>)}
+                <UserRule name={rule.name} description={rule.description} />
+              </li>
+            ))}
           </ul>
         )}
       </div>
@@ -90,6 +103,5 @@ export const AddRules: React.FC<AddRulesProps> = ({ruleNameChangeHandler, ruleNa
         </RuleButton>
       </AddRuleContainer>
     </Container>
-  )
-}
-
+  );
+};
