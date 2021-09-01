@@ -3,15 +3,15 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import MyNiwaLogo from "./assets/myniwa.svg";
 import { useUserState } from "../../store/user/useUserState";
-import { useFirebaseAuth } from "../SignIn/useFirebaseAuth";
+import { logout } from "../SignIn/useFirebaseAuth";
 import { ReactComponent as Hamburger } from "./assets/hamburger.svg";
+import MyNiwaLogo from "./assets/myniwa.svg";
 import "./Header.css";
 
 export const Header = () => {
+  const history = useHistory();
   const { userData } = useUserState();
-  const { logout } = useFirebaseAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -25,10 +25,10 @@ export const Header = () => {
 
   const handleLogout = useCallback(async () => {
     handleClose();
-    logout();
+    await logout();
+    history.push("/");
   }, []);
 
-  let history = useHistory();
   const linkHandler = (page: string) => {
     history.push(page);
     handleClose();
@@ -66,7 +66,7 @@ export const Header = () => {
         >
           Create Garden
         </MenuItem>
-        {userData && (
+        {userData.isLoggedIn && (
           <MenuItem className="menu-link" onClick={handleLogout}>
             Logout
           </MenuItem>
