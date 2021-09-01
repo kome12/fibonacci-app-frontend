@@ -147,6 +147,7 @@ export const GardenView = () => {
       <div className="centered">
         <Button
           variant="contained"
+          color="secondary"
           onClick={() => linkHandler("/user/myGardens")}
         >
           Go back to My Gardens

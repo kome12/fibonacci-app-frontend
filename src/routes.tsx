@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
+import { About } from "./pages/About";
 import { CreateGarden } from "./pages/CreateGarden";
 import { GardenView } from "./pages/GardenView";
 import { Home } from "./pages/Home";
@@ -19,6 +20,7 @@ export const Routes = () => {
       <Switch location={location}>
         {isUserLoggedIn && (
           <Route path="/user">
+            <Route path="/About" component={About} exact />
             <Route path="/user/myGardens" component={MyGardens} exact />
             <Route
               path="/user/gardenView/:gardenId"
@@ -28,6 +30,7 @@ export const Routes = () => {
             <Route path="/user/createGarden" component={CreateGarden} exact />
           </Route>
         )}
+        <Route path="/About" component={About} exact />
         <Route path="/" component={Home} />
         {/* <Route component={NotFound} /> */}
       </Switch>
