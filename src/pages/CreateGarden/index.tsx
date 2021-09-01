@@ -112,42 +112,42 @@ export const CreateGarden = () => {
 
     createGardenAndRules();
   };
- 
+
   return (
     <Container className="create-garden-root" component={motion.div}>
       <CreateGardenContainer>
         <div className="create-garden">
-        <AnimatePresence>
-          {activeStep === 0 && (
-            <NewGarden
-              nameChangeHandler={nameChangeHandler}
-              name={name}
-              descChangeHandler={descChangeHandler}
-              desc={desc}
-              animDirection={animDirection}
-            />
-            )}
-          {activeStep === 1 && (
-            <AddRules
-              ruleNameChangeHandler={ruleNameChangeHandler}
-              ruleName={ruleName}
-              ruleDescChangeHandler={ruleDescChangeHandler}
-              ruleDesc={ruleDesc}
-              addRuleHandler={addRuleHandler}
-              userRules={userRules}
-              animDirection={animDirection}
+          <AnimatePresence>
+            {activeStep === 0 && (
+              <NewGarden
+                nameChangeHandler={nameChangeHandler}
+                name={name}
+                descChangeHandler={descChangeHandler}
+                desc={desc}
+                animDirection={animDirection}
               />
-              )}
-          {activeStep === 2 && (
-            <GardenSummary
-            gardenName={name}
-            gardenDesc={desc}
-            userRules={userRules}
-            createGardenHandler={createGardenHandler}
-            animDirection={animDirection}
-            />
             )}
-            </AnimatePresence>
+            {activeStep === 1 && (
+              <AddRules
+                ruleNameChangeHandler={ruleNameChangeHandler}
+                ruleName={ruleName}
+                ruleDescChangeHandler={ruleDescChangeHandler}
+                ruleDesc={ruleDesc}
+                addRuleHandler={addRuleHandler}
+                userRules={userRules}
+                animDirection={animDirection}
+              />
+            )}
+            {activeStep === 2 && (
+              <GardenSummary
+                gardenName={name}
+                gardenDesc={desc}
+                userRules={userRules}
+                createGardenHandler={createGardenHandler}
+                animDirection={animDirection}
+              />
+            )}
+          </AnimatePresence>
         </div>
         <CreateGardenStepper
           variant="progress"
@@ -157,27 +157,27 @@ export const CreateGarden = () => {
           activeStep={activeStep}
           nextButton={
             <Button
-            size="medium"
-            onClick={handleNext}
-            disabled={
-              activeStep === 2 ||
-              name.length < 1 ||
-              (activeStep === 1 && userRules.length < 1)
-            }
+              size="medium"
+              onClick={handleNext}
+              disabled={
+                activeStep === 2 ||
+                name.length < 1 ||
+                (activeStep === 1 && userRules.length < 1)
+              }
             >
               Next
             </Button>
           }
           backButton={
             <Button
-            size="medium"
-            onClick={handleBack}
-            disabled={activeStep === 0}
+              size="medium"
+              onClick={handleBack}
+              disabled={activeStep === 0}
             >
               Back
             </Button>
           }
-          />
+        />
       </CreateGardenContainer>
     </Container>
   );

@@ -103,35 +103,41 @@ export const GardenView = () => {
     <div className="garden-parent-container">
       <h1>Garden View</h1>
       <div className="garden-view-container">
-      <div className="garden-container">
-        {completedTasks.length === 0 ?
-          <div><h2>You have no flowers yet!</h2></div> : <div>{completedTasks.map((task, index) => "🌱")}</div>}
-      </div>
-      <div className="rules-container">
-        <h2>Daily Goals:</h2>
-        {rules.map((rule, index) => {
-          return (
-            <div key={index}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={(e) => completeTaskHandler(rule)}
-                disabled={rulesStatus[index]}
-              >
-                <div className="rule-name">{rule.name}</div>
-              </Button>
-              {/* <div className="rule-description">{rule.description}</div> */}
+        <div className="garden-container">
+          {completedTasks.length === 0 ? (
+            <div>
+              <h2>You have no flowers yet!</h2>
             </div>
-          );
-        })}
-      </div>
-      <div className="centered">
-        <Button
-          variant="contained"
-          onClick={() => linkHandler("/user/myGardens")}
-        >
-          Go back to My Gardens
-        </Button>
+          ) : (
+            <div>{completedTasks.map((task, index) => "🌱")}</div>
+          )}
+        </div>
+        <div className="rules-container">
+          <h2>Daily Goals:</h2>
+          {rules.map((rule, index) => {
+            return (
+              <div key={index}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={(e) => completeTaskHandler(rule)}
+                  disabled={rulesStatus[index]}
+                >
+                  <div className="rule-name">{rule.name}</div>
+                </Button>
+                {/* <div className="rule-description">{rule.description}</div> */}
+              </div>
+            );
+          })}
+        </div>
+        <div className="centered">
+          <Button
+            variant="contained"
+            onClick={() => linkHandler("/user/myGardens")}
+          >
+            Go back to My Gardens
+          </Button>
+        </div>
       </div>
     </div>
   );
