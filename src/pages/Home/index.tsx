@@ -41,8 +41,8 @@ export const Home = () => {
             color="primary"         
             onClick={() => linkHandler("/user/myGardens")}
           >Get me to my Gardens!</Button> : 
-          <SignIn />}
-        {/* { {!userData && <SignIn /> }} */}
+          (<div><h4>Sign in to get started!</h4>
+          <SignIn /></div>)}
         </div>
       </div>
     </div>

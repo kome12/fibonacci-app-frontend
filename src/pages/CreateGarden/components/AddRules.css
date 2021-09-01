@@ -50,7 +50,6 @@ ul {
 
 li {
   display: list-item;
-  list-style: outside "\1F33B";
   font-size: large;
   border: 0.5rem #ff7f27d9;
 }
