@@ -25,10 +25,10 @@ interface GardenSummaryProps {
 
 export const GardenSummary = ({gardenName, gardenDesc, userRules, createGardenHandler}: GardenSummaryProps) => {
   return (
-    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: 50 }}
+    <Container className="garden-summary-container" component={motion.div} initial={{ opacity: 0, x: "5vw" }}
     animate={{ opacity: 1, x: 0}}
     transition={{ duration: 0.6 }}
-    exit={{ opacity: 0, x: -50 }}>
+    exit={{ opacity: 0, x: "-5vw" }}>
       <h2>Garden Summary</h2>
       <Container className="garden-summary-details">
         <h3>Name: <span className="garden-summary-name">{gardenName}</span></h3>

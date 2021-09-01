@@ -15,10 +15,10 @@ export const NewGarden = ({nameChangeHandler, name, descChangeHandler, desc}:New
   return (
     <Container className="new-garden-container" 
                component={motion.div}
-               initial={{ opacity: 0, x: 50 }}
+               initial={{ opacity: 0, x: "5vw" }}
                animate={{ opacity: 1, x: 0}}
                transition={{ duration: 0.6 }}
-               exit={{ opacity: 0, x: -50 }}>
+               exit={{ opacity: 0, x: "-5vw" }}>
       <h2>Create Garden</h2>
         <label htmlFor="desc"><p>Name:</p></label>
         <p>Give your Garden a name! *required</p>

@@ -36,10 +36,10 @@ interface AddRulesProps {
 
 export const AddRules = ({ruleNameChangeHandler, ruleName, ruleDescChangeHandler, ruleDesc, addRuleHandler, userRules}: AddRulesProps) => {
   return (
-    <Container className="add-rules-container" component={motion.div} initial={{ opacity: 0, x: 50 }}
+    <Container className="add-rules-container" component={motion.div} initial={{ opacity: 0, x: "5vw" }}
     animate={{ opacity: 1, x: 0}}
     transition={{ duration: 0.6 }}
-    exit={{ opacity: 0, x: -50 }}>
+    exit={{ opacity: 0, x: "-5vw" }}>
       <h2>Add rules</h2>
       <h3>Current rules:</h3>
       <div className="user-rules">
