@@ -4,6 +4,7 @@ import * as moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
+import { BottomNav } from "../../components/BottomNav";
 import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
@@ -139,6 +140,7 @@ export const GardenView = () => {
           </Button>
         </div>
       </div>
+      <BottomNav />
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
 import { AnimatePresence, motion } from "framer-motion";
 import "./CreateGardenPage.css";
+import { BottomNav } from "../../components/BottomNav";
 
 const CreateGardenContainer = styled(Container)({
   background: "#6ABC6880",
@@ -179,6 +180,7 @@ export const CreateGarden = () => {
           }
         />
       </CreateGardenContainer>
+      <BottomNav />
     </Container>
   );
 };
