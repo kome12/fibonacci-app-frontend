@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom'
 import { CompletedTask } from '../../models/completedTask.model'
 import { Rule } from '../../models/rule.model'
 import { useUserState } from '../../store/user/useUserState'
+import Chip from '@material-ui/core/Chip';
+import DoneIcon from '@material-ui/icons/Done';
 import './GardenView.css'
 
 export const GardenView = () => {
@@ -77,6 +79,10 @@ export const GardenView = () => {
     sendCompletedTask()
   }
 
+  const handleDelete = () => {
+    console.log("Needs implementation")
+  }
+
   const checkCompletedTaskStatus = (
     currentRules: Array<Rule>,
 
@@ -99,6 +105,10 @@ export const GardenView = () => {
     setRulesStatus(currentRulesStatus)
   }
 
+  const handleChipColor = (bool) => {
+    return bool ? "primary" : "secondary"
+  }
+
   return (
     <div className="garden-parent-container">
       <h1>Garden View</h1>
@@ -112,15 +122,17 @@ export const GardenView = () => {
         {rules.map((rule, index) => {
           return (
             <div key={index}>
-              <Button
-                variant='contained'
-                color='secondary'
+              <Chip
+                icon={<DoneIcon />}
+                label={rule.name}
+                clickable
+                color={handleChipColor(rulesStatus[index])}
                 onClick={(e) => completeTaskHandler(rule)}
-                disabled={rulesStatus[index]}
-              >
-                <div className='rule-name'>{rule.name}</div>
-              </Button>
-              {/* <div className="rule-description">{rule.description}</div> */}
+                disabled={rulesStatus[index]}                
+                onDelete={handleDelete}
+              />
+              {rule.description ? (<div className="rule-description">{rule.description}</div>) : <div></div>
+              }
             </div>
           )
         })}
