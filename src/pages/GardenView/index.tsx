@@ -1,4 +1,9 @@
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import Chip from "@material-ui/core/Chip";
+import CloseIcon from "@material-ui/icons/Close";
+import DoneIcon from "@material-ui/icons/Done";
+import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
 import * as moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -52,7 +57,7 @@ export const GardenView = () => {
     if (getData) {
       getDataFromBackend();
     }
-  }, [gardenId, getData]);
+  }, [rules, gardenId, getData]);
 
   let history = useHistory();
   const linkHandler = (page: string) => {
@@ -73,11 +78,15 @@ export const GardenView = () => {
         "https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks",
         completedTask
       );
-      // console.log('completedTask response:', res)
       setGetData(true);
     };
 
     sendCompletedTask();
+  };
+
+  const handleDelete = () => {
+    // TODO: Implement delete task
+    console.log("Needs implementation");
   };
 
   const checkCompletedTaskStatus = (
@@ -102,6 +111,10 @@ export const GardenView = () => {
     setRulesStatus(currentRulesStatus);
   };
 
+  const handleChipColor = (bool: boolean) => {
+    return bool ? "primary" : "secondary";
+  };
+
   return (
     <>
       <Header />
@@ -115,24 +128,35 @@ export const GardenView = () => {
                   <h2>You have no flowers yet!</h2>
                 </div>
               ) : (
-                <div>{completedTasks.map((_) => "🌱")}</div>
+                <div>{completedTasks.map((task, index) => "🌱")}</div>
               )}
             </div>
             <div className="rules-container">
               <h2>Daily Goals:</h2>
               {rules.map((rule, index) => {
                 return (
-                  <div key={rule._id}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => completeTaskHandler(rule)}
-                      disabled={rulesStatus[index]}
-                    >
-                      <div className="rule-name">{rule.name}</div>
-                    </Button>
-                    {/* <div className="rule-description">{rule.description}</div> */}
-                  </div>
+                  <Card variant="outlined">
+                    <div key={index}>
+                      <Chip
+                        icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
+                        label={rule.name}
+                        clickable
+                        color={handleChipColor(rulesStatus[index])}
+                        onClick={(e) => {
+                          completeTaskHandler(rule);
+                        }}
+                        onDelete={handleDelete}
+                        deleteIcon={<UndoIcon />}
+                      />
+                      {rule.description ? (
+                        <div className="rule-description">
+                          {rule.description}
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  </Card>
                 );
               })}
             </div>
