@@ -3,7 +3,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../../utils/firebase";
 
 const uiConfig = {
-  signInFlow: "popup",
+  signInFlow: "redirect",
   signInSuccessUrl: "/user/myGardens",
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,

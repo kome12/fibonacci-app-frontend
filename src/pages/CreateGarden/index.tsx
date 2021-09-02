@@ -1,5 +1,6 @@
 import { Button, Card, Container, createStyles, Grid, makeStyles, MobileStepper, Theme } from "@material-ui/core";
 import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Garden } from "../../models/garden.model";
@@ -8,7 +9,6 @@ import { useUserState } from "../../store/user/useUserState";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
-import { AnimatePresence, motion } from "framer-motion";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import "./CreateGardenPage.css";
@@ -81,7 +81,7 @@ export const CreateGarden = () => {
       const newGarden: Garden = {
         name: name,
         description: desc,
-        userFireBaseId: userData?.id || "",
+        userFireBaseId: (userData.isLoggedIn && userData.id) || "",
       };
       const resCreateGarden = await axios.post(
         `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens`,

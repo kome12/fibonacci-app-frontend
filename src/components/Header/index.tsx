@@ -1,17 +1,19 @@
+import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import MyNiwaLogo from "./assets/myniwa.svg";
+import { Link } from "react-router-dom";
 import { useUserState } from "../../store/user/useUserState";
-import { useFirebaseAuth } from "../SignIn/useFirebaseAuth";
+import { logout } from "../SignIn/useFirebaseAuth";
 import { ReactComponent as Hamburger } from "./assets/hamburger.svg";
-import "./Header.css";
+import MyNiwaLogo from "./assets/myniwa.svg";
+import styles from "./Header.module.css";
 
 export const Header = () => {
+  const history = useHistory();
   const { userData } = useUserState();
-  const { logout } = useFirebaseAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -25,25 +27,27 @@ export const Header = () => {
 
   const handleLogout = useCallback(async () => {
     handleClose();
-    logout();
+    await logout();
+    history.push("/");
   }, []);
 
-  let history = useHistory();
   const linkHandler = (page: string) => {
     history.push(page);
     handleClose();
   };
 
   return (
-    <div className="header-container">
-      <img className="my-niwa-logo" src={MyNiwaLogo} alt="my niwa logo" />
+    <AppBar position="static" className={styles.header}>
+      <Link to="/">
+        <img className={styles.logo} src={MyNiwaLogo} alt="my niwa logo" />
+      </Link>
+
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
       >
         <div style={{ color: "#000000" }}>
-          <h1 className="italic">menu</h1>
           <Hamburger />
         </div>
       </Button>
@@ -66,12 +70,12 @@ export const Header = () => {
         >
           Create Garden
         </MenuItem>
-        {userData && (
+        {userData.isLoggedIn && (
           <MenuItem className="menu-link" onClick={handleLogout}>
             Logout
           </MenuItem>
         )}
       </Menu>
-    </div>
+    </AppBar>
   );
 };

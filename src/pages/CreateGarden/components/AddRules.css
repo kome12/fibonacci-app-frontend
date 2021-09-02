@@ -1,0 +1,82 @@
+<<<<<<< HEAD
+=======
+.add-rules-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-rules-container > h2 {
+  align-self: center;
+  font-size: 2.3rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.add-rules-container > h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.user-rules {
+  height: 10rem;
+  overflow-y: auto;
+}
+
+.user-rules::-webkit-scrollbar {
+  height: 0.1rem;
+  width: 0.25rem;
+  background-color: #ff7f2780;
+  border-radius: 20px;
+}
+
+.no-rules-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-rules {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+  margin-right: 2rem;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+li {
+  display: list-item;
+  font-size: large;
+  border: 0.5rem #ff7f27d9;
+}
+
+.rule-li {
+  margin: 0 1rem 0 0;
+}
+
+.rule-p {
+  padding: 2% 0;
+  margin: 0;
+}
+
+.rule-label {
+  padding: 0 0 2%;
+  margin: 0;
+}
+
+.rule-label > p {
+  padding: 0 0 2%;
+  margin: 0;
+}
+
+input {
+  align-self: center;
+  margin: 2%;
+}
+>>>>>>> c88b1f1405e33128d9d49b981f5c860d73fabe73
