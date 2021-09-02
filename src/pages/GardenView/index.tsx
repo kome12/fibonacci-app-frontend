@@ -128,7 +128,7 @@ export const GardenView = () => {
                   <h2>You have no flowers yet!</h2>
                 </div>
               ) : (
-                <div>{completedTasks.map((task, index) => "🌱")}</div>
+                <div>{completedTasks.map((_) => "🌱")}</div>
               )}
             </div>
             <div className="rules-container">
