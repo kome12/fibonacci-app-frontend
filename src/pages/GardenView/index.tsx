@@ -9,6 +9,8 @@ import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
+import { Header } from "../../components/Header";
+import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
@@ -32,6 +34,7 @@ export const GardenView = () => {
   const { gardenId } = useParams<{ gardenId: string }>();
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
+  const [isFetchingGardenData, setIsFetchingGardenData] = useState(true);
 
   useEffect(() => {
     const getDataFromBackend = async () => {
@@ -42,13 +45,13 @@ export const GardenView = () => {
       const res = await axios.get(
         `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/${gardenId}`
       );
-      console.log("res in getDatafrombackend:", res);
 
       setRules(res.data?.rules || []);
       setCompletedTasks(res.data?.completedTasks || []);
       const completedTasks = res.data?.completedTasks || [];
 
       checkCompletedTaskStatus(rules, completedTasks);
+      setIsFetchingGardenData(false);
       setGetData(false);
     };
 
@@ -66,7 +69,7 @@ export const GardenView = () => {
     const completedTask: CompletedTask = {
       ruleId: rule._id || "",
       // TODO: Fix when backend updates schema for completedTask's fireBaseUserId
-      fireBaseUserId: userData?.id || "",
+      fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
       date: new Date(),
       rewardTypeId: "61274429d20570644762b99b",
     };
@@ -112,54 +115,61 @@ export const GardenView = () => {
   };
 
   return (
-    <div className="garden-parent-container">
-      <h1>Garden View</h1>
-      <div className="garden-view-container">
-        <div className="garden-container">
-          {completedTasks.length === 0 ? (
-            <div>
-              <h2>You have no flowers yet!</h2>
-            </div>
-          ) : (
-            <div>{completedTasks.map((task, index) => "🌱")}</div>
-          )}
-        </div>
-        <div className="rules-container">
-          <h2>Daily Goals:</h2>
-          {rules.map((rule, index) => {
-            return (
-              <Card variant="outlined">
-                <div key={index}>
-                  <Chip
-                    icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
-                    label={rule.name}
-                    clickable
-                    color={handleChipColor(rulesStatus[index])}
-                    onClick={(e) => {
-                      completeTaskHandler(rule);
-                    }}
-                    onDelete={handleDelete}
-                    deleteIcon={<UndoIcon />}
-                  />
-                  {rule.description ? (
-                    <div className="rule-description">{rule.description}</div>
-                  ) : (
-                    <div></div>
-                  )}
+    <>
+      <Header />
+      <div className="garden-parent-container">
+        <h1>Garden View</h1>
+        <LoadingWrapper isLoading={isFetchingGardenData}>
+          <div className="garden-view-container">
+            <div className="garden-container">
+              {completedTasks.length === 0 ? (
+                <div>
+                  <h2>You have no flowers yet!</h2>
                 </div>
-              </Card>
-            );
-          })}
-        </div>
-        <div className="centered">
-          <Button
-            variant="contained"
-            onClick={() => linkHandler("/user/myGardens")}
-          >
-            Go back to My Gardens
-          </Button>
-        </div>
+              ) : (
+                <div>{completedTasks.map((_) => "🌱")}</div>
+              )}
+            </div>
+            <div className="rules-container">
+              <h2>Daily Goals:</h2>
+              {rules.map((rule, index) => {
+                return (
+                  <Card variant="outlined">
+                    <div key={index}>
+                      <Chip
+                        icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
+                        label={rule.name}
+                        clickable
+                        color={handleChipColor(rulesStatus[index])}
+                        onClick={(e) => {
+                          completeTaskHandler(rule);
+                        }}
+                        onDelete={handleDelete}
+                        deleteIcon={<UndoIcon />}
+                      />
+                      {rule.description ? (
+                        <div className="rule-description">
+                          {rule.description}
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+            <div className="centered">
+              <Button
+                variant="contained"
+                onClick={() => linkHandler("/user/myGardens")}
+              >
+                Go back to My Gardens
+              </Button>
+            </div>
+          </div>
+        </LoadingWrapper>
       </div>
-    </div>
+    </>
   );
 };

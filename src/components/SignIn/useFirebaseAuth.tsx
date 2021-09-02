@@ -1,30 +1,27 @@
-import { useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import { useUserState } from "../../store/user/useUserState";
 import fb from "../../utils/firebase";
 
-export const useFirebaseAuth = () => {
-  const history = useHistory();
-  const { setUserData } = useUserState();
+export const logout = async () => {
+  await fb.auth().signOut();
+};
 
-  const logout = useCallback(async () => {
-    await fb.auth().signOut();
-    history.push("/");
-  }, []);
+export const useFirebaseAuth = () => {
+  const { setUserData } = useUserState();
 
   // Listen to the Firebase Auth state and set user global state
   useEffect(() => {
     const unregisterAuthObserver = fb.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log({ user });
         setUserData({
           id: user.uid,
           displayName: user.displayName ?? "",
           imageUrl: user.photoURL,
+          isLoggedIn: true,
         });
         return;
       }
-      setUserData(undefined);
+      setUserData({ isLoggedIn: false });
     });
 
     // Make sure we un-register Firebase observers when the component unmounts
