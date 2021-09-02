@@ -1,6 +1,7 @@
 import { Button, Container, MobileStepper } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Garden } from "../../models/garden.model";
@@ -9,7 +10,6 @@ import { useUserState } from "../../store/user/useUserState";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
-import { AnimatePresence, motion } from "framer-motion";
 import "./CreateGardenPage.css";
 
 const CreateGardenContainer = styled(Container)({
@@ -85,7 +85,8 @@ export const CreateGarden = () => {
         userFireBaseId: userData?.id || "",
       };
       const resCreateGarden = await axios.post(
-        `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens`,
+        // `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens`,
+        `http://localhost:3001/api/v1/gardens`,
         newGarden
       );
 
@@ -103,7 +104,8 @@ export const CreateGarden = () => {
         );
 
         await axios.post(
-          `https://the-fibonacci-api-staging.herokuapp.com/api/v1/rules/bulk`,
+          // `https://the-fibonacci-api-staging.herokuapp.com/api/v1/rules/bulk`,
+          `http://localhost:3001/api/v1/rules/bulk`,
           populateRulesWithGardendId
         );
         history.push(`/user/gardenView/${gardenId}`);

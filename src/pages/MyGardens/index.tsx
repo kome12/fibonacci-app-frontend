@@ -40,6 +40,35 @@ export const MyGardens = () => {
     getDataFromBackend();
   }, []);
 
+  interface IFlower {
+    _id: string;
+    imageURL: string;
+    name: string;
+    isActive: boolean;
+    isSecret: boolean;
+  }
+  const [flowers, setFlowers] = useState(Array<IFlower>());
+  useEffect(() => {
+    // get flowers for test
+    const getFlowers = async () => {
+      const res = await axios.get(`http://localhost:3001/api/v1/flowers`);
+      console.log("res for flowers:", res);
+      setFlowers(res.data);
+    };
+
+    getFlowers();
+  }, []);
+
+  const renderFlowers = () => {
+    return flowers.map((flower: IFlower) => {
+      return (
+        <div key={flower._id}>
+          <img src={flower.imageURL} alt={flower.name} />
+        </div>
+      );
+    });
+  };
+
   return (
     <div className="my-gardens-container">
       <h1>My Gardens</h1>
@@ -71,6 +100,10 @@ export const MyGardens = () => {
             </Link>
           );
         })}
+      </div>
+      <div>
+        <h3>Test from Cloudinary</h3>
+        {renderFlowers()}
       </div>
     </div>
   );
