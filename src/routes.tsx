@@ -1,35 +1,57 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import { CreateGarden } from "./pages/CreateGarden";
-import { GardenView } from "./pages/GardenView";
-import { Home } from "./pages/Home";
-import { MyGardens } from "./pages/MyGardens";
+import { Loading } from "./components/LoadingWrapper/Loading";
 import { useUserState } from "./store/user/useUserState";
+const Home = React.lazy(() =>
+  import("./pages/Home").then(({ Home }) => ({ default: Home }))
+);
+const MyGardens = React.lazy(() =>
+  import("./pages/MyGardens").then(({ MyGardens }) => ({ default: MyGardens }))
+);
+const GardenView = React.lazy(() =>
+  import("./pages/GardenView").then(({ GardenView }) => ({
+    default: GardenView,
+  }))
+);
+const CreateGarden = React.lazy(() =>
+  import("./pages/CreateGarden").then(({ CreateGarden }) => ({
+    default: CreateGarden,
+  }))
+);
 
-const NotFound = () => <div>Page Not Found</div>;
-const Loading = () => <div>Page Loading...</div>;
+const NotFound = React.lazy(() =>
+  import("./pages/NotFound").then(({ NotFound }) => ({
+    default: NotFound,
+  }))
+);
 
 export const Routes = () => {
   const location = useLocation();
-  const { userData: isUserLoggedIn } = useUserState();
+  const { userData } = useUserState();
+  if (userData.isLoggedIn === null) {
+    return <Loading />;
+  }
 
   return (
-    // TODO: Refactor routes after MVP
     <Suspense fallback={<Loading />}>
       <Switch location={location}>
-        {isUserLoggedIn && (
-          <Route path="/user">
-            <Route path="/user/myGardens" component={MyGardens} exact />
-            <Route
-              path="/user/gardenView/:gardenId"
-              component={GardenView}
-              exact
-            />
-            <Route path="/user/createGarden" component={CreateGarden} exact />
-          </Route>
+        {userData.isLoggedIn && (
+          <Switch>
+            <Route path="/user">
+              <Route path="/user/myGardens" component={MyGardens} exact />
+              <Route
+                path="/user/gardenView/:gardenId"
+                component={GardenView}
+                exact
+              />
+              <Route path="/user/createGarden" component={CreateGarden} exact />
+            </Route>
+            <Route path="/" component={Home} exact />
+            <Route component={NotFound} />
+          </Switch>
         )}
-        <Route path="/" component={Home} />
-        {/* <Route component={NotFound} /> */}
+        <Route path="/" component={Home} exact />
+        <Route component={NotFound} />
       </Switch>
     </Suspense>
   );
