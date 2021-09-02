@@ -4,6 +4,9 @@ import { BottomNav } from "./components/BottomNav";
 import { Loading } from "./components/LoadingWrapper/Loading";
 import { useUserState } from "./store/user/useUserState";
 
+const About = React.lazy(() => 
+  import("./pages/About").then(({ About }) => ({ default: About }))
+);
 const Home = React.lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
 );
@@ -20,7 +23,6 @@ const CreateGarden = React.lazy(() =>
     default: CreateGarden,
   }))
 );
-
 const NotFound = React.lazy(() =>
   import("./pages/NotFound").then(({ NotFound }) => ({
     default: NotFound,
@@ -40,15 +42,16 @@ export const Routes = () => {
         {userData.isLoggedIn && (
           <Switch>
             <Route path="/user">
-              <Route path="/user/myGardens" component={MyGardens} exact />
-              <Route
+            <Route path="/user/myGardens" component={MyGardens} exact />
+            <Route
                 path="/user/gardenView/:gardenId"
                 component={GardenView}
                 exact
-              />
-              <Route path="/user/createGarden" component={CreateGarden} exact />
+            />
+            <Route path="/user/createGarden" component={CreateGarden} exact />
               <BottomNav />
             </Route>
+            <Route path="/about" component={About} exact />
             <Route path="/" component={Home} exact />
             <Route component={NotFound} />
           </Switch>
