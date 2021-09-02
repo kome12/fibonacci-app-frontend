@@ -135,13 +135,13 @@ export const GardenView = () => {
               {rules.map((rule, index) => {
                 return (
                   <Card variant="outlined">
-                    <div key={index}>
+                    <div key={rule._id}>
                       <Chip
                         icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
                         label={rule.name}
                         clickable
                         color={handleChipColor(rulesStatus[index])}
-                        onClick={(e) => {
+                        onClick={() => {
                           completeTaskHandler(rule);
                         }}
                         onDelete={handleDelete}
