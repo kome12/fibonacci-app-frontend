@@ -1,15 +1,8 @@
 import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-<<<<<<< HEAD
-import { About } from "./pages/About";
-import { CreateGarden } from "./pages/CreateGarden";
-import { GardenView } from "./pages/GardenView";
-import { Home } from "./pages/Home";
-import { MyGardens } from "./pages/MyGardens";
-=======
 import { Loading } from "./components/LoadingWrapper/Loading";
->>>>>>> a433826e4fdd0445cc89f3f4b068780e8a94947e
 import { useUserState } from "./store/user/useUserState";
+
 const Home = React.lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
 );
