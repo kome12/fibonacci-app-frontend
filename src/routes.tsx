@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
+import { BottomNav } from "./components/BottomNav";
 import { Loading } from "./components/LoadingWrapper/Loading";
 import { useUserState } from "./store/user/useUserState";
 const Home = React.lazy(() =>
@@ -45,6 +46,7 @@ export const Routes = () => {
                 exact
               />
               <Route path="/user/createGarden" component={CreateGarden} exact />
+              <BottomNav />
             </Route>
             <Route path="/" component={Home} exact />
             <Route component={NotFound} />
