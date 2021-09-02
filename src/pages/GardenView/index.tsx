@@ -5,8 +5,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
-import * as moment from "moment";
-import React, { useEffect, useState } from "react";
+import { isSameDay } from "date-fns";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { Header } from "../../components/Header";
@@ -18,6 +18,7 @@ import "./GardenView.css";
 
 export const GardenView = () => {
   // TODO: FIX API CALL AFTER MVP
+  // TODO: Need to be refactor
 
   // const [gardenByGardenIdApi, getGardenByGardenIdData] =
   //   useApi(getGardenByGardenId);
@@ -69,7 +70,7 @@ export const GardenView = () => {
       ruleId: rule._id || "",
       // TODO: Fix when backend updates schema for completedTask's fireBaseUserId
       fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
-      date: moment.utc().startOf("day").toDate(),
+      date: new Date().toISOString(),
       rewardTypeId: "61274429d20570644762b99b",
     };
 
@@ -94,8 +95,6 @@ export const GardenView = () => {
 
     currentCompletedTasks: Array<CompletedTask>
   ) => {
-    const today: moment.Moment = moment.utc();
-
     const currentRulesStatus: Array<boolean> = currentRules.map(
       (rule: Rule) => {
         const filteredCompletedTasks: Array<CompletedTask> =
@@ -103,9 +102,9 @@ export const GardenView = () => {
             return completedTask.ruleId === rule._id;
           });
 
-        return filteredCompletedTasks.some((completedTask: CompletedTask) =>
-          moment.utc(completedTask.date).isSame(today, "day")
-        );
+        return filteredCompletedTasks.some((completedTask: CompletedTask) => {
+          return isSameDay(new Date(), new Date(completedTask.date));
+        });
       }
     );
     setRulesStatus(currentRulesStatus);
@@ -136,13 +135,13 @@ export const GardenView = () => {
               {rules.map((rule, index) => {
                 return (
                   <Card variant="outlined">
-                    <div key={index}>
+                    <div key={rule._id}>
                       <Chip
                         icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
                         label={rule.name}
                         clickable
                         color={handleChipColor(rulesStatus[index])}
-                        onClick={(e) => {
+                        onClick={() => {
                           completeTaskHandler(rule);
                         }}
                         onDelete={handleDelete}
