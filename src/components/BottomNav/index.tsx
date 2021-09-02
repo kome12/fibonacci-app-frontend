@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AppBar, BottomNavigation, BottomNavigationAction, createStyles, makeStyles } from '@material-ui/core';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import EmojiNatureIcon from '@material-ui/icons/EmojiNature';
@@ -27,7 +27,7 @@ export const BottomNav = () => {
     <AppBar position="fixed" className={classes.appBar}>
       <BottomNavigation value={currentPage} onChange={handlePageChange}>
         <BottomNavigationAction label="My Niwa" showLabel={true} value="/user/myGardens" icon={<EmojiNatureIcon />}></BottomNavigationAction>
-        <BottomNavigationAction label="Flower Bed" showLabel={true} value="/user/createGarden" icon={<AddBoxIcon />}></BottomNavigationAction>
+        <BottomNavigationAction label="Flower Bed" showLabel={true} value="/user/createGarden" icon={<AddCircleIcon />}></BottomNavigationAction>
         <BottomNavigationAction label="Collection" showLabel={true} value="/user/collection" icon={<LocalFloristIcon />}></BottomNavigationAction>
         <BottomNavigationAction label="Florist" showLabel={true} value="/user/store" icon={<StorefrontIcon />}></BottomNavigationAction>
       </BottomNavigation>
