@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { AppBar, BottomNavigation, BottomNavigationAction, createStyles, makeStyles } from '@material-ui/core';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import EmojiNatureIcon from '@material-ui/icons/EmojiNature';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>
@@ -16,16 +20,16 @@ export const BottomNav = () => {
   let history = useHistory();
   const handlePageChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
     setCurrentPage(newValue);
-    history.push(newValue)
+    // history.push(newValue)
   };
   // Fix routes when new features are added.
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <BottomNavigation value={currentPage} onChange={handlePageChange}>
-        <BottomNavigationAction label="My Garden / 庭" showLabel={true} value="/user/myGardens"></BottomNavigationAction>
-        <BottomNavigationAction label="Create Flower Bed" showLabel={true} value="/user/createGarden"></BottomNavigationAction>
-        <BottomNavigationAction label="My Collection" showLabel={true} value="/user/myGardens"></BottomNavigationAction>
-        <BottomNavigationAction label="Florist / 花屋" showLabel={true} value="/user/myGardens"></BottomNavigationAction>
+        <BottomNavigationAction label="My Niwa" showLabel={true} value="/user/myGardens" icon={<EmojiNatureIcon />}></BottomNavigationAction>
+        <BottomNavigationAction label="Flower Bed" showLabel={true} value="/user/createGarden" icon={<AddBoxIcon />}></BottomNavigationAction>
+        <BottomNavigationAction label="Collection" showLabel={true} value="/user/collection" icon={<LocalFloristIcon />}></BottomNavigationAction>
+        <BottomNavigationAction label="Florist" showLabel={true} value="/user/store" icon={<StorefrontIcon />}></BottomNavigationAction>
       </BottomNavigation>
     </AppBar>
   )
