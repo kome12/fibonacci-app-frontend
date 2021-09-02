@@ -1,5 +1,4 @@
-import { Button, Container, MobileStepper } from "@material-ui/core";
-import { styled } from "@material-ui/core/styles";
+import { Button, Card, Container, createStyles, Grid, makeStyles, MobileStepper, Theme } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -10,27 +9,29 @@ import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
 import { AnimatePresence, motion } from "framer-motion";
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import "./CreateGardenPage.css";
-
-const CreateGardenContainer = styled(Container)({
-  background: "#6ABC6880",
-  borderRadius: 20,
-  color: "white",
-  display: "flex",
-  flexDirection: "column",
-  height: "80vh",
-  paddingTop: "2%",
-});
-
-const CreateGardenStepper = styled(MobileStepper)({
-  background: "#6ABC6880",
-  borderRadius: 20,
-});
 
 export interface NewUserRule {
   name: string;
   description?: string;
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      height: "60vh"
+    },
+    card: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+      height: "100%"
+    },
+  }),
+);
 
 export const CreateGarden = () => {
   const { userData } = useUserState();
@@ -112,73 +113,79 @@ export const CreateGarden = () => {
 
     createGardenAndRules();
   };
-
+  const classes = useStyles();
   return (
-    <Container className="create-garden-root" component={motion.div}>
-      <CreateGardenContainer>
-        <div className="create-garden">
-          <AnimatePresence>
-            {activeStep === 0 && (
-              <NewGarden
-                nameChangeHandler={nameChangeHandler}
-                name={name}
-                descChangeHandler={descChangeHandler}
-                desc={desc}
-                animDirection={animDirection}
-              />
-            )}
-            {activeStep === 1 && (
-              <AddRules
-                ruleNameChangeHandler={ruleNameChangeHandler}
-                ruleName={ruleName}
-                ruleDescChangeHandler={ruleDescChangeHandler}
-                ruleDesc={ruleDesc}
-                addRuleHandler={addRuleHandler}
-                userRules={userRules}
-                animDirection={animDirection}
-              />
-            )}
-            {activeStep === 2 && (
-              <GardenSummary
-                gardenName={name}
-                gardenDesc={desc}
-                userRules={userRules}
-                createGardenHandler={createGardenHandler}
-                animDirection={animDirection}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-        <CreateGardenStepper
-          variant="progress"
-          steps={3}
-          position="static"
-          className="stepper"
-          activeStep={activeStep}
-          nextButton={
-            <Button
-              size="medium"
-              onClick={handleNext}
-              disabled={
-                activeStep === 2 ||
-                name.length < 1 ||
-                (activeStep === 1 && userRules.length < 1)
-              }
-            >
-              Next
-            </Button>
-          }
-          backButton={
-            <Button
-              size="medium"
-              onClick={handleBack}
-              disabled={activeStep === 0}
-            >
-              Back
-            </Button>
-          }
-        />
-      </CreateGardenContainer>
-    </Container>
+    <Grid container={true} direction ="column" alignItems="center" justifyContent="space-between" className={classes.root}>
+      <Container className={classes.root} component={motion.div}>
+        <Card className={classes.card}>
+            <AnimatePresence>
+              {activeStep === 0 && (
+                <NewGarden
+                  nameChangeHandler={nameChangeHandler}
+                  name={name}
+                  descChangeHandler={descChangeHandler}
+                  desc={desc}
+                  animDirection={animDirection}
+                />
+              )}
+              {activeStep === 1 && (
+                <AddRules
+                  ruleNameChangeHandler={ruleNameChangeHandler}
+                  ruleName={ruleName}
+                  ruleDescChangeHandler={ruleDescChangeHandler}
+                  ruleDesc={ruleDesc}
+                  addRuleHandler={addRuleHandler}
+                  userRules={userRules}
+                  animDirection={animDirection}
+                />
+              )}
+              {activeStep === 2 && (
+                <GardenSummary
+                  gardenName={name}
+                  gardenDesc={desc}
+                  userRules={userRules}
+                  createGardenHandler={createGardenHandler}
+                  animDirection={animDirection}
+                />
+              )}
+            </AnimatePresence>
+          <MobileStepper
+            variant="progress"
+            steps={3}
+            position="bottom"
+            className="stepper"
+            activeStep={activeStep}
+            nextButton={
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                endIcon={<ArrowRightIcon />}
+                onClick={handleNext}
+                disabled={
+                  activeStep === 2 ||
+                  name.length < 1 ||
+                  (activeStep === 1 && userRules.length < 1)
+                }
+              >
+                Next
+              </Button>
+            }
+            backButton={
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                startIcon={<ArrowLeftIcon />}
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                Back
+              </Button>
+            }
+          />
+        </Card>
+      </Container>
+    </Grid>
   );
 };
