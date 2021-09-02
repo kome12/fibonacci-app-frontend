@@ -1,3 +1,4 @@
+import { Header } from "../../components/Header";
 import { SignIn } from "../../components/SignIn";
 import { useHistory } from 'react-router'
 import { useUserState } from "../../store/user/useUserState";
@@ -45,6 +46,6 @@ export const Home = () => {
           <SignIn /></div>)}
         </div>
       </div>
-    </div>
+    </>
   );
 };
