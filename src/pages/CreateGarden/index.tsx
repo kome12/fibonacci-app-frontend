@@ -12,6 +12,7 @@ import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
 import "./CreateGardenPage.css";
+import { BottomNav } from "../../components/BottomNav";
 
 const CreateGardenContainer = styled(Container)({
   background: "#6ABC6880",
