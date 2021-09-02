@@ -1,20 +1,20 @@
-import { Button, Container, styled } from "@material-ui/core";
+import { Button, Container, Grid, styled } from "@material-ui/core";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import "./GardenSummary.css";
 import { motion } from "framer-motion";
 
-const CreateGardenButton = styled(Button)({
-  alignSelf: "center",
-  background: "#ff7f27d9",
-  borderRadius: 20,
-  color: "#fff",
-  fontSize: "1.2rem",
-  fontWeight: "bold",
-  margin: "10% 2rem 5%",
-  height: "10%",
-  width: "80%",
-});
+// const CreateGardenButton = styled(Button)({
+//   alignSelf: "center",
+//   background: "#ff7f27d9",
+//   borderRadius: 20,
+//   color: "#fff",
+//   fontSize: "1.2rem",
+//   fontWeight: "bold",
+//   margin: "10% 2rem 5%",
+//   height: "10%",
+//   width: "80%",
+// });
 
 interface GardenSummaryProps {
   gardenName: string;
@@ -34,7 +34,7 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   return (
-    <Container
+    <Grid
       className="garden-summary-container"
       component={motion.div}
       initial={{ opacity: 0, x: initDir }}
@@ -60,9 +60,9 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
           ))}
         </ul>
       </Container>
-      <CreateGardenButton onClick={createGardenHandler}>
+      <Button size="large" variant="contained" color="primary" onClick={createGardenHandler}>
         + Create Garden
-      </CreateGardenButton>
-    </Container>
+      </Button>
+    </Grid>
   );
 };
