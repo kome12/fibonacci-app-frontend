@@ -59,7 +59,7 @@ export const GardenView = () => {
     }
   }, [rules, gardenId, getData]);
 
-  let history = useHistory();
+  const history = useHistory();
   const linkHandler = (page: string) => {
     history.push(page);
   };

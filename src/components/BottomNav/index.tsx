@@ -22,7 +22,7 @@ export const BottomNav = () => {
     setCurrentPage(newValue);
     history.push(newValue)
   };
-  // Fix routes when new features are added.
+  // TODO: Fix routes when new features are added.
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <BottomNavigation value={currentPage} onChange={handlePageChange}>
