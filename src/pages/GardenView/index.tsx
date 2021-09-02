@@ -70,7 +70,7 @@ export const GardenView = () => {
       ruleId: rule._id || "",
       // TODO: Fix when backend updates schema for completedTask's fireBaseUserId
       fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
-      date: new Date(),
+      date: new Date().toISOString(),
       rewardTypeId: "61274429d20570644762b99b",
     };
 
