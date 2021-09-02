@@ -8,7 +8,7 @@ import "./home.css";
 export const Home = () => {
   const { userData } = useUserState();
   
-  let history = useHistory();
+  const history = useHistory();
   const linkHandler = (page: string) => {
     history.push(page);
   };

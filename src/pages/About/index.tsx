@@ -8,26 +8,28 @@ import { Paper } from "@material-ui/core";
 export const About = () => {
   const { userData } = useUserState();
   
-  let history = useHistory();
-  const linkHandler = (page: string) => {
-    history.push(page);
+  const history = useHistory();
+  const linkHandler = () => {
+    history.push("/user/myGardens");
   };
 
   return (
     <div className="info-page">
-      <Paper>
-        This is what my niwa is about
-        <ul>
-          <li>Thing 1</li>
-          <li>Thing 2</li>
-          <li>Thing 3</li>
-        </ul>
+      <Paper className="info-container">
+        <h1>My niwa is about growing a beautiful garden</h1>
+        <ol>
+          <li>Create a flowerbed with seeds (good habits you'd like to have!)</li>
+          <li>Every day, complete your seeds to gain coins!</li>
+          <li>Use your coins to either buy flowers...</li>
+          <li>Or try your luck with the gacha for rare flowers!</li>
+          <li>Try to collect all the flowers while bettering yourself!</li>
+        </ol>
       </Paper>
       {userData ? 
       <Button 
         variant="contained" 
         color="primary"         
-        onClick={() => linkHandler("/user/myGardens")}
+        onClick={() => linkHandler()}
       >Get me to my Gardens!</Button> : 
       <SignIn />}
     {/* { {!userData && <SignIn /> }} */}
