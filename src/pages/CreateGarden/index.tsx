@@ -180,7 +180,6 @@ export const CreateGarden = () => {
           }
         />
       </CreateGardenContainer>
-      <BottomNav />
     </Container>
   );
 };

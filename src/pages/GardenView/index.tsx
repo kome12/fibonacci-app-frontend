@@ -140,7 +140,6 @@ export const GardenView = () => {
           </Button>
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 };

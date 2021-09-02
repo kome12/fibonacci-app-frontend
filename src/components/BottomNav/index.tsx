@@ -16,11 +16,11 @@ const useStyles = makeStyles(() =>
 export const BottomNav = () => {
   const [currentPage, setCurrentPage] = useState("/user/myGardens");
   const classes = useStyles();
-  // TODO: decide how to change views on button click, fix issue with page changing
+  // TODO: decide how to change views on button click
   let history = useHistory();
   const handlePageChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
     setCurrentPage(newValue);
-    // history.push(newValue)
+    history.push(newValue)
   };
   // Fix routes when new features are added.
   return (

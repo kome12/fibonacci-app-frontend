@@ -73,7 +73,6 @@ export const MyGardens = () => {
           );
         })}
       </div>
-      <BottomNav />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
+import { BottomNav } from "./components/BottomNav";
 import { CreateGarden } from "./pages/CreateGarden";
 import { GardenView } from "./pages/GardenView";
 import { Home } from "./pages/Home";
@@ -26,6 +27,7 @@ export const Routes = () => {
               exact
             />
             <Route path="/user/createGarden" component={CreateGarden} exact />
+            <BottomNav />
           </Route>
         )}
         <Route path="/" component={Home} />
