@@ -12,7 +12,6 @@ import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
 import "./CreateGardenPage.css";
-import { BottomNav } from "../../components/BottomNav";
 
 const CreateGardenContainer = styled(Container)({
   background: "#6ABC6880",
@@ -84,7 +83,7 @@ export const CreateGarden = () => {
       const newGarden: Garden = {
         name: name,
         description: desc,
-        userFireBaseId: (userData.isLoggedIn && userData.id) || "",
+        fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
       };
       const resCreateGarden = await axios.post(
         `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens`,

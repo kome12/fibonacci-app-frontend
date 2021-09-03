@@ -4,7 +4,7 @@ export interface Garden {
   _id?: string;
   name: string;
   description: string;
-  userFireBaseId: string;
+  fireBaseUserId: string;
 }
 
 export interface PopulatedGarden {
