@@ -11,6 +11,7 @@
 .content {
   height: 80vh;
   margin: 1rem 0;
+  overflow-y: auto;
 }
 
 .nav {
