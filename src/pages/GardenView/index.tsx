@@ -1,10 +1,12 @@
 import Button from "@material-ui/core/Button";
+import Switch from '@material-ui/core/Switch';
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
+import wateringAnimation from "./assets/watering.gif"
 import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -35,6 +37,7 @@ export const GardenView = () => {
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
   const [isFetchingGardenData, setIsFetchingGardenData] = useState(true);
+  const [detailsState, setDetailsState] = useState({detailView: false})
 
   useEffect(() => {
     const getDataFromBackend = async () => {
@@ -114,24 +117,28 @@ export const GardenView = () => {
     return bool ? "primary" : "secondary";
   };
 
+  const handleChangeView = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDetailsState({ ...detailsState, [event.target.name]: event.target.checked });
+  };
+
   return (
     <>
       <Header />
       <div className="garden-parent-container">
-        <h1>Garden View</h1>
+        <h1>Daily Gardening</h1>
         <LoadingWrapper isLoading={isFetchingGardenData}>
           <div className="garden-view-container">
-            <div className="garden-container">
-              {completedTasks.length === 0 ? (
-                <div>
-                  <h2>You have no flowers yet!</h2>
-                </div>
-              ) : (
-                <div>{completedTasks.map((_) => "🌱")}</div>
-              )}
+            <div className="watering-animation-container">
+              <img src={wateringAnimation} alt="watering animation" className="watering-animation" />
             </div>
             <div className="rules-container">
               <h2>Daily Goals:</h2>
+              <Switch
+                checked={detailsState.detailView}
+                onChange={handleChangeView}
+                name="detailView"
+              />
+              View Details
               {rules.map((rule, index) => {
                 return (
                   <Card variant="outlined">
@@ -162,6 +169,7 @@ export const GardenView = () => {
             <div className="centered">
               <Button
                 variant="contained"
+                color="secondary"
                 onClick={() => linkHandler("/user/myGardens")}
               >
                 Go back to My Gardens
