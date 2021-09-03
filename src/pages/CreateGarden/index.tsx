@@ -33,8 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%"
     },
     stepper: {
+      height: "10%",
       alignSelf: "flex-end",
-      height: "15%"
+      paddingBottom: "6%",
     }
   }),
 );
