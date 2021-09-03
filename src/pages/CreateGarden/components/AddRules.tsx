@@ -140,7 +140,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
           value={ruleDesc}
           autoComplete="off"
         />
-        <Button size="large" variant="contained" color="primary" onClick={addRuleHandler} startIcon={<AddCircleIcon />}>
+        <Button size="large" variant="contained" color="primary" onClick={addRuleHandler} startIcon={<AddCircleIcon />} disabled={ruleName.length < 1}>
           Plant Seed
         </Button>
       </Grid>
