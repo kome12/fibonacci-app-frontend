@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import { UserViewLayout } from "./components/UserViewLayout";
 import { Loading } from "./components/LoadingWrapper/Loading";
+import { UserViewLayout } from "./components/UserViewLayout";
 import { useUserState } from "./store/user/useUserState";
 
 const About = React.lazy(() =>
@@ -41,8 +41,8 @@ export const Routes = () => {
       <Switch location={location}>
         {userData.isLoggedIn && (
           <Switch>
-            <UserViewLayout showHeader={true} showBottomNav={true}>
-              <Route path="/user">
+            <Route path="/user">
+              <UserViewLayout showHeader showBottomNav>
                 <Route path="/user/myGardens" component={MyGardens} exact />
                 <Route
                   path="/user/gardenView/:gardenId"
@@ -54,8 +54,8 @@ export const Routes = () => {
                   component={CreateGarden}
                   exact
                 />
-              </Route>
-            </UserViewLayout>
+              </UserViewLayout>
+            </Route>
             <Route path="/about" component={About} exact />
             <Route path="/" component={Home} exact />
             <Route component={NotFound} />
