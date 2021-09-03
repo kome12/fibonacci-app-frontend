@@ -81,9 +81,9 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
           <Typography variant="h6" className={classes.subtitle}>Name:</Typography>
           <Typography variant="h5" className={classes.gardenDetails}>{gardenName}</Typography>
         </Grid>
-        {gardenDesc && <Grid container direction="row" className={classes.gardenDetailGrid} justifyContent="center">
+        {gardenDesc && <Grid container direction="row" className={classes.gardenDetailGrid} justifyContent="center" alignItems="center">
           <Typography variant="h6" className={classes.subtitle}>Description:</Typography>
-          <Typography variant="h5" className={classes.gardenDetails}>{gardenDesc}</Typography>
+          <Typography variant="body1" className={classes.gardenDetails}>{gardenDesc}</Typography>
         </Grid>}
       </Grid>
       <Grid container className={classes.gardenRules} direction="row" justifyContent="center">

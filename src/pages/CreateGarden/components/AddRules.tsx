@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "0.25rem",
       marginLeft: "5%",
       overflowY: "auto",
+      scrollBehavior: "smooth",
       height: "40%"
     },
     noRules: {
