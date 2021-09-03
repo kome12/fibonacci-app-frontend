@@ -5,6 +5,30 @@
   padding: 0 20px;
 }
 
+.logoWrapper {
+  display: inline-block;
+  width: 35%;
+  max-width: 150px;
+}
+
 .logo {
-  width: 45%;
+  width: 100%;
+}
+
+.avatar {
+  position: relative;
+  border-radius: 50%;
+  border: 1px solid #172f4a;
+  background-color: #fff;
+}
+
+.avatar > span {
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4.5px 4.5px 0 4.5px;
+  border-color: #172f4a transparent transparent transparent;
 }
