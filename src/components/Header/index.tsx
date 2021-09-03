@@ -1,3 +1,4 @@
+import { createStyles, makeStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -10,6 +11,12 @@ import { logout } from "../SignIn/useFirebaseAuth";
 import { ReactComponent as Hamburger } from "./assets/hamburger.svg";
 import MyNiwaLogo from "./assets/myniwa.svg";
 import styles from "./Header.module.css";
+
+const useStyles = makeStyles(() =>
+createStyles({
+  root: {
+    flexDirection: "row"
+  }}));
 
 export const Header = () => {
   const history = useHistory();
@@ -36,8 +43,10 @@ export const Header = () => {
     handleClose();
   };
 
+  const classes = useStyles();
+
   return (
-    <AppBar position="static" className={styles.header}>
+    <AppBar position="static" className={styles.header} classes={{root: classes.root}}>
       <Link to="/">
         <img className={styles.logo} src={MyNiwaLogo} alt="my niwa logo" />
       </Link>
