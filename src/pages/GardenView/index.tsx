@@ -1,12 +1,12 @@
 import Button from "@material-ui/core/Button";
-import Switch from '@material-ui/core/Switch';
+import Switch from "@material-ui/core/Switch";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
-import wateringAnimation from "./assets/watering.gif"
+import wateringAnimation from "./assets/watering.gif";
 import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -37,7 +37,7 @@ export const GardenView = () => {
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
   const [isFetchingGardenData, setIsFetchingGardenData] = useState(true);
-  const [detailsState, setDetailsState] = useState({detailView: false})
+  const [showDescriptions, setShowDescriptions] = useState(false);
 
   useEffect(() => {
     const getDataFromBackend = async () => {
@@ -117,25 +117,24 @@ export const GardenView = () => {
     return bool ? "primary" : "secondary";
   };
 
-  const handleChangeView = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDetailsState({ ...detailsState, [event.target.name]: event.target.checked });
-  };
-
   return (
     <>
-      <Header />
       <div className="garden-parent-container">
         <h1>Daily Gardening</h1>
         <LoadingWrapper isLoading={isFetchingGardenData}>
           <div className="garden-view-container">
             <div className="watering-animation-container">
-              <img src={wateringAnimation} alt="watering animation" className="watering-animation" />
+              <img
+                src={wateringAnimation}
+                alt="watering animation"
+                className="watering-animation"
+              />
             </div>
             <div className="rules-container">
               <h2>Daily Goals:</h2>
               <Switch
-                checked={detailsState.detailView}
-                onChange={handleChangeView}
+                checked={showDescriptions}
+                onChange={() => setShowDescriptions((status) => !status)}
                 name="detailView"
               />
               View Details
@@ -156,7 +155,7 @@ export const GardenView = () => {
                       />
                       {rule.description ? (
                         <div className="rule-description">
-                          {rule.description}
+                          {showDescriptions && rule.description}
                         </div>
                       ) : (
                         <div></div>
