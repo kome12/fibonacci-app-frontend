@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Button,
-  Card,
   Container,
   createStyles,
   Grid,
@@ -44,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     rules: {
       width: "90%",
+      marginBottom: "0.25rem",
       marginLeft: "5%",
       overflowY: "auto",
       height: "40%"
@@ -55,7 +55,10 @@ const useStyles = makeStyles((theme: Theme) =>
     ruleInput: {
       width: "90%",
       marginLeft: "5%",
-      gap: "0.5rem"
+      gap: "0.25rem"
+    },
+    ruleList: {
+      marginTop: ""
     },
     ruleLi: {
       marginTop: "0.25rem",
@@ -76,6 +79,11 @@ export const AddRules: React.FC<AddRulesProps> = ({
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   const classes = useStyles();
+  // TODO: fix not being able to see all of top elements for odd numbered rules
+  const lastRule = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    lastRule.current?.scrollIntoView();
+  }, [userRules])
   return (
     <Grid
       container={true}
@@ -102,14 +110,13 @@ export const AddRules: React.FC<AddRulesProps> = ({
             </Typography>
           </Container>
         ) : (
-          <List>
+          <List className={classes.ruleList}>
             {userRules.map((rule, idx) => (
-              <Card key={`${rule.name}-${idx}`} className={classes.ruleLi}>
-                <ListItem>
+                <ListItem key={`${rule.name}-${idx}`} className={classes.ruleLi}>
                   <UserRule name={rule.name} description={rule.description} />
                 </ListItem>
-              </Card>
             ))}
+            <div ref={lastRule}></div>
           </List>
         )}
       </Grid>
