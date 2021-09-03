@@ -83,9 +83,10 @@ export const Header = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem className="menu-link" onClick={handleLogout}>
-              Logout
+            <MenuItem onClick={() => history.push("/about")}>
+              About My Niwa
             </MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </>
       )}
