@@ -1,4 +1,4 @@
-import { Button, Card, Container, createStyles, Grid, makeStyles, MobileStepper, Theme } from "@material-ui/core";
+import { Button, Card, Container, createStyles, Grid, makeStyles, MobileStepper, Paper, Theme } from "@material-ui/core";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -22,12 +22,19 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      height: "60vh"
+      height: "100%",
+    },
+    container: {
+      height: "85%",
     },
     card: {
       textAlign: 'center',
       height: "100%"
     },
+    stepper: {
+      alignSelf: "flex-end",
+      height: "15%"
+    }
   }),
 );
 
@@ -115,7 +122,8 @@ export const CreateGarden = () => {
   return (
     <Grid container={true} direction ="column" alignItems="center" justifyContent="space-between" className={classes.root}>
       <Container className={classes.root} component={motion.div}>
-        <Card className={classes.card}>
+        <Paper className={classes.card} elevation={0}>
+          <Grid container className={classes.container}>
             <AnimatePresence>
               {activeStep === 0 && (
                 <NewGarden
@@ -144,14 +152,15 @@ export const CreateGarden = () => {
                   userRules={userRules}
                   createGardenHandler={createGardenHandler}
                   animDirection={animDirection}
-                />
-              )}
+                  />
+                  )}
             </AnimatePresence>
+          </Grid>
           <MobileStepper
             variant="progress"
             steps={3}
-            position="bottom"
-            className="stepper"
+            position="static"
+            className={classes.stepper}
             activeStep={activeStep}
             nextButton={
               <Button
@@ -182,7 +191,7 @@ export const CreateGarden = () => {
               </Button>
             }
           />
-        </Card>
+        </Paper>
       </Container>
     </Grid>
   );
