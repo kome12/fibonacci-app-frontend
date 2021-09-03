@@ -13,15 +13,11 @@ const useStyles = makeStyles(() =>
       bottom: 0,
     }}));
 
-export const BottomNav = () => {
-  const [currentPage, setCurrentPage] = useState("/user/myGardens");
+export const BottomNav = ({currentPage, handlePageChange}) => {
+
   const classes = useStyles();
   // TODO: decide how to change views on button click
-  let history = useHistory();
-  const handlePageChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
-    setCurrentPage(newValue);
-    history.push(newValue)
-  };
+
   // TODO: Fix routes when new features are added.
   return (
     <AppBar position="fixed" className={classes.appBar}>

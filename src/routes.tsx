@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import { BottomNav } from "./components/BottomNav";
+import { UserViewLayout } from "./components/UserViewLayout";
 import { Loading } from "./components/LoadingWrapper/Loading";
 import { useUserState } from "./store/user/useUserState";
 
@@ -41,6 +41,7 @@ export const Routes = () => {
       <Switch location={location}>
         {userData.isLoggedIn && (
           <Switch>
+            <UserViewLayout showHeader={true} showBottomNav={true}>
             <Route path="/user">
             <Route path="/user/myGardens" component={MyGardens} exact />
             <Route
@@ -49,8 +50,8 @@ export const Routes = () => {
                 exact
             />
             <Route path="/user/createGarden" component={CreateGarden} exact />
-              <BottomNav />
             </Route>
+            </UserViewLayout>
             <Route path="/about" component={About} exact />
             <Route path="/" component={Home} exact />
             <Route component={NotFound} />
