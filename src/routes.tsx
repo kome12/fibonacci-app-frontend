@@ -41,7 +41,7 @@ export const Routes = () => {
       <Switch location={location}>
         {userData.isLoggedIn && (
           <Switch>
-            <UserViewLayout showHeader={true} showBottomNav={true}>
+            <UserViewLayout showHeader showBottomNav>
               <Route path="/user">
                 <Route path="/user/myGardens" component={MyGardens} exact />
                 <Route
