@@ -11,14 +11,13 @@ import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
-import { Header } from "../../components/Header";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
-import "./GardenView.css";
+import "./DailyGardening.css";
 
-export const GardenView = () => {
+export const DailyGardening = () => {
   // TODO: FIX API CALL AFTER MVP
   // TODO: Need to be refactor
 

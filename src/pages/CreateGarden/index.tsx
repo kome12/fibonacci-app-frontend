@@ -121,7 +121,7 @@ export const CreateGarden = () => {
           `https://the-fibonacci-api-staging.herokuapp.com/api/v1/rules/bulk`,
           populateRulesWithGardendId
         );
-        history.push(`/user/gardenView/${gardenId}`);
+        history.push(`/user/dailyGardening/${gardenId}`);
       }
     };
 
