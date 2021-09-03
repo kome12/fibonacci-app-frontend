@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       height: "85%",
-      overflowY: "auto"
     },
     card: {
       textAlign: 'center',

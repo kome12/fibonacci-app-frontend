@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     seedsTitle: {
       width: "100%",
-      color: theme.palette.primary.dark,
+      color: theme.palette.primary.main,
       fontWeight: "bold"
     }
   })
