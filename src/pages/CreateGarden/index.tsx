@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       height: "100%",
+      overflowX: "hidden",
     },
     container: {
       height: "85%",
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     card: {
       textAlign: "center",
       height: "100%",
+      backgroundColor: theme.palette.background.default,
     },
     stepper: {
       height: "10%",
