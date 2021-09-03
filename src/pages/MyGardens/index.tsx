@@ -46,7 +46,6 @@ export const MyGardens = () => {
 
   return (
     <>
-      <Header />
       <div className="my-gardens-container">
         <LoadingWrapper isLoading={isFetchingGardens}>
           <h1>My Gardens</h1>
