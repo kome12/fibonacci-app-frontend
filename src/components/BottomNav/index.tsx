@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { AppBar, BottomNavigation, BottomNavigationAction, createStyles, makeStyles } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import EmojiNatureIcon from '@material-ui/icons/EmojiNature';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>
   createStyles({

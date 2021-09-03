@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Header } from "../../components/Header";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Garden } from "../../models/garden.model";
 import { useUserState } from "../../store/user/useUserState";
