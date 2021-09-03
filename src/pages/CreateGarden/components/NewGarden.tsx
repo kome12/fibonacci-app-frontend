@@ -1,7 +1,6 @@
 import { createStyles, Grid, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
 import { motion } from "framer-motion";
 import React from "react";
-import "./NewGarden.css";
 
 interface NewGardenProps {
   nameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
@@ -58,7 +57,7 @@ export const NewGarden: React.FC<NewGardenProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>Create Garden</Typography>
+      <Typography variant="h3" className={classes.title}>Add Flower Bed</Typography>
       <Typography variant="body1" className={classes.text}>Give your Flower Bed a name.</Typography>
       <TextField
         type="text"

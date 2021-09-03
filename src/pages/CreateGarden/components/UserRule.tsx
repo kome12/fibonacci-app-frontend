@@ -1,6 +1,5 @@
 import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import { NewUserRule } from "..";
-import "./UserRule.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

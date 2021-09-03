@@ -11,9 +11,9 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
-import "./AddRules.css";
 import { motion } from "framer-motion";
 
 interface AddRulesProps {
@@ -96,8 +96,8 @@ export const AddRules: React.FC<AddRulesProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>Add rules</Typography>
-      <Typography variant="h5" className={classes.subtitle}>Current rules:</Typography>
+      <Typography variant="h3" className={classes.title}>Plant Seeds</Typography>
+      <Typography variant="h5" className={classes.subtitle}>Current Seeds:</Typography>
       <Grid
         container={true}
         className={classes.rules}
@@ -107,7 +107,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
         {userRules.length < 1 ? (
           <Container>
             <Typography variant="h5" className={classes.noRules}>
-              There are currently no rules for this garden.
+              You haven't sown any Seeds in this garden yet...
             </Typography>
           </Container>
         ) : (
@@ -140,8 +140,8 @@ export const AddRules: React.FC<AddRulesProps> = ({
           value={ruleDesc}
           autoComplete="off"
         />
-        <Button size="large" variant="contained" color="primary" onClick={addRuleHandler}>
-          + Add rule
+        <Button size="large" variant="contained" color="primary" onClick={addRuleHandler} startIcon={<AddCircleIcon />}>
+          Plant Seed
         </Button>
       </Grid>
     </Grid>

@@ -11,7 +11,6 @@ import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import "./CreateGardenPage.css";
 
 export interface NewUserRule {
   name: string;

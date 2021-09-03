@@ -2,7 +2,6 @@ import { Button, createStyles, Grid, List, ListItem, makeStyles, Theme, Typograp
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import "./GardenSummary.css";
 import { motion } from "framer-motion";
 
 interface GardenSummaryProps {
@@ -78,7 +77,7 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
       <Typography variant="h3" className={classes.title}>Summary</Typography>
       <Grid container direction="column" className={classes.detailsContainer}>
         <Grid container direction="row" className={classes.gardenDetailGrid} justifyContent="center">
-          <Typography variant="h6" className={classes.subtitle}>Name:</Typography>
+          <Typography variant="h6" className={classes.subtitle}>Flower Bed Name:</Typography>
           <Typography variant="h5" className={classes.gardenDetails}>{gardenName}</Typography>
         </Grid>
         {gardenDesc && <Grid container direction="row" className={classes.gardenDetailGrid} justifyContent="center" alignItems="center">
