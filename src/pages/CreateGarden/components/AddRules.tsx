@@ -1,29 +1,20 @@
-import React from "react";
-import { Button, Container } from "@material-ui/core";
-import { styled } from "@material-ui/styles";
+import React, { useEffect, useRef } from "react";
+import {
+  Button,
+  Container,
+  createStyles,
+  Grid,
+  List,
+  ListItem,
+  makeStyles,
+  TextField,
+  Theme,
+  Typography,
+} from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
-import "./AddRules.css";
 import { motion } from "framer-motion";
-
-const AddRuleContainer = styled(Container)({
-  background: "#6ABC6880",
-  borderRadius: 20,
-  display: "flex",
-  flexDirection: "column",
-  height: "40%",
-  marginTop: "12%",
-});
-
-const RuleButton = styled(Button)({
-  alignSelf: "center",
-  background: "#ff7f27d9",
-  borderRadius: 20,
-  color: "#fff",
-  fontWeight: "bold",
-  margin: "2% 0 2%",
-  width: "50%",
-});
 
 interface AddRulesProps {
   ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
@@ -34,6 +25,48 @@ interface AddRulesProps {
   userRules: NewUserRule[];
   animDirection: "left" | "right";
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      height: "100%",
+      flexDirection: "column",
+      backgroundColor: theme.palette.background.default,
+    },
+    title: {
+      fontWeight: "bold",
+      color: theme.palette.primary.main,
+    },
+    subtitle: {
+      color: theme.palette.primary.dark,
+    },
+    rules: {
+      width: "90%",
+      marginBottom: "0.25rem",
+      marginLeft: "5%",
+      overflowY: "auto",
+      scrollBehavior: "smooth",
+      height: "40%",
+    },
+    noRules: {
+      color: theme.palette.error.main,
+      fontWeight: "bold",
+    },
+    ruleInput: {
+      width: "90%",
+      marginLeft: "5%",
+      gap: "0.25rem",
+    },
+    ruleList: {
+      marginTop: "",
+    },
+    ruleLi: {
+      marginTop: "0.25rem",
+      marginBottom: "0.25rem",
+    },
+  })
+);
 
 export const AddRules: React.FC<AddRulesProps> = ({
   ruleNameChangeHandler,
@@ -46,62 +79,87 @@ export const AddRules: React.FC<AddRulesProps> = ({
 }) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
+  const classes = useStyles();
+  // TODO: fix not being able to see all of top elements for odd numbered rules
+  const lastRule = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    lastRule.current?.scrollIntoView();
+  }, [userRules]);
   return (
-    <Container
-      className="add-rules-container"
+    <Grid
+      container={true}
+      className={classes.root}
+      justifyContent="center"
       component={motion.div}
       initial={{ opacity: 0, x: initDir }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <h2>Add rules</h2>
-      <h3>Current rules:</h3>
-      <div className="user-rules">
+      <Typography variant="h3" className={classes.title}>
+        Plant Seeds
+      </Typography>
+      <Typography variant="h5" className={classes.subtitle}>
+        Current Seeds:
+      </Typography>
+      <Grid
+        container={true}
+        className={classes.rules}
+        direction="column"
+        justifyContent="center"
+      >
         {userRules.length < 1 ? (
-          <div className="no-rules-container">
-            <p className="no-rules">
-              There are currently no rules for this garden.
-            </p>
-          </div>
+          <Container>
+            <Typography variant="h5" className={classes.noRules}>
+              You haven't sown any Seeds in this garden yet...
+            </Typography>
+          </Container>
         ) : (
-          <ul>
+          <List className={classes.ruleList}>
             {userRules.map((rule, idx) => (
-              <li className="rule-li" key={`${rule.name}-${idx}`}>
+              <ListItem key={`${rule.name}-${idx}`} className={classes.ruleLi}>
                 <UserRule name={rule.name} description={rule.description} />
-              </li>
+              </ListItem>
             ))}
-          </ul>
+            <div ref={lastRule}></div>
+          </List>
         )}
-      </div>
-      <AddRuleContainer>
-        <label className="rule-label" htmlFor="desc">
-          <p>Name:</p>
-        </label>
-        <input
-          className="garden-name"
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        className={classes.ruleInput}
+        spacing={1}
+      >
+        <TextField
           type="text"
           name="name"
+          label="Name:"
+          variant="outlined"
           onChange={ruleNameChangeHandler}
           value={ruleName}
           autoComplete="off"
         />
-
-        <label className="rule-label" htmlFor="desc">
-          <p>Description:</p>
-        </label>
-        <input
-          className="garden-desc"
+        <TextField
           type="text"
           name="desc"
+          label="Description:"
+          variant="outlined"
           onChange={ruleDescChangeHandler}
           value={ruleDesc}
           autoComplete="off"
         />
-        <RuleButton size="large" onClick={addRuleHandler}>
-          + Add rule
-        </RuleButton>
-      </AddRuleContainer>
-    </Container>
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
+          onClick={addRuleHandler}
+          startIcon={<AddCircleIcon />}
+          disabled={ruleName.length < 1}
+        >
+          Plant Seed
+        </Button>
+      </Grid>
+    </Grid>
   );
 };

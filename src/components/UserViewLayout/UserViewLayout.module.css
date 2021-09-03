@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  height: 10vh;
+}
+
+.content {
+  height: 80vh;
+  margin: 1rem 0;
+  overflow-y: auto;
+}
+
+.nav {
+  height: 10vh;
+}

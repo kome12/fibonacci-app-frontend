@@ -1,38 +1,51 @@
-import { Button, Container, MobileStepper } from "@material-ui/core";
-import { styled } from "@material-ui/core/styles";
+import {
+  Button,
+  Container,
+  createStyles,
+  Grid,
+  makeStyles,
+  MobileStepper,
+  Paper,
+  Theme,
+} from "@material-ui/core";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Header } from "../../components/Header";
 import { Garden } from "../../models/garden.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
-import "./CreateGardenPage.css";
-import { BottomNav } from "../../components/BottomNav";
-
-const CreateGardenContainer = styled(Container)({
-  background: "#6ABC6880",
-  borderRadius: 20,
-  color: "white",
-  display: "flex",
-  flexDirection: "column",
-  height: "80vh",
-  paddingTop: "2%",
-});
-
-const CreateGardenStepper = styled(MobileStepper)({
-  background: "#6ABC6880",
-  borderRadius: 20,
-});
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 
 export interface NewUserRule {
   name: string;
   description?: string;
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      height: "100%",
+    },
+    container: {
+      height: "85%",
+    },
+    card: {
+      textAlign: "center",
+      height: "100%",
+    },
+    stepper: {
+      height: "10%",
+      alignSelf: "flex-end",
+      paddingBottom: "6%",
+    },
+  })
+);
 
 export const CreateGarden = () => {
   const { userData } = useUserState();
@@ -114,13 +127,18 @@ export const CreateGarden = () => {
 
     createGardenAndRules();
   };
-
+  const classes = useStyles();
   return (
-    <>
-      <Header />
-      <Container className="create-garden-root" component={motion.div}>
-        <CreateGardenContainer>
-          <div className="create-garden">
+    <Grid
+      container={true}
+      direction="column"
+      alignItems="center"
+      justifyContent="space-between"
+      className={classes.root}
+    >
+      <Container className={classes.root} component={motion.div}>
+        <Paper className={classes.card} elevation={0}>
+          <Grid container className={classes.container}>
             <AnimatePresence>
               {activeStep === 0 && (
                 <NewGarden
@@ -152,16 +170,19 @@ export const CreateGarden = () => {
                 />
               )}
             </AnimatePresence>
-          </div>
-          <CreateGardenStepper
+          </Grid>
+          <MobileStepper
             variant="progress"
             steps={3}
             position="static"
-            className="stepper"
+            className={classes.stepper}
             activeStep={activeStep}
             nextButton={
               <Button
-                size="medium"
+                size="small"
+                variant="contained"
+                color="primary"
+                endIcon={<ArrowRightIcon />}
                 onClick={handleNext}
                 disabled={
                   activeStep === 2 ||
@@ -174,7 +195,10 @@ export const CreateGarden = () => {
             }
             backButton={
               <Button
-                size="medium"
+                size="small"
+                variant="contained"
+                color="primary"
+                startIcon={<ArrowLeftIcon />}
                 onClick={handleBack}
                 disabled={activeStep === 0}
               >
@@ -182,8 +206,8 @@ export const CreateGarden = () => {
               </Button>
             }
           />
-        </CreateGardenContainer>
+        </Paper>
       </Container>
-    </>
+    </Grid>
   );
 };
