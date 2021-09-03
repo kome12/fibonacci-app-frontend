@@ -4,6 +4,12 @@ import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import EmojiNatureIcon from '@material-ui/icons/EmojiNature';
 
+// TODO: fix any type when we can work out what it is supposed to be
+interface BottomNavProps {
+  currentPage: string,
+  handlePageChange: any
+}
+
 const useStyles = makeStyles(() =>
   createStyles({
     appBar: {
@@ -11,7 +17,7 @@ const useStyles = makeStyles(() =>
       bottom: 0,
     }}));
 
-export const BottomNav = ({currentPage, handlePageChange}) => {
+export const BottomNav: React.FC<BottomNavProps> = ({currentPage, handlePageChange}) => {
 
   const classes = useStyles();
   // TODO: decide how to change views on button click
