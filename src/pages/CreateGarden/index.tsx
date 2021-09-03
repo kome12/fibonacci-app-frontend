@@ -1,4 +1,4 @@
-import { Button, Card, Container, createStyles, Grid, makeStyles, MobileStepper, Paper, Theme } from "@material-ui/core";
+import { Button, Container, createStyles, Grid, makeStyles, MobileStepper, Paper, Theme } from "@material-ui/core";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
