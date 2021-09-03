@@ -46,8 +46,8 @@ export const MyGardens = () => {
   return (
     <>
       <div className="my-gardens-container">
+        <h1>My Gardens</h1>
         <LoadingWrapper isLoading={isFetchingGardens}>
-          <h1>My Gardens</h1>
           <div className="gardens-view">
             {myGardens.map((garden, index) => {
               return (

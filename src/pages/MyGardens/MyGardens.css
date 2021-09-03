@@ -1,11 +1,12 @@
 .my-gardens-container {
   padding: 0 10%;
   line-height: 1.6rem;
+  max-width: 480px;
+  margin: auto;
 }
 
 .gardens-view {
   border-radius: 10px;
-  background: rgb(124, 197, 124);
   justify-content: center;
   padding: 5%;
 }
