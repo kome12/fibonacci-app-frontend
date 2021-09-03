@@ -81,8 +81,6 @@ export const NewGarden: React.FC<NewGardenProps> = ({
         autoComplete="off"
         variant="outlined"
         label="Description:"
-        multiline
-        rows={3}
       />
     </Grid>
   );

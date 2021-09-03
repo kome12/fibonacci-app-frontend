@@ -9,6 +9,7 @@ import {
   ListItem,
   makeStyles,
   TextField,
+  Theme,
   Typography,
 } from "@material-ui/core";
 import { UserRule } from "./UserRule";
@@ -26,17 +27,40 @@ interface AddRulesProps {
   animDirection: "left" | "right";
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
       height: "100%",
+      flexDirection: "column",
+      backgroundColor: theme.palette.background.default
+    },
+    title: {
+      fontWeight: "bold",
+      color: theme.palette.primary.main
+    },
+    subtitle: {
+      color: theme.palette.primary.dark
     },
     rules: {
-      alignItems: "center",
+      width: "90%",
+      marginLeft: "5%",
       overflowY: "auto",
-      height: "20vh"
+      height: "40%"
     },
+    noRules: {
+      color: theme.palette.error.main,
+      fontWeight: "bold"
+    },
+    ruleInput: {
+      width: "90%",
+      marginLeft: "5%",
+      gap: "0.5rem"
+    },
+    ruleLi: {
+      marginTop: "0.25rem",
+      marginBottom: "0.25rem",
+    }
   })
 );
 
@@ -63,8 +87,8 @@ export const AddRules: React.FC<AddRulesProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3">Add rules</Typography>
-      <Typography variant="h5">Current rules:</Typography>
+      <Typography variant="h3" className={classes.title}>Add rules</Typography>
+      <Typography variant="h5" className={classes.subtitle}>Current rules:</Typography>
       <Grid
         container={true}
         className={classes.rules}
@@ -72,24 +96,24 @@ export const AddRules: React.FC<AddRulesProps> = ({
         justifyContent="center"
       >
         {userRules.length < 1 ? (
-          <Container className="no-rules-container">
-            <Typography variant="body2" className="no-rules">
+          <Container>
+            <Typography variant="h5" className={classes.noRules}>
               There are currently no rules for this garden.
             </Typography>
           </Container>
         ) : (
           <List>
             {userRules.map((rule, idx) => (
-              <Card>
-              <ListItem className="rule-li" key={`${rule.name}-${idx}`}>
+              <Card key={`${rule.name}-${idx}`} className={classes.ruleLi}>
+                <ListItem>
                   <UserRule name={rule.name} description={rule.description} />
-              </ListItem>
+                </ListItem>
               </Card>
             ))}
           </List>
         )}
       </Grid>
-      <Container>
+      <Grid container direction="column" className={classes.ruleInput} spacing={1}>
         <TextField
           type="text"
           name="name"
@@ -111,7 +135,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
         <Button size="large" variant="contained" color="primary" onClick={addRuleHandler}>
           + Add rule
         </Button>
-      </Container>
+      </Grid>
     </Grid>
   );
 };
