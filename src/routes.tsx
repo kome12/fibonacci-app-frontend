@@ -61,6 +61,7 @@ export const Routes = () => {
             <Route component={NotFound} />
           </Switch>
         )}
+        <Route path="/about" component={About} exact />
         <Route path="/" component={Home} exact />
         <Route component={NotFound} />
       </Switch>
