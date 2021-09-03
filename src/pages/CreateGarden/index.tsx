@@ -1,4 +1,13 @@
-import { Button, Container, createStyles, Grid, makeStyles, MobileStepper, Paper, Theme } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  createStyles,
+  Grid,
+  makeStyles,
+  MobileStepper,
+  Paper,
+  Theme,
+} from "@material-ui/core";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -9,8 +18,8 @@ import { useUserState } from "../../store/user/useUserState";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 
 export interface NewUserRule {
   name: string;
@@ -27,15 +36,15 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "85%",
     },
     card: {
-      textAlign: 'center',
-      height: "100%"
+      textAlign: "center",
+      height: "100%",
     },
     stepper: {
       height: "10%",
       alignSelf: "flex-end",
       paddingBottom: "6%",
-    }
-  }),
+    },
+  })
 );
 
 export const CreateGarden = () => {
@@ -120,7 +129,13 @@ export const CreateGarden = () => {
   };
   const classes = useStyles();
   return (
-    <Grid container={true} direction ="column" alignItems="center" justifyContent="space-between" className={classes.root}>
+    <Grid
+      container={true}
+      direction="column"
+      alignItems="center"
+      justifyContent="space-between"
+      className={classes.root}
+    >
       <Container className={classes.root} component={motion.div}>
         <Paper className={classes.card} elevation={0}>
           <Grid container className={classes.container}>
@@ -152,8 +167,8 @@ export const CreateGarden = () => {
                   userRules={userRules}
                   createGardenHandler={createGardenHandler}
                   animDirection={animDirection}
-                  />
-                  )}
+                />
+              )}
             </AnimatePresence>
           </Grid>
           <MobileStepper

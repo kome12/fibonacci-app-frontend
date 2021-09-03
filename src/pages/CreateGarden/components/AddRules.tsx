@@ -11,7 +11,7 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { UserRule } from "./UserRule";
 import { NewUserRule } from "..";
 import { motion } from "framer-motion";
@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       height: "100%",
       flexDirection: "column",
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.default,
     },
     title: {
       fontWeight: "bold",
-      color: theme.palette.primary.main
+      color: theme.palette.primary.main,
     },
     subtitle: {
-      color: theme.palette.primary.dark
+      color: theme.palette.primary.dark,
     },
     rules: {
       width: "90%",
@@ -47,24 +47,24 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "5%",
       overflowY: "auto",
       scrollBehavior: "smooth",
-      height: "40%"
+      height: "40%",
     },
     noRules: {
       color: theme.palette.error.main,
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     ruleInput: {
       width: "90%",
       marginLeft: "5%",
-      gap: "0.25rem"
+      gap: "0.25rem",
     },
     ruleList: {
-      marginTop: ""
+      marginTop: "",
     },
     ruleLi: {
       marginTop: "0.25rem",
       marginBottom: "0.25rem",
-    }
+    },
   })
 );
 
@@ -84,7 +84,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
   const lastRule = useRef<HTMLDivElement>(null);
   useEffect(() => {
     lastRule.current?.scrollIntoView();
-  }, [userRules])
+  }, [userRules]);
   return (
     <Grid
       container={true}
@@ -96,8 +96,12 @@ export const AddRules: React.FC<AddRulesProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>Plant Seeds</Typography>
-      <Typography variant="h5" className={classes.subtitle}>Current Seeds:</Typography>
+      <Typography variant="h3" className={classes.title}>
+        Plant Seeds
+      </Typography>
+      <Typography variant="h5" className={classes.subtitle}>
+        Current Seeds:
+      </Typography>
       <Grid
         container={true}
         className={classes.rules}
@@ -113,15 +117,20 @@ export const AddRules: React.FC<AddRulesProps> = ({
         ) : (
           <List className={classes.ruleList}>
             {userRules.map((rule, idx) => (
-                <ListItem key={`${rule.name}-${idx}`} className={classes.ruleLi}>
-                  <UserRule name={rule.name} description={rule.description} />
-                </ListItem>
+              <ListItem key={`${rule.name}-${idx}`} className={classes.ruleLi}>
+                <UserRule name={rule.name} description={rule.description} />
+              </ListItem>
             ))}
             <div ref={lastRule}></div>
           </List>
         )}
       </Grid>
-      <Grid container direction="column" className={classes.ruleInput} spacing={1}>
+      <Grid
+        container
+        direction="column"
+        className={classes.ruleInput}
+        spacing={1}
+      >
         <TextField
           type="text"
           name="name"
@@ -140,7 +149,14 @@ export const AddRules: React.FC<AddRulesProps> = ({
           value={ruleDesc}
           autoComplete="off"
         />
-        <Button size="large" variant="contained" color="primary" onClick={addRuleHandler} startIcon={<AddCircleIcon />} disabled={ruleName.length < 1}>
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
+          onClick={addRuleHandler}
+          startIcon={<AddCircleIcon />}
+          disabled={ruleName.length < 1}
+        >
           Plant Seed
         </Button>
       </Grid>

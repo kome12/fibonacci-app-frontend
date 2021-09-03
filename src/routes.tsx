@@ -4,7 +4,7 @@ import { UserViewLayout } from "./components/UserViewLayout";
 import { Loading } from "./components/LoadingWrapper/Loading";
 import { useUserState } from "./store/user/useUserState";
 
-const About = React.lazy(() => 
+const About = React.lazy(() =>
   import("./pages/About").then(({ About }) => ({ default: About }))
 );
 const Home = React.lazy(() =>
@@ -42,15 +42,19 @@ export const Routes = () => {
         {userData.isLoggedIn && (
           <Switch>
             <UserViewLayout showHeader={true} showBottomNav={true}>
-            <Route path="/user">
-            <Route path="/user/myGardens" component={MyGardens} exact />
-            <Route
-                path="/user/gardenView/:gardenId"
-                component={GardenView}
-                exact
-            />
-            <Route path="/user/createGarden" component={CreateGarden} exact />
-            </Route>
+              <Route path="/user">
+                <Route path="/user/myGardens" component={MyGardens} exact />
+                <Route
+                  path="/user/gardenView/:gardenId"
+                  component={GardenView}
+                  exact
+                />
+                <Route
+                  path="/user/createGarden"
+                  component={CreateGarden}
+                  exact
+                />
+              </Route>
             </UserViewLayout>
             <Route path="/about" component={About} exact />
             <Route path="/" component={Home} exact />

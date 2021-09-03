@@ -1,4 +1,10 @@
-import { createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import {
+  createStyles,
+  Grid,
+  makeStyles,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { NewUserRule } from "..";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -7,22 +13,28 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "0.25rem",
       color: theme.palette.text.primary,
       fontWeight: "bold",
-      alignSelf: "center"
+      alignSelf: "center",
     },
     desc: {
       marginBottom: "0.25rem",
       color: theme.palette.primary.dark,
-      alignSelf: "center"
+      alignSelf: "center",
     },
-  }),
+  })
 );
 
 export const UserRule: React.FC<NewUserRule> = ({ name, description }) => {
   const classes = useStyles();
   return (
     <Grid container={true} direction="column" justifyContent="center">
-      <Typography variant="h6" className={classes.name}>{name}</Typography>
-      {description && <Typography variant="caption" className={classes.desc}>{description}</Typography>}
+      <Typography variant="h6" className={classes.name}>
+        {name}
+      </Typography>
+      {description && (
+        <Typography variant="caption" className={classes.desc}>
+          {description}
+        </Typography>
+      )}
     </Grid>
   );
 };

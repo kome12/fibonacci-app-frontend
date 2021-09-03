@@ -1,4 +1,11 @@
-import { createStyles, Grid, makeStyles, TextField, Theme, Typography } from "@material-ui/core";
+import {
+  createStyles,
+  Grid,
+  makeStyles,
+  TextField,
+  Theme,
+  Typography,
+} from "@material-ui/core";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -16,24 +23,24 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       height: "100%",
       flexDirection: "column",
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.default,
     },
     title: {
       marginTop: "1rem",
       marginBottom: "1rem",
       color: theme.palette.primary.main,
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     text: {
       marginTop: "1rem",
       marginBottom: "0.5rem",
-      color: theme.palette.primary.dark
+      color: theme.palette.primary.dark,
     },
     textInput: {
       width: "90%",
       marginLeft: "5%",
     },
-  }),
+  })
 );
 
 export const NewGarden: React.FC<NewGardenProps> = ({
@@ -57,8 +64,12 @@ export const NewGarden: React.FC<NewGardenProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>Add Flower Bed</Typography>
-      <Typography variant="body1" className={classes.text}>Give your Flower Bed a name.</Typography>
+      <Typography variant="h3" className={classes.title}>
+        Add Flower Bed
+      </Typography>
+      <Typography variant="body1" className={classes.text}>
+        Give your Flower Bed a name.
+      </Typography>
       <TextField
         type="text"
         name="name"
@@ -70,7 +81,9 @@ export const NewGarden: React.FC<NewGardenProps> = ({
         label="Name:"
         required
       />
-      <Typography variant="body1" className={classes.text}>Add a description(optional)</Typography>
+      <Typography variant="body1" className={classes.text}>
+        Add a description(optional)
+      </Typography>
       <TextField
         type="text"
         name="desc"

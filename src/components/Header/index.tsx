@@ -13,10 +13,12 @@ import MyNiwaLogo from "./assets/myniwa.svg";
 import styles from "./Header.module.css";
 
 const useStyles = makeStyles(() =>
-createStyles({
-  root: {
-    flexDirection: "row"
-  }}));
+  createStyles({
+    root: {
+      flexDirection: "row",
+    },
+  })
+);
 
 export const Header = () => {
   const history = useHistory();
@@ -46,7 +48,11 @@ export const Header = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" className={styles.header} classes={{root: classes.root}}>
+    <AppBar
+      position="static"
+      className={styles.header}
+      classes={{ root: classes.root }}
+    >
       <Link to="/">
         <img className={styles.logo} src={MyNiwaLogo} alt="my niwa logo" />
       </Link>
