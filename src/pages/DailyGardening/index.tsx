@@ -1,12 +1,11 @@
 import Button from "@material-ui/core/Button";
-import Switch from "@material-ui/core/Switch";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
+import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
-import wateringAnimation from "./assets/watering.gif";
 import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -15,6 +14,7 @@ import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
+import wateringAnimation from "./assets/watering.gif";
 import "./DailyGardening.css";
 
 export const DailyGardening = () => {
@@ -139,27 +139,25 @@ export const DailyGardening = () => {
               View Details
               {rules.map((rule, index) => {
                 return (
-                  <Card variant="outlined">
-                    <div key={rule._id}>
-                      <Chip
-                        icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
-                        label={rule.name}
-                        clickable
-                        color={handleChipColor(rulesStatus[index])}
-                        onClick={() => {
-                          completeTaskHandler(rule);
-                        }}
-                        onDelete={handleDelete}
-                        deleteIcon={<UndoIcon />}
-                      />
-                      {rule.description ? (
-                        <div className="rule-description">
-                          {showDescriptions && rule.description}
-                        </div>
-                      ) : (
-                        <div></div>
-                      )}
-                    </div>
+                  <Card variant="outlined" key={rule._id}>
+                    <Chip
+                      icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
+                      label={rule.name}
+                      clickable
+                      color={handleChipColor(rulesStatus[index])}
+                      onClick={() => {
+                        completeTaskHandler(rule);
+                      }}
+                      onDelete={handleDelete}
+                      deleteIcon={<UndoIcon />}
+                    />
+                    {rule.description ? (
+                      <div className="rule-description">
+                        {showDescriptions && rule.description}
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </Card>
                 );
               })}
