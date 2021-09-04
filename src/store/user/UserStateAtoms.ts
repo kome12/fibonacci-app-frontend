@@ -4,7 +4,7 @@ type UserData =
   | {
       id: string;
       displayName: string;
-      imageUrl: string | undefined;
+      imageUrl: string | null;
       isLoggedIn: true;
     }
   | {

@@ -13,9 +13,9 @@ const Home = React.lazy(() =>
 const MyGardens = React.lazy(() =>
   import("./pages/MyGardens").then(({ MyGardens }) => ({ default: MyGardens }))
 );
-const GardenView = React.lazy(() =>
-  import("./pages/GardenView").then(({ GardenView }) => ({
-    default: GardenView,
+const DailyGardening = React.lazy(() =>
+  import("./pages/DailyGardening").then(({ DailyGardening }) => ({
+    default: DailyGardening,
   }))
 );
 const CreateGarden = React.lazy(() =>
@@ -45,8 +45,8 @@ export const Routes = () => {
               <UserViewLayout showHeader showBottomNav>
                 <Route path="/user/myGardens" component={MyGardens} exact />
                 <Route
-                  path="/user/gardenView/:gardenId"
-                  component={GardenView}
+                  path="/user/dailyGardening/:gardenId"
+                  component={DailyGardening}
                   exact
                 />
                 <Route
