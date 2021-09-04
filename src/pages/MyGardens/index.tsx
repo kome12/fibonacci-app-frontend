@@ -42,7 +42,7 @@ export const MyGardens = () => {
     };
 
     getDataFromBackend();
-  }, []);
+  }, [userData]);
 
   return (
     <motion.div

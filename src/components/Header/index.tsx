@@ -41,12 +41,7 @@ export const Header = () => {
     handleClose();
     await logout();
     history.push("/");
-  }, []);
-
-  // const linkHandler = (page: string) => {
-  //   history.push(page);
-  //   handleClose();
-  // };
+  }, [history]);
 
   const classes = useStyles();
 

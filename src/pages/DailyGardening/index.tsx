@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import axios from "axios";
 import { isSameDay } from "date-fns";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
@@ -15,7 +16,6 @@ import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
 import wateringAnimation from "./assets/watering.gif";
 import "./DailyGardening.css";
-import { motion } from "framer-motion";
 
 export const DailyGardening = () => {
   // TODO: FIX API CALL AFTER MVP
@@ -87,10 +87,10 @@ export const DailyGardening = () => {
     sendCompletedTask();
   };
 
-  const handleDelete = () => {
-    // TODO: Implement delete task
-    console.log("Needs implementation");
-  };
+  // TODO: Implement delete task
+  // const handleDelete = () => {
+  //   console.log("Needs implementation");
+  // };
 
   const checkCompletedTaskStatus = (
     currentRules: Array<Rule>,
