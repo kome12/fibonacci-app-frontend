@@ -1,14 +1,14 @@
 .splash-page {
-  margin: auto;
+  height: 100vh;
   text-align: center;
+  background-color: #6ac697;
 }
 
 .ni-wa-container {
-  background-color: #6ac697;
+  height: 100%;
   max-width: 480px;
+  padding: 0 0 40px;
   margin: 0 auto;
-  border-radius: 20px;
-  min-height: 40rem;
 }
 
 .ni-wa-character {
@@ -19,7 +19,7 @@
 .ni-wa {
   font-size: 5rem;
   color: #172f4a;
-  line-height: 0;
+  margin: 0;
 }
 
 .ni-wa-definition {
