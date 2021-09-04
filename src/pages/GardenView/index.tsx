@@ -9,7 +9,6 @@ import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
-import { Header } from "../../components/Header";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
@@ -116,7 +115,6 @@ export const GardenView = () => {
 
   return (
     <>
-      <Header />
       <div className="garden-parent-container">
         <h1>Garden View</h1>
         <LoadingWrapper isLoading={isFetchingGardenData}>
