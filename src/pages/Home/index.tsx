@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import { motion } from "framer-motion";
 import { useHistory } from "react-router";
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
@@ -24,7 +25,13 @@ export const Home = () => {
   // }, []);
 
   return (
-    <div className="splash-page">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      exit={{ opacity: 0 }}
+      className="splash-page"
+    >
       <div className="ni-wa-container">
         <Niwa className="ni-wa-character" />
         <h1 className="ni-wa">ni•wa</h1>
@@ -53,6 +60,6 @@ export const Home = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

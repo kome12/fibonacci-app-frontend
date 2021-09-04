@@ -16,6 +16,7 @@ import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
 import "./DailyGardening.css";
+import { motion } from "framer-motion";
 
 export const DailyGardening = () => {
   // TODO: FIX API CALL AFTER MVP
@@ -117,7 +118,12 @@ export const DailyGardening = () => {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="garden-parent-container">
         <h1>Daily Gardening</h1>
         <LoadingWrapper isLoading={isFetchingGardenData}>
@@ -176,6 +182,6 @@ export const DailyGardening = () => {
           </div>
         </LoadingWrapper>
       </div>
-    </>
+    </motion.div>
   );
 };

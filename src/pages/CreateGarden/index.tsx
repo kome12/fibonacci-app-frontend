@@ -137,6 +137,11 @@ export const CreateGarden = () => {
       alignItems="center"
       justifyContent="space-between"
       className={classes.root}
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      exit={{ opacity: 0 }}
     >
       <Container className={classes.root} component={motion.div}>
         <Paper className={classes.card} elevation={0}>

@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
 import Gif1 from "./assets/not-found1.gif";
 import Gif2 from "./assets/not-found2.gif";
@@ -11,7 +12,13 @@ export const NotFound = () => {
   const notFoundGif = gifs[index];
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      exit={{ opacity: 0 }}
+      className={styles.wrapper}
+    >
       <h1>
         Oops!
         <br />
@@ -27,6 +34,6 @@ export const NotFound = () => {
       >
         Go Back To Top Page
       </Button>
-    </div>
+    </motion.div>
   );
 };
