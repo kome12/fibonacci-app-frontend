@@ -8,6 +8,8 @@ import {
   Paper,
   Theme,
 } from "@material-ui/core";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -18,8 +20,6 @@ import { useUserState } from "../../store/user/useUserState";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 
 export interface NewUserRule {
   name: string;
@@ -99,7 +99,7 @@ export const CreateGarden = () => {
       const newGarden: Garden = {
         name: name,
         description: desc,
-        userFireBaseId: (userData.isLoggedIn && userData.id) || "",
+        fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
       };
       const resCreateGarden = await axios.post(
         `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens`,

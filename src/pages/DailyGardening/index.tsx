@@ -70,7 +70,6 @@ export const DailyGardening = () => {
   const completeTaskHandler = async (rule: Rule) => {
     const completedTask: CompletedTask = {
       ruleId: rule._id || "",
-      // TODO: Fix when backend updates schema for completedTask's fireBaseUserId
       fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
       date: new Date().toISOString(),
       rewardTypeId: "61274429d20570644762b99b",
