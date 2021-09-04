@@ -4,7 +4,6 @@ import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
-import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
 import { isSameDay } from "date-fns";
 import { useEffect, useState } from "react";
@@ -148,8 +147,9 @@ export const DailyGardening = () => {
                       onClick={() => {
                         completeTaskHandler(rule);
                       }}
-                      onDelete={handleDelete}
-                      deleteIcon={<UndoIcon />}
+                      // TODO: Implement UNDO
+                      // onDelete={handleDelete}
+                      // deleteIcon={<UndoIcon />}
                     />
                     {rule.description ? (
                       <div className="rule-description">
