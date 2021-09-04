@@ -121,7 +121,7 @@ export const DailyGardening = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
       <div className="garden-parent-container">
