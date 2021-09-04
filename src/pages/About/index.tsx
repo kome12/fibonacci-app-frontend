@@ -1,9 +1,9 @@
-import { SignIn } from "../../components/SignIn";
-import { useHistory } from "react-router";
-import { useUserState } from "../../store/user/useUserState";
-import Button from "@material-ui/core/Button";
-import "./About.css";
 import { Paper } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router";
+import { SignIn } from "../../components/SignIn";
+import { useUserState } from "../../store/user/useUserState";
+import "./About.css";
 
 export const About = () => {
   const { userData } = useUserState();
@@ -27,7 +27,7 @@ export const About = () => {
           <li>Try to collect all the flowers while bettering yourself!</li>
         </ol>
       </Paper>
-      {userData ? (
+      {userData.isLoggedIn ? (
         <Button
           variant="contained"
           color="primary"
