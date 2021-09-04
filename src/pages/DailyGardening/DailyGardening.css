@@ -1,27 +1,17 @@
 .garden-view-container {
-  background-color: rgb(124, 197, 124);
   padding: 3%;
   line-height: 1.6rem;
   justify-content: center;
-  width: 92%;
-  margin: auto;
   border-radius: 20px;
 }
 
 .garden-parent-container {
   padding: 0 10%;
   line-height: 1.6rem;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.garden-container {
-  min-height: 100px;
-  min-width: 100px;
-  margin: auto;
-  border: 4px white solid;
-  margin-bottom: 1rem;
-  padding: 2rem;
-  border-radius: 20px;
-}
 .rules-container {
   padding: 5%;
   margin: auto;
@@ -32,4 +22,9 @@
 .centered {
   padding: 2rem;
   margin: auto;
+}
+
+.watering-animation {
+  width: 100%;
+  border-radius: 20px;
 }

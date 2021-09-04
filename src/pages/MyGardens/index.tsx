@@ -5,9 +5,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Header } from "../../components/Header";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Garden } from "../../models/garden.model";
 import { useUserState } from "../../store/user/useUserState";
@@ -42,18 +42,22 @@ export const MyGardens = () => {
     };
 
     getDataFromBackend();
-  }, []);
+  }, [userData]);
 
   return (
-    <>
-      <Header />
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="my-gardens-container">
+        <h1>My Gardens</h1>
         <LoadingWrapper isLoading={isFetchingGardens}>
-          <h1>My Gardens</h1>
           <div className="gardens-view">
             {myGardens.map((garden, index) => {
               return (
-                <Link to={`/user/gardenView/${garden._id}`} key={index}>
+                <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
                   <Card className={`garden-card ${classes.root}`}>
                     <CardActionArea>
                       <CardMedia
@@ -81,6 +85,6 @@ export const MyGardens = () => {
           </div>
         </LoadingWrapper>
       </div>
-    </>
+    </motion.div>
   );
 };

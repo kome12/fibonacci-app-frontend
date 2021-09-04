@@ -26,7 +26,6 @@ export const useFirebaseAuth = () => {
 
     // Make sure we un-register Firebase observers when the component unmounts
     return () => unregisterAuthObserver();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  return { logout } as const;
 };
