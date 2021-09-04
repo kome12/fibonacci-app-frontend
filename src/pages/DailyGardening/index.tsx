@@ -31,7 +31,7 @@ export const DailyGardening = () => {
   // const [garden, setGarden] = useState({});
   const { userData } = useUserState();
   const [rules, setRules] = useState(Array<Rule>());
-  const [completedTasks, setCompletedTasks] = useState([]);
+  // const [completedTasks, setCompletedTasks] = useState([]);
   const { gardenId } = useParams<{ gardenId: string }>();
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
@@ -49,7 +49,7 @@ export const DailyGardening = () => {
       );
 
       setRules(res.data?.rules || []);
-      setCompletedTasks(res.data?.completedTasks || []);
+      // setCompletedTasks(res.data?.completedTasks || []);
       const completedTasks = res.data?.completedTasks || [];
 
       checkCompletedTaskStatus(rules, completedTasks);
@@ -67,7 +67,7 @@ export const DailyGardening = () => {
     history.push(page);
   };
 
-  const completeTaskHandler = (rule: Rule) => {
+  const completeTaskHandler = async (rule: Rule) => {
     const completedTask: CompletedTask = {
       ruleId: rule._id || "",
       // TODO: Fix when backend updates schema for completedTask's fireBaseUserId
@@ -77,7 +77,7 @@ export const DailyGardening = () => {
     };
 
     const sendCompletedTask = async () => {
-      const res = await axios.post(
+      await axios.post(
         "https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks",
         completedTask
       );
@@ -94,7 +94,6 @@ export const DailyGardening = () => {
 
   const checkCompletedTaskStatus = (
     currentRules: Array<Rule>,
-
     currentCompletedTasks: Array<CompletedTask>
   ) => {
     const currentRulesStatus: Array<boolean> = currentRules.map(
