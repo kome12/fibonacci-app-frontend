@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { Loading } from "./components/LoadingWrapper/Loading";
@@ -38,33 +39,35 @@ export const Routes = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Switch location={location}>
-        {userData.isLoggedIn && (
-          <Switch>
-            <Route path="/user">
-              <UserViewLayout showHeader showBottomNav>
-                <Route path="/user/myGardens" component={MyGardens} exact />
-                <Route
-                  path="/user/dailyGardening/:gardenId"
-                  component={DailyGardening}
-                  exact
-                />
-                <Route
-                  path="/user/createGarden"
-                  component={CreateGarden}
-                  exact
-                />
-              </UserViewLayout>
-            </Route>
-            <Route path="/about" component={About} exact />
-            <Route path="/" component={Home} exact />
-            <Route component={NotFound} />
-          </Switch>
-        )}
-        <Route path="/about" component={About} exact />
-        <Route path="/" component={Home} exact />
-        <Route component={NotFound} />
-      </Switch>
+      <AnimatePresence>
+        <Switch location={location}>
+          {userData.isLoggedIn && (
+            <Switch>
+              <Route path="/user">
+                <UserViewLayout showHeader showBottomNav>
+                  <Route path="/user/myGardens" component={MyGardens} exact />
+                  <Route
+                    path="/user/dailyGardening/:gardenId"
+                    component={DailyGardening}
+                    exact
+                  />
+                  <Route
+                    path="/user/createGarden"
+                    component={CreateGarden}
+                    exact
+                  />
+                </UserViewLayout>
+              </Route>
+              <Route path="/about" component={About} exact />
+              <Route path="/" component={Home} exact />
+              <Route component={NotFound} />
+            </Switch>
+          )}
+          <Route path="/about" component={About} exact />
+          <Route path="/" component={Home} exact />
+          <Route component={NotFound} />
+        </Switch>
+      </AnimatePresence>
     </Suspense>
   );
 };
