@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       height: "100%",
+      overflowX: "hidden",
     },
     container: {
       height: "85%",
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     card: {
       textAlign: "center",
       height: "100%",
+      backgroundColor: theme.palette.background.default,
     },
     stepper: {
       height: "10%",
@@ -135,6 +137,11 @@ export const CreateGarden = () => {
       alignItems="center"
       justifyContent="space-between"
       className={classes.root}
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0 }}
     >
       <Container className={classes.root} component={motion.div}>
         <Paper className={classes.card} elevation={0}>

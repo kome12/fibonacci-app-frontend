@@ -5,6 +5,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
@@ -44,7 +45,12 @@ export const MyGardens = () => {
   }, []);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="my-gardens-container">
         <h1>My Gardens</h1>
         <LoadingWrapper isLoading={isFetchingGardens}>
@@ -79,6 +85,6 @@ export const MyGardens = () => {
           </div>
         </LoadingWrapper>
       </div>
-    </>
+    </motion.div>
   );
 };
