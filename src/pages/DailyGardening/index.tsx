@@ -4,7 +4,6 @@ import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
-import UndoIcon from "@material-ui/icons/Undo";
 import axios from "axios";
 import { isSameDay } from "date-fns";
 import { motion } from "framer-motion";
@@ -88,24 +87,24 @@ export const DailyGardening = () => {
   };
 
   // TODO: Implement delete task
-  const handleDelete = async (rule: Rule) => {
-    console.log("Needs implementation");
-    const deleteCompletedTask: CompletedTask | undefined = completedTasks.find(
-      (completedTask: CompletedTask) =>
-        completedTask.ruleId === rule._id &&
-        isSameDay(new Date(), new Date(completedTask.date))
-    );
+  // const handleDelete = async (rule: Rule) => {
+  //   console.log("Needs implementation");
+  //   const deleteCompletedTask: CompletedTask | undefined = completedTasks.find(
+  //     (completedTask: CompletedTask) =>
+  //       completedTask.ruleId === rule._id &&
+  //       isSameDay(new Date(), new Date(completedTask.date))
+  //   );
 
-    if (deleteCompletedTask) {
-      // will return updated coins for users
-      await axios.delete(
-        `https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks${
-          deleteCompletedTask._id
-        }/fireBaseUserId/${(userData.isLoggedIn && userData.id) || ""}`
-      );
-      setGetData(true);
-    }
-  };
+  //   if (deleteCompletedTask) {
+  //     // will return updated coins for users
+  //     await axios.delete(
+  //       `https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks${
+  //         deleteCompletedTask._id
+  //       }/fireBaseUserId/${(userData.isLoggedIn && userData.id) || ""}`
+  //     );
+  //     setGetData(true);
+  //   }
+  // };
 
   const checkCompletedTaskStatus = (
     currentRules: Array<Rule>,
@@ -168,8 +167,8 @@ export const DailyGardening = () => {
                         completeTaskHandler(rule);
                       }}
                       // TODO: Implement UNDO
-                      onDelete={() => handleDelete(rule)}
-                      deleteIcon={<UndoIcon />}
+                      // onDelete={() => handleDelete(rule)}
+                      // deleteIcon={<UndoIcon />}
                     />
                     {rule.description ? (
                       <div className="rule-description">
