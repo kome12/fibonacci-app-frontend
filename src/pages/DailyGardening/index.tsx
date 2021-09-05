@@ -31,7 +31,8 @@ export const DailyGardening = () => {
   // const [garden, setGarden] = useState({});
   const { userData } = useUserState();
   const [rules, setRules] = useState(Array<Rule>());
-  const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
+  // TODO: Please uncomment below line for delete!
+  // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
   const { gardenId } = useParams<{ gardenId: string }>();
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
@@ -49,7 +50,8 @@ export const DailyGardening = () => {
       );
 
       setRules(res.data?.rules || []);
-      setCompletedTasks(res.data?.completedTasks || []);
+      // TODO: Please uncomment below line for delete!
+      // setCompletedTasks(res.data?.completedTasks || []);
       const completedTasks = res.data?.completedTasks || [];
 
       checkCompletedTaskStatus(rules, completedTasks);
