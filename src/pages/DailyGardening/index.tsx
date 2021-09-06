@@ -31,7 +31,8 @@ export const DailyGardening = () => {
   // const [garden, setGarden] = useState({});
   const { userData } = useUserState();
   const [rules, setRules] = useState(Array<Rule>());
-  // const [completedTasks, setCompletedTasks] = useState([]);
+  // TODO: Please uncomment below line for delete!
+  // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
   const { gardenId } = useParams<{ gardenId: string }>();
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
@@ -49,6 +50,7 @@ export const DailyGardening = () => {
       );
 
       setRules(res.data?.rules || []);
+      // TODO: Please uncomment below line for delete!
       // setCompletedTasks(res.data?.completedTasks || []);
       const completedTasks = res.data?.completedTasks || [];
 
@@ -87,8 +89,23 @@ export const DailyGardening = () => {
   };
 
   // TODO: Implement delete task
-  // const handleDelete = () => {
+  // const handleDelete = async (rule: Rule) => {
   //   console.log("Needs implementation");
+  //   const deleteCompletedTask: CompletedTask | undefined = completedTasks.find(
+  //     (completedTask: CompletedTask) =>
+  //       completedTask.ruleId === rule._id &&
+  //       isSameDay(new Date(), new Date(completedTask.date))
+  //   );
+
+  //   if (deleteCompletedTask) {
+  //     // will return updated coins for users
+  //     await axios.delete(
+  //       `https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks${
+  //         deleteCompletedTask._id
+  //       }/fireBaseUserId/${(userData.isLoggedIn && userData.id) || ""}`
+  //     );
+  //     setGetData(true);
+  //   }
   // };
 
   const checkCompletedTaskStatus = (
@@ -152,7 +169,7 @@ export const DailyGardening = () => {
                         completeTaskHandler(rule);
                       }}
                       // TODO: Implement UNDO
-                      // onDelete={handleDelete}
+                      // onDelete={() => handleDelete(rule)}
                       // deleteIcon={<UndoIcon />}
                     />
                     {rule.description ? (
