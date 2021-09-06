@@ -4,15 +4,17 @@ import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
-import axios from "axios";
 import { isSameDay } from "date-fns";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
+import {
+  CompletedTaskToSend,
+  sendCompletedTask,
+} from "../../helpers/api/completedTasks/sendCompletedTask";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
-import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
@@ -20,21 +22,45 @@ import wateringAnimation from "./assets/watering.gif";
 import "./DailyGardening.css";
 
 export const DailyGardening = () => {
-  const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
-  const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
+  const history = useHistory();
+  const { userData } = useUserState();
 
+  const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
+  const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
+
+  const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
   );
+  const completedTasks = useMemo(() => {
+    const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
+    if (completedTaskApi.response) {
+      currentCompletedTasks.push(completedTaskApi.response);
+      return currentCompletedTasks;
+    }
+    return currentCompletedTasks;
+  }, [gardenDataApi, completedTaskApi]);
 
-  const { userData } = useUserState();
+  const isRuleCompleted = useCallback(
+    (ruleId?: string) => {
+      if (!completedTasks || !ruleId) return false;
+
+      return completedTasks.some((completedTask) => {
+        return (
+          isSameDay(new Date(), new Date(completedTask.date)) &&
+          completedTask.ruleId === ruleId
+        );
+      });
+    },
+    [completedTasks]
+  );
+
+  console.log({ completedTasks });
 
   // TODO: Please uncomment below line for delete!
   // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
   const { gardenId } = useParams<{ gardenId: string }>();
-  const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
-  const [getData, setGetData] = useState(true);
   const [showDescriptions, setShowDescriptions] = useState(false);
 
   useEffect(() => {
@@ -44,32 +70,20 @@ export const DailyGardening = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gardenId]);
 
-  const history = useHistory();
-  const linkHandler = (page: string) => {
-    history.push(page);
-  };
+  const completeTaskHandler = useCallback(
+    async (rule: Rule) => {
+      const completedTask: CompletedTaskToSend = {
+        ruleId: rule._id || "",
+        fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
+        date: new Date().toISOString(),
+        rewardTypeId: "61274429d20570644762b99b",
+      };
 
-  const completeTaskHandler = async (rule: Rule) => {
-    const completedTask: Omit<
-      CompletedTask,
-      "_id" | "createdDate" | "lastUpdate"
-    > = {
-      ruleId: rule._id || "",
-      fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
-      date: new Date().toISOString(),
-      rewardTypeId: "61274429d20570644762b99b",
-    };
-
-    const sendCompletedTask = async () => {
-      await axios.post(
-        "https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks",
-        completedTask
-      );
-      setGetData(true);
-    };
-
-    sendCompletedTask();
-  };
+      sendCompletedTaskData(completedTask);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userData]
+  );
 
   // TODO: Implement delete task
   // const handleDelete = async (rule: Rule) => {
@@ -90,25 +104,6 @@ export const DailyGardening = () => {
   //     setGetData(true);
   //   }
   // };
-
-  const checkCompletedTaskStatus = (
-    currentRules: Array<Rule>,
-    currentCompletedTasks: Array<CompletedTask>
-  ) => {
-    const currentRulesStatus: Array<boolean> = currentRules.map(
-      (rule: Rule) => {
-        const filteredCompletedTasks: Array<CompletedTask> =
-          currentCompletedTasks.filter((completedTask: CompletedTask) => {
-            return completedTask.ruleId === rule._id;
-          });
-
-        return filteredCompletedTasks.some((completedTask: CompletedTask) => {
-          return isSameDay(new Date(), new Date(completedTask.date));
-        });
-      }
-    );
-    setRulesStatus(currentRulesStatus);
-  };
 
   const handleChipColor = (bool: boolean) => {
     return bool ? "primary" : "secondary";
@@ -140,16 +135,18 @@ export const DailyGardening = () => {
                 name="detailView"
               />
               View Details
-              {rules.map((rule, index) => {
+              {rules.map((rule) => {
                 return (
                   <Card variant="outlined" key={rule._id}>
                     <Chip
-                      icon={rulesStatus[index] ? <DoneIcon /> : <CloseIcon />}
+                      icon={
+                        isRuleCompleted(rule._id) ? <DoneIcon /> : <CloseIcon />
+                      }
                       label={rule.name}
                       clickable
-                      color={handleChipColor(rulesStatus[index])}
+                      color={handleChipColor(isRuleCompleted(rule._id))}
                       onClick={() => {
-                        completeTaskHandler(rule);
+                        !isRuleCompleted(rule._id) && completeTaskHandler(rule);
                       }}
                       // TODO: Implement UNDO
                       // onDelete={() => handleDelete(rule)}
@@ -170,7 +167,7 @@ export const DailyGardening = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => linkHandler("/user/myGardens")}
+                onClick={() => history.push("/user/myGardens")}
               >
                 Go back to My Gardens
               </Button>
