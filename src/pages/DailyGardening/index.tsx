@@ -10,6 +10,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
+// TODO: Revisit when delete api is implemented
+// import { deleteCompletedTask } from "../../helpers/api/completedTasks/deleteCompletedTask";
 import {
   CompletedTaskToSend,
   sendCompletedTask,
@@ -27,9 +29,15 @@ export const DailyGardening = () => {
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
+  // TODO: Revisit when delete api is implemented
+  // const [deletedTaskApi, deleteTask] = useApi(deleteCompletedTask);
 
+  const userId = useMemo(
+    () => (userData.isLoggedIn ? userData.id : ""),
+    [userData]
+  );
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
-  console.log("MEMO: Use garden data:", { garden });
+  console.log("TODO: Use garden data:", { garden });
 
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
@@ -74,7 +82,7 @@ export const DailyGardening = () => {
     async (rule: Rule) => {
       const completedTask: CompletedTaskToSend = {
         ruleId: rule._id || "",
-        fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
+        fireBaseUserId: userId,
         date: new Date().toISOString(),
         rewardTypeId: "61274429d20570644762b99b",
       };
@@ -85,25 +93,23 @@ export const DailyGardening = () => {
     [userData]
   );
 
-  // TODO: Implement delete task
-  // const handleDelete = async (rule: Rule) => {
-  //   console.log("Needs implementation");
-  //   const deleteCompletedTask: CompletedTask | undefined = completedTasks.find(
-  //     (completedTask: CompletedTask) =>
-  //       completedTask.ruleId === rule._id &&
-  //       isSameDay(new Date(), new Date(completedTask.date))
-  //   );
+  // TODO: Revisit when delete api is implemented.
+  // const handleDelete = useCallback(
+  //   async (rule: Rule) => {
+  //     const deleteCompletedTask: CompletedTask | undefined =
+  //       completedTasks.find(
+  //         (completedTask: CompletedTask) =>
+  //           completedTask.ruleId === rule._id &&
+  //           isSameDay(new Date(), new Date(completedTask.date))
+  //       );
 
-  //   if (deleteCompletedTask) {
-  //     // will return updated coins for users
-  //     await axios.delete(
-  //       `https://the-fibonacci-api-staging.herokuapp.com/api/v1/completedTasks${
-  //         deleteCompletedTask._id
-  //       }/fireBaseUserId/${(userData.isLoggedIn && userData.id) || ""}`
-  //     );
-  //     setGetData(true);
-  //   }
-  // };
+  //     if (deleteCompletedTask && userId) {
+  //       // will return updated coins for users
+  //       await deleteTask(deleteCompletedTask._id, userId);
+  //     }
+  //   },
+  //   [completedTasks, deleteTask, userId]
+  // );
 
   const handleChipColor = (bool: boolean) => {
     return bool ? "primary" : "secondary";
