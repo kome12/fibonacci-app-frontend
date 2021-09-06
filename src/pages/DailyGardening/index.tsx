@@ -154,16 +154,15 @@ export const DailyGardening = () => {
                       onClick={() => {
                         !isRuleCompleted(rule._id) && completeTaskHandler(rule);
                       }}
+                      disabled={completedTaskApi.status === "loading"}
                       // TODO: Implement UNDO
                       // onDelete={() => handleDelete(rule)}
                       // deleteIcon={<UndoIcon />}
                     />
-                    {rule.description ? (
-                      <div className="rule-description">
+                    {rule.description && (
+                      <p className="rule-description">
                         {showDescriptions && rule.description}
-                      </div>
-                    ) : (
-                      <div></div>
+                      </p>
                     )}
                   </Card>
                 );
