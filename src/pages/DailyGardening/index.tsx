@@ -29,6 +29,8 @@ export const DailyGardening = () => {
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
+  console.log("MEMO: Use garden data:", { garden });
+
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
@@ -55,8 +57,6 @@ export const DailyGardening = () => {
     },
     [completedTasks]
   );
-
-  console.log({ completedTasks });
 
   // TODO: Please uncomment below line for delete!
   // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
