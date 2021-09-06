@@ -37,6 +37,9 @@ export const api = {
   post<R>(url: string, data?: unknown) {
     return request<R>({ method: "post", url, data });
   },
+  delete<R>(url: string, data?: unknown) {
+    return request<R>({ method: "delete", url, data });
+  },
   put<R>(url: string, data?: unknown) {
     return request<R>({ method: "put", url, data });
   },
