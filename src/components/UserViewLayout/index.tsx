@@ -17,8 +17,10 @@ export const UserViewLayout: React.FC<UserViewLayoutProps> = ({
   const [currentPage, setCurrentPage] = useState("/user/myGardens");
   const history = useHistory();
   const handlePageChange = (_event, newValue: string) => {
-    setCurrentPage(newValue);
-    history.push(newValue);
+    if (newValue !== "more") {
+      setCurrentPage(newValue);
+      history.push(newValue);
+    }
   };
   return (
     <div className={styles.layout}>
