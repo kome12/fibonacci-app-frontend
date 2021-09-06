@@ -28,10 +28,7 @@ export const MyGardens = () => {
   const { userData } = useUserState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
 
-  const myGardens = useMemo(
-    () => gardensApi.response?.gardens ?? [],
-    [gardensApi]
-  );
+  const myGardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
 
   useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
