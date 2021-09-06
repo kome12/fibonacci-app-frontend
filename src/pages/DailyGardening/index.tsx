@@ -7,62 +7,42 @@ import DoneIcon from "@material-ui/icons/Done";
 import axios from "axios";
 import { isSameDay } from "date-fns";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
+import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
 import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
+import { useApi } from "../../utils/api/useApi";
 import wateringAnimation from "./assets/watering.gif";
 import "./DailyGardening.css";
 
 export const DailyGardening = () => {
-  // TODO: FIX API CALL AFTER MVP
-  // TODO: Need to be refactor
+  const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
+  const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
 
-  // const [gardenByGardenIdApi, getGardenByGardenIdData] =
-  //   useApi(getGardenByGardenId);
-  // const gardens = useMemo(
-  //   () => gardenByGardenIdApi.response ?? [],
-  //   [gardenByGardenIdApi]
-  // );
+  const rules = useMemo(
+    () => gardenDataApi.response?.rules ?? [],
+    [gardenDataApi]
+  );
 
-  // const [garden, setGarden] = useState({});
   const { userData } = useUserState();
-  const [rules, setRules] = useState(Array<Rule>());
+
   // TODO: Please uncomment below line for delete!
   // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
   const { gardenId } = useParams<{ gardenId: string }>();
   const [rulesStatus, setRulesStatus] = useState(Array<boolean>());
   const [getData, setGetData] = useState(true);
-  const [isFetchingGardenData, setIsFetchingGardenData] = useState(true);
   const [showDescriptions, setShowDescriptions] = useState(false);
 
   useEffect(() => {
-    const getDataFromBackend = async () => {
-      // await getGardenByGardenIdData();
-      // console.log("gardenByGardenIdApi:", gardenByGardenIdApi);
-
-      // setRules(gardenByGardenIdApi.response?.rules || []);
-      const res = await axios.get(
-        `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/${gardenId}`
-      );
-
-      setRules(res.data?.rules || []);
-      // TODO: Please uncomment below line for delete!
-      // setCompletedTasks(res.data?.completedTasks || []);
-      const completedTasks = res.data?.completedTasks || [];
-
-      checkCompletedTaskStatus(rules, completedTasks);
-      setIsFetchingGardenData(false);
-      setGetData(false);
-    };
-
-    if (getData) {
-      getDataFromBackend();
+    if (gardenId) {
+      getGardenData(gardenId);
     }
-  }, [rules, gardenId, getData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gardenId]);
 
   const history = useHistory();
   const linkHandler = (page: string) => {
@@ -70,7 +50,10 @@ export const DailyGardening = () => {
   };
 
   const completeTaskHandler = async (rule: Rule) => {
-    const completedTask: CompletedTask = {
+    const completedTask: Omit<
+      CompletedTask,
+      "_id" | "createdDate" | "lastUpdate"
+    > = {
       ruleId: rule._id || "",
       fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
       date: new Date().toISOString(),
@@ -140,7 +123,7 @@ export const DailyGardening = () => {
     >
       <div className="garden-parent-container">
         <h1>Daily Gardening</h1>
-        <LoadingWrapper isLoading={isFetchingGardenData}>
+        <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
           <div className="garden-view-container">
             <div className="watering-animation-container">
               <img
