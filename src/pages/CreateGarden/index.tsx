@@ -26,6 +26,8 @@ export interface NewUserRule {
   description?: string;
 }
 
+type NewGardenData = Omit<Garden, "_id" | "createdDate" | "lastUpdate">;
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -96,7 +98,7 @@ export const CreateGarden = () => {
   const createGardenHandler = () => {
     const createGardenAndRules = async () => {
       // TODO: FIX the endpoint
-      const newGarden: Garden = {
+      const newGarden: NewGardenData = {
         name: name,
         description: desc,
         fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
