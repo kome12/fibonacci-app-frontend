@@ -1,29 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
-export const baseURL = () => {
-  // switch (process.env.NODE_ENV) {
-  //   case "production":
-  //     return "https://the-fibonacci-api.herokuapp.com/";
-  //   case "test":
-  //     return "https://the-fibonacci-api-staging.herokuapp.com/api/v1";
-  //   case "development":
-  //     return "http://localhost:3001/api/v1";
-  // }
-  return "https://the-fibonacci-api-staging.herokuapp.com/api/v1";
-  // return "http://localhost:3001/api/v1";
-};
-
-export const clientBaseURL = () => {
-  switch (process.env.NODE_ENV) {
-    case "production":
-      return "https://the-fibonacci-app.herokuapp.com/";
-    case "test":
-      return "https://the-fibonacci-app-staging.herokuapp.com/";
-    case "development":
-      return "http://localhost:3000";
-  }
-};
-
 export type ApiResponse<T> =
   | {
       error: undefined;
@@ -38,9 +14,7 @@ async function request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
   try {
     const res = await axios.request<T>({
       timeout: 10000,
-      baseURL: baseURL(),
-      // xsrfHeaderName: 'X-CSRF-Token',
-      // withCredentials: true,
+      baseURL: process.env.REACT_APP_API_BASE_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -62,6 +36,9 @@ export const api = {
   },
   post<R>(url: string, data?: unknown) {
     return request<R>({ method: "post", url, data });
+  },
+  delete<R>(url: string, data?: unknown) {
+    return request<R>({ method: "delete", url, data });
   },
   put<R>(url: string, data?: unknown) {
     return request<R>({ method: "put", url, data });
