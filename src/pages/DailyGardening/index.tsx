@@ -4,7 +4,7 @@ import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
-import { isSameDay } from "date-fns";
+import { formatISO, isSameDay } from "date-fns";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router";
@@ -73,17 +73,32 @@ export const DailyGardening = () => {
 
   useEffect(() => {
     if (gardenId) {
-      getGardenData(gardenId);
+      const dateISO: string = formatISO(new Date(), {
+        representation: "date",
+      });
+      getGardenData(gardenId, dateISO);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gardenId]);
 
   const completeTaskHandler = useCallback(
     async (rule: Rule) => {
+      const localeDate: Date = new Date();
+      const utcDate: Date = new Date(
+        Date.UTC(
+          localeDate.getFullYear(),
+          localeDate.getMonth(),
+          localeDate.getDate(),
+          0,
+          0,
+          0,
+          0
+        )
+      );
       const completedTask: CompletedTaskToSend = {
         ruleId: rule._id || "",
         fireBaseUserId: userId,
-        date: new Date().toISOString(),
+        date: utcDate.toISOString(),
         rewardTypeId: "61274429d20570644762b99b",
       };
 
