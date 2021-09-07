@@ -172,7 +172,7 @@ export const DailyGardening = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => history.push("/user/myGardens")}
+                onClick={() => history.push("/user/myniwa")}
               >
                 Go back to My Gardens
               </Button>

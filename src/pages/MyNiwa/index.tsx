@@ -14,7 +14,7 @@ import { useUserState } from "../../store/user/useUserState";
 import AddIcon from "@material-ui/icons/Add";
 import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
-import "./MyGardens.css";
+import "./MyNiwa.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,12 +38,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const MyGardens = () => {
+export const MyNiwa = () => {
   const classes = useStyles();
   const { userData } = useUserState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
 
-  const myGardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
+  const myniwa = useMemo(() => gardensApi.response ?? [], [gardensApi]);
 
   useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
@@ -71,7 +71,7 @@ export const MyGardens = () => {
           direction="row"
           justifyContent="space-between"
         >
-          <h1>My Gardens</h1>
+          <h1>My Niwa</h1>
           <Tooltip title="Add Flower Bed">
             <IconButton
               className={classes.createGarden}
@@ -83,7 +83,7 @@ export const MyGardens = () => {
         </Grid>
         <LoadingWrapper isLoading={!gardensApi.isLoaded}>
           <div className="gardens-view">
-            {myGardens.map((garden, index) => {
+            {myniwa.map((garden, index) => {
               return (
                 <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
                   <Card className={`garden-card ${classes.root}`}>
