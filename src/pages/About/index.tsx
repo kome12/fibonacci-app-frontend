@@ -11,12 +11,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import gardenPhoto from "./assets/david-emrich-dJcDUnby4n4-unsplash.jpg";
+import gardenPhoto from "./assets/david-emrich-9a0S_8bU0lo-unsplash.jpg";
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
   media: {
     height: 140,
   },
