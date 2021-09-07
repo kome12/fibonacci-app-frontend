@@ -4,13 +4,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
-import { Garden } from "../../models/garden.model";
+import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { useUserState } from "../../store/user/useUserState";
+import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
 import "./MyGardens.css";
 
@@ -26,22 +26,15 @@ const useStyles = makeStyles({
 export const MyGardens = () => {
   const classes = useStyles();
   const { userData } = useUserState();
-  const [isFetchingGardens, setIsFetchingGardens] = useState(true);
-  const [myGardens, setMyGardens] = useState<Array<Garden>>([]);
+  const [gardensApi, getUserGardens] = useApi(getGardens);
+
+  const myGardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
 
   useEffect(() => {
-    const getDataFromBackend = async () => {
-      if (userData.isLoggedIn && userData.id) {
-        // TODO: FIX DATABASE CALL AFTER MVP
-        const res = await axios.get(
-          `https://the-fibonacci-api-staging.herokuapp.com/api/v1/gardens/userid/${userData?.id}`
-        );
-        setMyGardens(res.data || []);
-        setIsFetchingGardens(false);
-      }
-    };
-
-    getDataFromBackend();
+    if (userData.isLoggedIn && userData.id) {
+      getUserGardens(userData.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   return (
@@ -53,7 +46,7 @@ export const MyGardens = () => {
     >
       <div className="my-gardens-container">
         <h1>My Gardens</h1>
-        <LoadingWrapper isLoading={isFetchingGardens}>
+        <LoadingWrapper isLoading={!gardensApi.isLoaded}>
           <div className="gardens-view">
             {myGardens.map((garden, index) => {
               return (
