@@ -1,12 +1,15 @@
+import { useState } from "react";
 import {
   AppBar,
   BottomNavigation,
   BottomNavigationAction,
   createStyles,
   makeStyles,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 
@@ -30,6 +33,15 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   handlePageChange,
 }) => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // TODO: decide how to change views on button click
 
   // TODO: Fix routes when new features are added.
@@ -43,15 +55,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           icon={<EmojiNatureIcon />}
         ></BottomNavigationAction>
         <BottomNavigationAction
-          label="Flower Bed"
-          showLabel={true}
-          value="/user/createGarden"
-          icon={<AddCircleIcon />}
-        ></BottomNavigationAction>
-        <BottomNavigationAction
           label="Collection"
           showLabel={true}
-          value="/user/collection"
+          value="/user/myCollection"
           icon={<LocalFloristIcon />}
         ></BottomNavigationAction>
         <BottomNavigationAction
@@ -60,7 +66,26 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           value="/user/store"
           icon={<StorefrontIcon />}
         ></BottomNavigationAction>
+        <BottomNavigationAction
+          label="More"
+          showLabel={true}
+          value="more"
+          icon={<MoreHorizIcon />}
+          onClick={handleClick}
+        ></BottomNavigationAction>
       </BottomNavigation>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        transitionDuration={200}
+      >
+        <MenuItem>Menu 1</MenuItem>
+        <MenuItem>Menu 2</MenuItem>
+        <MenuItem>Menu 3</MenuItem>
+        <MenuItem>Menu 4</MenuItem>
+      </Menu>
     </AppBar>
   );
 };

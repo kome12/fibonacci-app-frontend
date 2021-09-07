@@ -1,27 +1,42 @@
+import { Grid, IconButton, Tooltip } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { makeStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { useUserState } from "../../store/user/useUserState";
+import AddIcon from "@material-ui/icons/Add";
 import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
 import "./MyGardens.css";
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 845,
-  },
-  media: {
-    height: 140,
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      maxWidth: 845,
+    },
+    media: {
+      height: 140,
+    },
+    myNiwaHeader: {
+      width: "100%",
+    },
+    createGarden: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
+      alignSelf: "center",
+      "&:hover": {
+        backgroundColor: theme.palette.primary.dark,
+      },
+    },
+  })
+);
 
 export const MyGardens = () => {
   const classes = useStyles();
@@ -37,6 +52,11 @@ export const MyGardens = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
+  const history = useHistory();
+  const goToCreateGarden = () => {
+    history.push("/user/createGarden");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -45,7 +65,22 @@ export const MyGardens = () => {
       exit={{ opacity: 0 }}
     >
       <div className="my-gardens-container">
-        <h1>My Gardens</h1>
+        <Grid
+          container
+          className={classes.myNiwaHeader}
+          direction="row"
+          justifyContent="space-between"
+        >
+          <h1>My Gardens</h1>
+          <Tooltip title="Add Flower Bed">
+            <IconButton
+              className={classes.createGarden}
+              onClick={goToCreateGarden}
+            >
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        </Grid>
         <LoadingWrapper isLoading={!gardensApi.isLoaded}>
           <div className="gardens-view">
             {myGardens.map((garden, index) => {
