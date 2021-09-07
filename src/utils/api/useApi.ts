@@ -74,6 +74,7 @@ export const useApi = <T, ApiCallArgs extends unknown[] = []>(
     if (options?.autoCall) {
       (callApi as () => void)();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return [apiState, callApi] as const;
 };
