@@ -9,7 +9,7 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import BackspaceIcon from "@material-ui/icons/Backspace";
 import styles from "./Florist.module.css";
@@ -71,10 +71,13 @@ export const Florist = () => {
     () => flowersAPIState.response ?? [],
     [flowersAPIState]
   );
+  const calledOnMount = useRef(false);
   useEffect(() => {
-    getAllFlowers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!calledOnMount.current) {
+      getAllFlowers();
+    }
+    calledOnMount.current = true;
+  }, [getAllFlowers]);
 
   const [cart, setCart] = useState<Flower[]>([]);
   const addToCart = (flowerItem: Flower) => {
