@@ -34,8 +34,6 @@ export const Header = () => {
     [userData]
   );
 
-  console.log({ coinBalance });
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
