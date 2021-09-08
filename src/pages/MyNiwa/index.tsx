@@ -5,13 +5,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import AddIcon from "@material-ui/icons/Add";
 import { motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { useUserState } from "../../store/user/useUserState";
-import AddIcon from "@material-ui/icons/Add";
 import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
 import "./MyNiwa.css";
@@ -50,7 +50,7 @@ export const MyNiwa = () => {
   const { userData } = useUserState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
 
-  const myniwa = useMemo(() => gardensApi.response ?? [], [gardensApi]);
+  const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
 
   useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
@@ -90,7 +90,7 @@ export const MyNiwa = () => {
         </Grid>
         <LoadingWrapper isLoading={!gardensApi.isLoaded}>
           <div className="gardens-view">
-            {myniwa.map((garden, index) => {
+            {gardens.map((garden, index) => {
               return (
                 <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
                   <Card className={`garden-card ${classes.root}`}>

@@ -11,6 +11,11 @@
   max-width: 150px;
 }
 
+.userContent {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
   width: 100%;
 }
@@ -31,4 +36,21 @@
   border-style: solid;
   border-width: 4.5px 4.5px 0 4.5px;
   border-color: #172f4a transparent transparent transparent;
+}
+
+.coinBalance {
+  display: flex;
+  align-items: center;
+  color: #172f4a;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.coinBalance > h3 {
+  margin: 0 0 0 4px;
+  font-size: 1.2rem;
+}
+
+.coinBalance > img {
+  width: 25px;
 }
