@@ -9,26 +9,14 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import { useState } from "react";
-import flowerPic from "./assets/flower.png";
+import { useEffect, useMemo, useState } from "react";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import BackspaceIcon from "@material-ui/icons/Backspace";
 import styles from "./Florist.module.css";
-
-const flowers = [
-  { name: "Daisy", price: 2 },
-  { name: "Rose", price: 7 },
-  { name: "Tulip", price: 5 },
-  { name: "Sakura", price: 6 },
-  { name: "Daisy1", price: 2 },
-  { name: "Rose1", price: 7 },
-  { name: "Tulip1", price: 5 },
-  { name: "Sakura1", price: 6 },
-  { name: "Daisy2", price: 2 },
-  { name: "Rose2", price: 7 },
-  { name: "Tulip2", price: 5 },
-  { name: "Sakura2", price: 6 },
-];
+import { Flower } from "../../models/flowers.model";
+import { getFlowers } from "../../helpers/api/flowers/getFlowers";
+import { useApi } from "../../utils/api/useApi";
+import { LoadingWrapper } from "../../components/LoadingWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,12 +65,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Flower {
-  name: string;
-  price: number;
-}
-
 export const Florist = () => {
+  const [flowersAPIState, getAllFlowers] = useApi(getFlowers);
+  const allFlowers = useMemo(
+    () => flowersAPIState.response ?? [],
+    [flowersAPIState]
+  );
+  useEffect(() => {
+    getAllFlowers();
+  }, []);
+
   const [cart, setCart] = useState<Flower[]>([]);
   const addToCart = (flowerItem: Flower) => {
     setCart((prev) => {
@@ -162,33 +154,39 @@ export const Florist = () => {
         </Menu>
       </Grid>
       <Grid container justifyContent="center" className={classes.flowerList}>
-        {flowers.map((flower) => {
-          return (
-            <Button
-              key={flower.name}
-              className={classes.card}
-              onClick={() => addToCart(flower)}
-            >
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                className={
-                  cart.includes(flower) ? classes.selected : classes.notSelected
-                }
+        <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
+          {allFlowers.map((flower) => {
+            return (
+              <Button
+                key={flower.name}
+                className={classes.card}
+                onClick={() => addToCart(flower)}
               >
-                <Typography variant="h6">{flower.name}</Typography>
-                <img
-                  src={flowerPic}
-                  alt={`${flower.name} pic`}
-                  className={styles.pic}
-                />
-                <Typography variant="body1">Price: {flower.price}</Typography>
-              </Grid>
-            </Button>
-          );
-        })}
+                <Grid
+                  container
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  className={
+                    cart.includes(flower)
+                      ? classes.selected
+                      : classes.notSelected
+                  }
+                >
+                  <Typography variant="caption">{flower.name}</Typography>
+                  <img
+                    src={flower.imageURL}
+                    alt={`${flower.name} pic`}
+                    className={styles.pic}
+                  />
+                  <Typography variant="caption">
+                    Price: {flower.price}
+                  </Typography>
+                </Grid>
+              </Button>
+            );
+          })}
+        </LoadingWrapper>
       </Grid>
     </Grid>
   );
