@@ -1,4 +1,3 @@
-// remove ? when dealing with real data
 export interface Flower {
   _id: string;
   name: string;
@@ -6,4 +5,10 @@ export interface Flower {
   price: number;
   isActive: boolean;
   isSecret: boolean;
+}
+
+export interface BuyFlower {
+  fireBaseUserId: string;
+  flowerId: string;
+  price: number;
 }
