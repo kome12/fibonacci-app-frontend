@@ -5,5 +5,5 @@ export interface Rule {
   gardenId: string;
   createdDate: string;
   lastUpdate: string;
-  IsRemoved: boolean;
+  isRemoved: boolean;
 }
