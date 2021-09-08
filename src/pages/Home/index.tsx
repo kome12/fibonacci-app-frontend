@@ -48,7 +48,7 @@ export const Home = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => linkHandler("/user/myGardens")}
+              onClick={() => linkHandler("/user/myniwa")}
             >
               Get me to my Gardens!
             </Button>
