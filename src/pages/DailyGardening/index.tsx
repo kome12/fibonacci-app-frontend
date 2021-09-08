@@ -83,8 +83,8 @@ export const DailyGardening = () => {
 
   const completeTaskHandler = useCallback(
     async (rule: Rule) => {
-      const localeDate: Date = new Date();
-      const utcDate: Date = new Date(
+      const localeDate = new Date();
+      const utcDate = new Date(
         Date.UTC(
           localeDate.getFullYear(),
           localeDate.getMonth(),
