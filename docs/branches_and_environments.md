@@ -2,8 +2,8 @@
 
 | Environment | Branch  | URL |
 | ----------- | ------- | --- |
-| Staging     | staging | https://the-fibonacci-app-staging.herokuapp.com/ |
-| Production  | main    | https://the-fibonacci-app.herokuapp.com/ |
+| Staging     | staging | https://myniwa-staging.netlify.app/ |
+| Production  | main    | https://myniwa.netlify.app/ |
 
 ## Development
 

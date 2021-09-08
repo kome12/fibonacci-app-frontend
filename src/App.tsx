@@ -1,55 +1,28 @@
-import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-import Home from "./components/Home";
-import MyGardens from "./components/MyGardens";
-import GardenView from "./components/GardenView";
-import CreateGarden from "./components/CreateGarden";
-import './App.css';
+import { ThemeProvider } from "@material-ui/core";
+import { Suspense } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import { AppWrapper } from "./components/AppWrapper";
+import { Loading } from "./components/LoadingWrapper/Loading";
+import { Routes } from "./routes";
+import { MyNiwaTheme } from "./utils/UITheme";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/myGardens">My Current Gardens</Link>
-            </li>
-            <li>
-              <Link to="/gardenView">GardenView</Link>
-            </li>
-            <li>
-              <Link to="/createGarden">Create Garden</Link>
-            </li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path="/myGardens">
-            <MyGardens />
-          </Route>
-          <Route path="/gardenView">
-            <GardenView />
-          </Route>
-          <Route path="/createGarden">
-            <CreateGarden />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div>
+      <RecoilRoot>
+        <AppWrapper>
+          <Router>
+            <ThemeProvider theme={MyNiwaTheme}>
+              <Suspense fallback={<Loading />}>
+                <Routes />
+              </Suspense>
+            </ThemeProvider>
+          </Router>
+        </AppWrapper>
+      </RecoilRoot>
     </div>
   );
-}
+};
 
 export default App;

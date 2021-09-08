@@ -1,0 +1,17 @@
+.my-gardens-container {
+  padding: 0 10%;
+  line-height: 1.6rem;
+  max-width: 480px;
+  margin: auto;
+}
+
+.gardens-view {
+  border-radius: 10px;
+  justify-content: center;
+  padding: 5%;
+}
+
+.garden-card {
+  margin: auto;
+  margin-top: 2%;
+}
