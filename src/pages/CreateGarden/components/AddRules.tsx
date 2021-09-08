@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from "react";
 import {
   Button,
   Container,
@@ -12,9 +11,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { UserRule } from "./UserRule";
-import { NewUserRule } from "..";
+import CloseIcon from "@material-ui/icons/Close";
 import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { NewUserRule } from "..";
+import { UserRule } from "./UserRule";
 
 interface AddRulesProps {
   ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
@@ -24,6 +25,7 @@ interface AddRulesProps {
   addRuleHandler: React.MouseEventHandler<HTMLButtonElement>;
   userRules: NewUserRule[];
   animDirection: "left" | "right";
+  removeRule: (index: number) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -65,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "0.25rem",
       marginBottom: "0.25rem",
     },
+    closeIcon: {
+      padding: "10px",
+    },
   })
 );
 
@@ -76,6 +81,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
   addRuleHandler,
   userRules,
   animDirection,
+  removeRule,
 }) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
@@ -119,6 +125,15 @@ export const AddRules: React.FC<AddRulesProps> = ({
             {userRules.map((rule, idx) => (
               <ListItem key={`${rule.name}-${idx}`} className={classes.ruleLi}>
                 <UserRule name={rule.name} description={rule.description} />
+                {idx}
+                <div
+                  className={classes.closeIcon}
+                  onClick={() => {
+                    removeRule(idx);
+                  }}
+                >
+                  <CloseIcon />
+                </div>
               </ListItem>
             ))}
             <div ref={lastRule}></div>

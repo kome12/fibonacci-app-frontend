@@ -8,6 +8,7 @@ export interface Garden {
   fireBaseUserId: string;
   createdDate: string;
   lastUpdate: string;
+  gardenCategoryId: string;
 }
 
 export interface PopulatedGarden {
