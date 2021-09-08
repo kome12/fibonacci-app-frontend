@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { useCallback, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { CountUp } from "use-count-up";
 import { useUserState } from "../../store/user/useUserState";
 import { logout } from "../SignIn/useFirebaseAuth";
 import CoinAsset from "./assets/coin.png";
@@ -29,9 +30,11 @@ export const Header = () => {
   const { userData } = useUserState();
 
   const coinBalance = useMemo(
-    () => (userData.isLoggedIn && userData.numCoins) || "-",
+    () => (userData.isLoggedIn && userData.numCoins) || null,
     [userData]
   );
+
+  console.log({ coinBalance });
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -64,7 +67,19 @@ export const Header = () => {
       {userData.isLoggedIn && (
         <div className={styles.userContent}>
           <div className={styles.coinBalance}>
-            <img src={CoinAsset} alt="" /> <h3>{coinBalance}</h3>
+            <img src={CoinAsset} alt="" />
+            <h3>
+              {coinBalance ? (
+                <CountUp
+                  isCounting={!!coinBalance}
+                  end={coinBalance}
+                  duration={1.5}
+                  thousandsSeparator=","
+                />
+              ) : (
+                "-"
+              )}
+            </h3>
           </div>
           <Button
             aria-controls="simple-menu"
