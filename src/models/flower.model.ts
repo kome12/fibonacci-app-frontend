@@ -6,3 +6,9 @@ export type Flower = {
   isActive: boolean;
   isSecret: boolean;
 };
+
+export type BuyFlower = {
+  fireBaseUserId: string;
+  flowerId: string;
+  price: number;
+};
