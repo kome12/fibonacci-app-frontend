@@ -14,6 +14,7 @@ import { useApi } from "../../utils/api/useApi";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { buyFlower } from "../../helpers/api/flowers/buyFlower";
 import { useUserState } from "../../store/user/useUserState";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,8 +56,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Florist = () => {
   const { userData } = useUserState();
-  // use users collections data
-  const [bought, setBought] = useState<string[]>([]);
+  const userFlowerColl = userData.isLoggedIn
+    ? userData.flowerCollections.map((flower) => flower._id)
+    : [];
+  const [bought, setBought] = useState<string[]>(userFlowerColl);
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
   const boughtFlower = useMemo(
     () => buyFlowerAPIState.response ?? [],
@@ -86,7 +89,7 @@ export const Florist = () => {
   }, [getAllFlowers]);
 
   const classes = useStyles();
-  return (
+  return userData.isLoggedIn ? (
     <Grid
       container
       direction="column"
@@ -144,6 +147,11 @@ export const Florist = () => {
                     onClick={() => buyFlowerClick(flower._id, flower.price)}
                     color="primary"
                     className={classes.buyButton}
+                    disabled={
+                      userData.numCoins && flower.price > userData.numCoins
+                        ? true
+                        : false
+                    }
                   >
                     Buy: {flower.price}
                   </Button>
@@ -154,5 +162,7 @@ export const Florist = () => {
         </Grid>
       </Grid>
     </Grid>
+  ) : (
+    <Redirect exact to="/" />
   );
 };
