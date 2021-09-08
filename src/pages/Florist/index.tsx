@@ -73,6 +73,7 @@ export const Florist = () => {
   );
   useEffect(() => {
     getAllFlowers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [cart, setCart] = useState<Flower[]>([]);
