@@ -7,7 +7,7 @@ type UserData =
       displayName: string;
       imageUrl: string | null;
       isLoggedIn: true;
-      numCoins: number | null;
+      balance: number | null;
       flowerCollections: Flower[];
     }
   | {
