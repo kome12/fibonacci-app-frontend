@@ -80,12 +80,16 @@ export const Florist = () => {
   }, [getAllFlowers]);
 
   const [cart, setCart] = useState<Flower[]>([]);
-  const addToCart = (flowerItem: Flower) => {
+  const addOrRemoveFlower = (flowerItem: Flower) => {
     setCart((prev) => {
-      if (cart.filter((v) => v.name === flowerItem.name).length === 0) {
+      const filteredCart = cart.filter((v) => v.name === flowerItem.name);
+      if (filteredCart.length === 0) {
         return [...prev, flowerItem];
+      } else if (filteredCart.length === 1) {
+        return cart.filter((v) => v.name !== flowerItem.name);
+      } else {
+        return prev;
       }
-      return prev;
     });
   };
   const deleteFromCart = (flowerItem: Flower) => {
@@ -164,7 +168,7 @@ export const Florist = () => {
               <Button
                 key={flower.name}
                 className={classes.card}
-                onClick={() => addToCart(flower)}
+                onClick={() => addOrRemoveFlower(flower)}
               >
                 <Grid
                   container
