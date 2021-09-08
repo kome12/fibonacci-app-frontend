@@ -12,8 +12,12 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import gardenPhoto from "./assets/david-emrich-9a0S_8bU0lo-unsplash.jpg";
+import gardenPhoto2 from "./assets/david-emrich-dJcDUnby4n4-unsplash(small).jpg";
 
 const useStyles = makeStyles({
+  root: {
+    opacity: 0.8,
+  },
   media: {
     height: 140,
   },
@@ -39,13 +43,13 @@ export const About = () => {
     >
       <div className="about-page">
         <div className="about-container">
-          <Card className="info-container">
+          <Card className={classes.root}>
             <CardActionArea>
-              <CardMedia
+              {/* <CardMedia
                 className={classes.media}
                 image={gardenPhoto}
                 title=""
-              />
+              /> */}
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   My niwa is about growing a beautiful garden
@@ -53,12 +57,12 @@ export const About = () => {
                 <Typography>
                   <ol>
                     <li>
-                      Create a flowerbed with seeds (good habits you'd like to
+                      Create a flower bed with seeds (good habits you'd like to
                       have!)
                     </li>
                     <li>Every day, complete your seeds to gain coins!</li>
                     <li>Use your coins to either buy flowers...</li>
-                    <li>Or try your luck with the gacha for rare flowers!</li>
+                    {/* <li>Or try your luck with the gacha for rare flowers!</li> */}
                     <li>
                       Try to collect all the flowers while bettering yourself!
                     </li>
@@ -74,7 +78,7 @@ export const About = () => {
                   size="large"
                   onClick={() => linkHandler()}
                 >
-                  Get me to my Gardens!
+                  Get me to my niwa!
                 </Button>
               ) : (
                 <SignIn />
