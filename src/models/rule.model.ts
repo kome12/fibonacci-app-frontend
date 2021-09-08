@@ -3,6 +3,7 @@ export interface Rule {
   name: string;
   description: string;
   gardenId: string;
+  createdDate: string;
+  lastUpdate: string;
+  isRemoved: boolean;
 }
-
-// TODO: Add interface for CreateRule

@@ -7,4 +7,4 @@ export type CompletedTaskToSend = Omit<
 >;
 
 export const sendCompletedTask = (data: CompletedTaskToSend) =>
-  api.post<CompletedTask>("completedTasks", data);
+  api.post<CompletedTask>("/completedTasks", data);

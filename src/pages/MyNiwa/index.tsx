@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: theme.palette.primary.dark,
       },
     },
+    arrow: {
+      color: theme.palette.primary.dark,
+    },
+    tooltip: {
+      backgroundColor: theme.palette.primary.dark,
+      fontWeight: "bold",
+    },
   })
 );
 
@@ -72,7 +79,7 @@ export const MyNiwa = () => {
           justifyContent="space-between"
         >
           <h1>My Niwa</h1>
-          <Tooltip title="Add Flower Bed">
+          <Tooltip arrow classes={classes} title="Add Flower Bed">
             <IconButton
               className={classes.createGarden}
               onClick={goToCreateGarden}
