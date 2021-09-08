@@ -26,6 +26,10 @@ import "./DailyGardening.css";
 export const DailyGardening = () => {
   const history = useHistory();
   const { userData } = useUserState();
+  const { gardenId } = useParams<{ gardenId: string }>();
+  const [showDescriptions, setShowDescriptions] = useState(false);
+  // TODO: Please uncomment below line for delete!
+  // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
@@ -65,11 +69,6 @@ export const DailyGardening = () => {
     },
     [completedTasks]
   );
-
-  // TODO: Please uncomment below line for delete!
-  // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
-  const { gardenId } = useParams<{ gardenId: string }>();
-  const [showDescriptions, setShowDescriptions] = useState(false);
 
   useEffect(() => {
     if (gardenId) {
@@ -139,6 +138,11 @@ export const DailyGardening = () => {
     >
       <div className="garden-parent-container">
         <h1>Daily Gardening</h1>
+        <button
+          onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
+        >
+          Edit Garden
+        </button>
         <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
           <div className="garden-view-container">
             <div className="watering-animation-container">
