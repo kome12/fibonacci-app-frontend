@@ -11,8 +11,8 @@ const About = React.lazy(() =>
 const Home = React.lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
 );
-const MyGardens = React.lazy(() =>
-  import("./pages/MyGardens").then(({ MyGardens }) => ({ default: MyGardens }))
+const MyNiwa = React.lazy(() =>
+  import("./pages/MyNiwa").then(({ MyNiwa }) => ({ default: MyNiwa }))
 );
 const DailyGardening = React.lazy(() =>
   import("./pages/DailyGardening").then(({ DailyGardening }) => ({
@@ -50,7 +50,7 @@ export const Routes = () => {
             <Switch>
               <Route path="/user">
                 <UserViewLayout showHeader showBottomNav>
-                  <Route path="/user/myGardens" component={MyGardens} exact />
+                  <Route path="/user/myniwa" component={MyNiwa} exact />
                   <Route
                     path="/user/dailyGardening/:gardenId"
                     component={DailyGardening}

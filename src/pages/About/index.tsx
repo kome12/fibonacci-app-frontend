@@ -11,7 +11,7 @@ export const About = () => {
 
   const history = useHistory();
   const linkHandler = () => {
-    history.push("/user/myGardens");
+    history.push("/user/myniwa");
   };
 
   return (

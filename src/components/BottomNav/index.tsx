@@ -51,7 +51,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         <BottomNavigationAction
           label="My Niwa"
           showLabel={true}
-          value="/user/myGardens"
+          value="/user/myniwa"
           icon={<EmojiNatureIcon />}
         ></BottomNavigationAction>
         <BottomNavigationAction
