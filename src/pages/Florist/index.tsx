@@ -12,6 +12,8 @@ import QuestionMark from "./assets/questionMark.png";
 import { getFlowers } from "../../helpers/api/flowers/getFlowers";
 import { useApi } from "../../utils/api/useApi";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
+import { buyFlower } from "../../helpers/api/flowers/buyFlower";
+import { useUserState } from "../../store/user/useUserState";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,13 +47,30 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       backgroundColor: "#6ac69780",
     },
+    buyButton: {
+      marginBottom: "0.125rem",
+    },
   })
 );
 
 export const Florist = () => {
+  const { userData } = useUserState();
+  // use users collections data
   const [bought, setBought] = useState<string[]>([]);
-  const buyFlower = (flowerId, flowerPrice) => {
-    setBought((prev) => [...prev, flowerId]);
+  const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
+  const boughtFlower = useMemo(
+    () => buyFlowerAPIState.response ?? [],
+    [buyFlowerAPIState]
+  );
+  const buyFlowerClick = (flowerId, flowerPrice) => {
+    if (userData.isLoggedIn) {
+      buyFlowerReq({
+        fireBaseUserId: userData.id,
+        flowerId,
+        price: flowerPrice,
+      });
+      if (boughtFlower) setBought((prev) => [...prev, flowerId]);
+    }
   };
   const [flowersAPIState, getAllFlowers] = useApi(getFlowers);
   const allFlowers = useMemo(
@@ -88,6 +107,24 @@ export const Florist = () => {
             {allFlowers.map((flower) => {
               const isBought = bought.includes(flower._id);
               return isBought ? (
+                <LoadingWrapper isLoading={!buyFlowerAPIState.isLoaded}>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    className={classes.cardBought}
+                    key={flower._id}
+                  >
+                    <Typography variant="caption">{flower.name}</Typography>
+                    <img
+                      src={flower.imageURL}
+                      alt={`${flower.name} pic`}
+                      className={styles.boughtPic}
+                    />
+                  </Grid>
+                </LoadingWrapper>
+              ) : (
                 <Grid
                   container
                   direction="column"
@@ -96,38 +133,23 @@ export const Florist = () => {
                   className={classes.card}
                   key={flower._id}
                 >
-                  <Typography variant="caption">{flower.name}</Typography>
-                  <img
-                    src={flower.imageURL}
-                    alt={`${flower.name} pic`}
-                    className={styles.pic}
-                  />
-                  <Button
-                    variant="contained"
-                    onClick={() => buyFlower(flower._id, flower.price)}
-                  >
-                    Buy: {flower.price}
-                  </Button>
-                </Grid>
-              ) : (
-                <Grid
-                  container
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="center"
-                  className={classes.cardBought}
-                  key={flower._id}
-                >
-                  <Typography variant="caption">{flower.name}</Typography>
+                  <Typography variant="caption">???</Typography>
                   <img
                     src={QuestionMark}
                     alt={"secret flower pic"}
                     className={styles.pic}
                   />
+                  <Button
+                    variant="contained"
+                    onClick={() => buyFlowerClick(flower._id, flower.price)}
+                    color="primary"
+                    className={classes.buyButton}
+                  >
+                    Buy: {flower.price}
+                  </Button>
                 </Grid>
               );
             })}
-            ;
           </LoadingWrapper>
         </Grid>
       </Grid>
