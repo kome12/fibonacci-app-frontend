@@ -7,7 +7,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import { motion } from "framer-motion";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: theme.palette.primary.dark,
       },
     },
+  })
+);
+
+const useTooltipStyles = makeStyles((theme: Theme) =>
+  createStyles({
     arrow: {
       color: theme.palette.primary.dark,
     },
@@ -47,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MyNiwa = () => {
   const classes = useStyles();
+  const tooltipStyles = useTooltipStyles();
   const { userData } = useUserState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
 
@@ -63,7 +69,7 @@ export const MyNiwa = () => {
   const goToCreateGarden = () => {
     history.push("/user/createGarden");
   };
-
+  const tooltipRef = useRef(null);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -79,7 +85,12 @@ export const MyNiwa = () => {
           justifyContent="space-between"
         >
           <h1>My Niwa</h1>
-          <Tooltip arrow classes={classes} title="Add Flower Bed">
+          <Tooltip
+            arrow
+            classes={tooltipStyles}
+            title="Add Flower Bed"
+            ref={tooltipRef}
+          >
             <IconButton
               className={classes.createGarden}
               onClick={goToCreateGarden}
