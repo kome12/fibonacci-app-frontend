@@ -7,7 +7,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
@@ -69,7 +69,6 @@ export const MyNiwa = () => {
   const goToCreateGarden = () => {
     history.push("/user/createGarden");
   };
-  const tooltipRef = useRef(null);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -85,12 +84,7 @@ export const MyNiwa = () => {
           justifyContent="space-between"
         >
           <h1>My Niwa</h1>
-          <Tooltip
-            arrow
-            classes={tooltipStyles}
-            title="Add Flower Bed"
-            ref={tooltipRef}
-          >
+          <Tooltip arrow classes={tooltipStyles} title="Add Flower Bed">
             <IconButton
               className={classes.createGarden}
               onClick={goToCreateGarden}
