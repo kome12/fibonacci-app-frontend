@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { Flower } from "../../models/flower.model";
 
 type UserData =
   | {
@@ -8,7 +7,7 @@ type UserData =
       imageUrl: string | null;
       isLoggedIn: true;
       balance: number | null;
-      flowerCollections: Flower[];
+      flowerCollections: string[];
     }
   | {
       isLoggedIn: false | null;
