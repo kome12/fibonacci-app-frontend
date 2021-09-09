@@ -59,39 +59,65 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Florist = () => {
-  const { userData } = useUserState();
-  const userFlowerColl = userData.isLoggedIn
-    ? userData.flowerCollections.map((flower) => flower._id)
-    : [];
-  const [bought, setBought] = useState<string[]>(userFlowerColl);
+  const { userData, setUserData } = useUserState();
+  // const [bought, setBought] = useState<string[]>([]);
   const [lastBought, setLastBought] = useState<string | null>(null);
+  // const [currBalance, setCurrBalance] = useState<number | null>(null)
   const [buyFlowerError, setBuyFlowerError] = useState<boolean>(false);
   const [errMsgVis, setErrMsgVis] = useState<boolean>(false);
-  const [buyFlowerLoading, setBuyFlowerLoading] = useState<boolean>(false);
+  // const [buyFlowerLoading, setBuyFlowerLoading] = useState<boolean>(false);
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
-  const buyFlowerHandler = async (flowerId, flowerPrice) => {
+  const bought = useMemo(()=>userData.isLoggedIn&&userData.flowerCollections||[],[userData])
+  const currBalance = useMemo(()=>userData.isLoggedIn&&userData.balance||0,[userData])
+
+  // useEffect(() => {
+  //   if (userData.isLoggedIn) {
+  //     // setBought(userData.flowerCollections);
+  //     // setCurrBalance(userData.balance);
+  //   }
+  // }, [userData])
+
+  const buyFlowerHandler = async (flowerId: string, flowerPrice: number) => {
     if (userData.isLoggedIn) {
+      setLastBought(flowerId);
       await buyFlowerReq({
         fireBaseUserId: userData.id,
         flowerId,
         price: flowerPrice,
       });
-      setLastBought(flowerId);
+      
     }
   };
+  
   useEffect(() => {
-    if (buyFlowerAPIState.status === "loading") setBuyFlowerLoading(true);
+    // if (buyFlowerAPIState.status === "loading") {
+    //   setBuyFlowerLoading(true);
+    // }
     if (buyFlowerAPIState.status === "succeeded" && lastBought) {
       setBuyFlowerError(false);
-      setBuyFlowerLoading(false);
-      setBought((prev) => [...prev, lastBought]);
+      
+      setUserData((data) => {
+        const newFlowerCollection = data.isLoggedIn && data.flowerCollections ||[]
+        return({ ...data, balance: currBalance, flowerCollections: [...newFlowerCollection,...bought] })})
+      // setBought((prev) => {
+      //   if (!bought.includes(lastBought)) {
+      //     return [...prev, lastBought];
+      //   } else {
+      //     return prev;
+      //   }
+      // });
+      // setCurrBalance(buyFlowerAPIState.response.balance);
     }
+
     if (buyFlowerAPIState.status === "failed") {
       setBuyFlowerError(true);
-      setBuyFlowerLoading(false);
+      
     }
-  }, [buyFlowerAPIState, lastBought]);
+  }, [buyFlowerAPIState.status, lastBought]);
+
+  // useEffect(() => {
+  // }, [currBalance, bought, setUserData])
 
   useEffect(() => {
     if (buyFlowerError) {
@@ -105,13 +131,11 @@ export const Florist = () => {
     () => flowersAPIState.response ?? [],
     [flowersAPIState]
   );
-  const calledOnMount = useRef(false);
+
   useEffect(() => {
-    if (!calledOnMount.current) {
-      getAllFlowers();
-    }
-    calledOnMount.current = true;
-  }, [getAllFlowers]);
+    getAllFlowers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const classes = useStyles();
   return userData.isLoggedIn ? (
@@ -145,6 +169,7 @@ export const Florist = () => {
           <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
             {allFlowers.map((flower) => {
               const isBought = bought.includes(flower._id);
+              // console.log("isBought:", isBought,"bought:", bought, "flower:", flower, allFlowers);
               return isBought ? (
                 <Grid
                   container
@@ -171,7 +196,7 @@ export const Florist = () => {
                   key={flower._id}
                 >
                   <LoadingWrapper
-                    isLoading={flower._id === lastBought && buyFlowerLoading}
+                    isLoading={flower._id === lastBought && buyFlowerAPIState.status === 'loading'}
                   >
                     <Typography variant="caption">???</Typography>
                     <img
