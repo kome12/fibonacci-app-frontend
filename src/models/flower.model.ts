@@ -12,3 +12,10 @@ export type BuyFlower = {
   flowerId: string;
   price: number;
 };
+
+export type BuyFlowerResponse = {
+  _id: string;
+    fireBaseUserId: string;
+    balance: number;
+    flowerCollections: string[];
+}
