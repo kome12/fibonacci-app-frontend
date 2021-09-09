@@ -50,6 +50,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     buyButton: {
       marginBottom: "0.125rem",
+      width: "100%",
+    },
+    errorMsg: {
+      backgroundColor: theme.palette.error.light,
     },
   })
 );
@@ -60,11 +64,11 @@ export const Florist = () => {
     ? userData.flowerCollections.map((flower) => flower._id)
     : [];
   const [bought, setBought] = useState<string[]>(userFlowerColl);
+  const [lastBought, setLastBought] = useState<string | null>(null);
+  const [buyFlowerError, setBuyFlowerError] = useState<boolean>(false);
+  const [buyFlowerLoading, setBuyFlowerLoading] = useState<boolean>(false);
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
-  const boughtFlower = useMemo(
-    () => buyFlowerAPIState.response ?? [],
-    [buyFlowerAPIState]
-  );
+
   const buyFlowerClick = (flowerId, flowerPrice) => {
     if (userData.isLoggedIn) {
       buyFlowerReq({
@@ -72,9 +76,22 @@ export const Florist = () => {
         flowerId,
         price: flowerPrice,
       });
-      if (boughtFlower) setBought((prev) => [...prev, flowerId]);
+      setLastBought(flowerId);
     }
   };
+  useEffect(() => {
+    if (buyFlowerAPIState.status === "loading") setBuyFlowerLoading(true);
+    if (buyFlowerAPIState.status === "succeeded" && lastBought) {
+      setBuyFlowerError(false);
+      setBuyFlowerLoading(false);
+      setBought((prev) => [...prev, lastBought]);
+    }
+    if (buyFlowerAPIState.status === "failed") {
+      setBuyFlowerError(true);
+      setBuyFlowerLoading(false);
+    }
+  }, [buyFlowerAPIState, lastBought]);
+
   const [flowersAPIState, getAllFlowers] = useApi(getFlowers);
   const allFlowers = useMemo(
     () => flowersAPIState.response ?? [],
@@ -107,26 +124,29 @@ export const Florist = () => {
         <Typography variant="h3">Florist</Typography>
         <Grid container justifyContent="center" className={classes.flowerList}>
           <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
+            {buyFlowerError && (
+              <Typography className={classes.errorMsg}>
+                Error buying flower, please try again.
+              </Typography>
+            )}
             {allFlowers.map((flower) => {
               const isBought = bought.includes(flower._id);
               return isBought ? (
-                <LoadingWrapper isLoading={!buyFlowerAPIState.isLoaded}>
-                  <Grid
-                    container
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    className={classes.cardBought}
-                    key={flower._id}
-                  >
-                    <Typography variant="caption">{flower.name}</Typography>
-                    <img
-                      src={flower.imageURL}
-                      alt={`${flower.name} pic`}
-                      className={styles.boughtPic}
-                    />
-                  </Grid>
-                </LoadingWrapper>
+                <Grid
+                  container
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  className={classes.cardBought}
+                  key={flower._id}
+                >
+                  <Typography variant="caption">{flower.name}</Typography>
+                  <img
+                    src={flower.imageURL}
+                    alt={`${flower.name} pic`}
+                    className={styles.boughtPic}
+                  />
+                </Grid>
               ) : (
                 <Grid
                   container
@@ -136,25 +156,29 @@ export const Florist = () => {
                   className={classes.card}
                   key={flower._id}
                 >
-                  <Typography variant="caption">???</Typography>
-                  <img
-                    src={QuestionMark}
-                    alt={"secret flower pic"}
-                    className={styles.pic}
-                  />
-                  <Button
-                    variant="contained"
-                    onClick={() => buyFlowerClick(flower._id, flower.price)}
-                    color="primary"
-                    className={classes.buyButton}
-                    disabled={
-                      userData.numCoins && flower.price > userData.numCoins
-                        ? true
-                        : false
-                    }
+                  <LoadingWrapper
+                    isLoading={flower._id === lastBought && buyFlowerLoading}
                   >
-                    Buy: {flower.price}
-                  </Button>
+                    <Typography variant="caption">???</Typography>
+                    <img
+                      src={QuestionMark}
+                      alt={"secret flower pic"}
+                      className={styles.pic}
+                    />
+                    <Button
+                      variant="contained"
+                      onClick={() => buyFlowerClick(flower._id, flower.price)}
+                      color="primary"
+                      className={classes.buyButton}
+                      disabled={
+                        !userData.balance || flower.price > userData.balance
+                          ? true
+                          : false
+                      }
+                    >
+                      Buy: {flower.price}
+                    </Button>
+                  </LoadingWrapper>
                 </Grid>
               );
             })}
