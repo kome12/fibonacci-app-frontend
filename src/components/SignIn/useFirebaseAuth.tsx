@@ -18,6 +18,8 @@ export const useFirebaseAuth = () => {
           displayName: user.displayName ?? "",
           imageUrl: user.photoURL,
           isLoggedIn: true,
+          balance: null,
+          flowerCollections: [],
         });
         return;
       }

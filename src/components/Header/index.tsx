@@ -3,11 +3,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { CountUp } from "use-count-up";
 import { useUserState } from "../../store/user/useUserState";
 import { logout } from "../SignIn/useFirebaseAuth";
+import CoinAsset from "./assets/coin.png";
 import MyNiwaLogo from "./assets/myniwa.svg";
 import styles from "./Header.module.css";
 
@@ -26,6 +28,13 @@ const useStyles = makeStyles(() =>
 export const Header = () => {
   const history = useHistory();
   const { userData } = useUserState();
+
+  const coinBalance = useMemo(
+    () => (userData.isLoggedIn && userData.balance) || null,
+    [userData]
+  );
+
+  console.log({ coinBalance });
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -56,7 +65,22 @@ export const Header = () => {
       </Link>
 
       {userData.isLoggedIn && (
-        <>
+        <div className={styles.userContent}>
+          <div className={styles.coinBalance}>
+            <img src={CoinAsset} alt="" />
+            <h3>
+              {coinBalance ? (
+                <CountUp
+                  isCounting={!!coinBalance}
+                  end={coinBalance}
+                  duration={1.5}
+                  thousandsSeparator=","
+                />
+              ) : (
+                "-"
+              )}
+            </h3>
+          </div>
           <Button
             aria-controls="simple-menu"
             aria-haspopup="true"
@@ -83,7 +107,7 @@ export const Header = () => {
             </MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
-        </>
+        </div>
       )}
     </AppBar>
   );

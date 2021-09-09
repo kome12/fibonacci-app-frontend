@@ -125,7 +125,6 @@ export const AddRules: React.FC<AddRulesProps> = ({
             {userRules.map((rule, idx) => (
               <ListItem key={`${rule.name}-${idx}`} className={classes.ruleLi}>
                 <UserRule name={rule.name} description={rule.description} />
-                {idx}
                 <div
                   className={classes.closeIcon}
                   onClick={() => {
