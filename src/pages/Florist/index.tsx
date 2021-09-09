@@ -70,9 +70,9 @@ export const Florist = () => {
   const [buyFlowerLoading, setBuyFlowerLoading] = useState<boolean>(false);
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
-  const buyFlowerClick = (flowerId, flowerPrice) => {
+  const buyFlowerHandler = async (flowerId, flowerPrice) => {
     if (userData.isLoggedIn) {
-      buyFlowerReq({
+      await buyFlowerReq({
         fireBaseUserId: userData.id,
         flowerId,
         price: flowerPrice,
@@ -181,7 +181,7 @@ export const Florist = () => {
                     />
                     <Button
                       variant="contained"
-                      onClick={() => buyFlowerClick(flower._id, flower.price)}
+                      onClick={() => buyFlowerHandler(flower._id, flower.price)}
                       color="primary"
                       className={classes.buyButton}
                       disabled={
