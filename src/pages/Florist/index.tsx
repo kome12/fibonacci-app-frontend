@@ -6,15 +6,15 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import { useEffect, useMemo, useRef, useState } from "react";
-import styles from "./Florist.module.css";
-import QuestionMark from "./assets/questionMark.png";
-import { getFlowers } from "../../helpers/api/flowers/getFlowers";
-import { useApi } from "../../utils/api/useApi";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { buyFlower } from "../../helpers/api/flowers/buyFlower";
+import { getFlowers } from "../../helpers/api/flowers/getFlowers";
 import { useUserState } from "../../store/user/useUserState";
-import { Redirect } from "react-router-dom";
+import { useApi } from "../../utils/api/useApi";
+import QuestionMark from "./assets/questionMark.png";
+import styles from "./Florist.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,47 +59,56 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Florist = () => {
+  const classes = useStyles();
   const { userData, setUserData } = useUserState();
-  // const [bought, setBought] = useState<string[]>([]);
   const [lastBought, setLastBought] = useState<string | null>(null);
-  // const [currBalance, setCurrBalance] = useState<number | null>(null)
-  const [buyFlowerError, setBuyFlowerError] = useState<boolean>(false);
-  const [errMsgVis, setErrMsgVis] = useState<boolean>(false);
-  // const [buyFlowerLoading, setBuyFlowerLoading] = useState<boolean>(false);
+  const [flowerPrice, setFlowerPrice] = useState(0);
+  const [buyFlowerError, setBuyFlowerError] = useState(false);
+  const [errMsgVis, setErrMsgVis] = useState(false);
+
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
-  const bought = useMemo(()=>userData.isLoggedIn&&userData.flowerCollections||[],[userData])
-  const currBalance = useMemo(()=>userData.isLoggedIn&&userData.balance||0,[userData])
+  const userId = useMemo(
+    () => (userData.isLoggedIn && userData.id) || "",
+    [userData]
+  );
+  const boughtFlowers = useMemo(
+    () => (userData.isLoggedIn && userData.flowerCollections) || [],
+    [userData]
+  );
 
-  // useEffect(() => {
-  //   if (userData.isLoggedIn) {
-  //     // setBought(userData.flowerCollections);
-  //     // setCurrBalance(userData.balance);
-  //   }
-  // }, [userData])
+  const buyFlowerHandler = useCallback(
+    async (flowerId: string, flowerPrice: number) => {
+      if (userId) {
+        setLastBought(flowerId);
+        setFlowerPrice(flowerPrice);
+        await buyFlowerReq({
+          fireBaseUserId: userId,
+          flowerId,
+          price: flowerPrice,
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userId]
+  );
 
-  const buyFlowerHandler = async (flowerId: string, flowerPrice: number) => {
-    if (userData.isLoggedIn) {
-      setLastBought(flowerId);
-      await buyFlowerReq({
-        fireBaseUserId: userData.id,
-        flowerId,
-        price: flowerPrice,
-      });
-      
-    }
-  };
-  
   useEffect(() => {
-    // if (buyFlowerAPIState.status === "loading") {
-    //   setBuyFlowerLoading(true);
-    // }
     if (buyFlowerAPIState.status === "succeeded" && lastBought) {
       setBuyFlowerError(false);
-      
+
       setUserData((data) => {
-        const newFlowerCollection = data.isLoggedIn && data.flowerCollections ||[]
-        return({ ...data, balance: currBalance, flowerCollections: [...newFlowerCollection,...bought] })})
+        const newFlowerCollection =
+          (data.isLoggedIn && data.flowerCollections) || [];
+
+        const currentBalance = (data.isLoggedIn && data.balance) || 0;
+        return {
+          ...data,
+          balance: currentBalance - flowerPrice,
+          flowerCollections: [...newFlowerCollection, ...[lastBought]],
+        };
+      });
+      // MEMO: Conall not sure about this logic so if needed uncomment it else remove it
       // setBought((prev) => {
       //   if (!bought.includes(lastBought)) {
       //     return [...prev, lastBought];
@@ -107,17 +116,13 @@ export const Florist = () => {
       //     return prev;
       //   }
       // });
-      // setCurrBalance(buyFlowerAPIState.response.balance);
     }
 
     if (buyFlowerAPIState.status === "failed") {
       setBuyFlowerError(true);
-      
     }
-  }, [buyFlowerAPIState.status, lastBought]);
-
-  // useEffect(() => {
-  // }, [currBalance, bought, setUserData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buyFlowerAPIState.status, lastBought, flowerPrice]);
 
   useEffect(() => {
     if (buyFlowerError) {
@@ -134,10 +139,9 @@ export const Florist = () => {
 
   useEffect(() => {
     getAllFlowers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const classes = useStyles();
   return userData.isLoggedIn ? (
     <Grid
       container
@@ -168,8 +172,7 @@ export const Florist = () => {
         <Grid container justifyContent="center" className={classes.flowerList}>
           <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
             {allFlowers.map((flower) => {
-              const isBought = bought.includes(flower._id);
-              // console.log("isBought:", isBought,"bought:", bought, "flower:", flower, allFlowers);
+              const isBought = boughtFlowers.includes(flower._id);
               return isBought ? (
                 <Grid
                   container
@@ -196,7 +199,10 @@ export const Florist = () => {
                   key={flower._id}
                 >
                   <LoadingWrapper
-                    isLoading={flower._id === lastBought && buyFlowerAPIState.status === 'loading'}
+                    isLoading={
+                      flower._id === lastBought &&
+                      buyFlowerAPIState.status === "loading"
+                    }
                   >
                     <Typography variant="caption">???</Typography>
                     <img
