@@ -24,8 +24,8 @@ export const AppWrapper: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (userAccountApi.response) {
-      const { numCoins, flowerCollections } = userAccountApi.response;
-      setUserData((data) => ({ ...data, numCoins, flowerCollections }));
+      const { balance, flowerCollections } = userAccountApi.response;
+      setUserData((data) => ({ ...data, balance, flowerCollections }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAccountApi.status, userAccountApi.response]);

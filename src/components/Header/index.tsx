@@ -30,7 +30,7 @@ export const Header = () => {
   const { userData } = useUserState();
 
   const coinBalance = useMemo(
-    () => (userData.isLoggedIn && userData.numCoins) || null,
+    () => (userData.isLoggedIn && userData.balance) || null,
     [userData]
   );
 

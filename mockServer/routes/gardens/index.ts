@@ -5,7 +5,7 @@ import { newGardenData } from "../../data/gardens/newGardenData";
 
 const router = express.Router();
 
-router.get("/:id", (_req: Request, res: Response) => {
+router.get("/:id/date/:date", (_req: Request, res: Response) => {
   setTimeout(() => {
     res.status(200).json(gardenData);
   }, 1000);

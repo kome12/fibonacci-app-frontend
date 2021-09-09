@@ -1,8 +1,16 @@
 .info-page {
-  max-width: 480px;
-  margin: 0 auto;
-  border-radius: 20px;
-  min-height: 40rem;
-  padding: 3%;
   background-color: #6ac697;
+}
+
+.about-page {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.to-my-niwa {
+  margin: auto;
+  margin-bottom: 2rem;
 }
