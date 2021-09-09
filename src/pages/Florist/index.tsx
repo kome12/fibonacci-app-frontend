@@ -66,6 +66,7 @@ export const Florist = () => {
   const [bought, setBought] = useState<string[]>(userFlowerColl);
   const [lastBought, setLastBought] = useState<string | null>(null);
   const [buyFlowerError, setBuyFlowerError] = useState<boolean>(false);
+  const [errMsgVis, setErrMsgVis] = useState<boolean>(false);
   const [buyFlowerLoading, setBuyFlowerLoading] = useState<boolean>(false);
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
@@ -91,6 +92,13 @@ export const Florist = () => {
       setBuyFlowerLoading(false);
     }
   }, [buyFlowerAPIState, lastBought]);
+
+  useEffect(() => {
+    if (buyFlowerError) {
+      setErrMsgVis(true);
+      setTimeout(setErrMsgVis, 5000, false);
+    }
+  }, [buyFlowerError]);
 
   const [flowersAPIState, getAllFlowers] = useApi(getFlowers);
   const allFlowers = useMemo(
@@ -122,13 +130,19 @@ export const Florist = () => {
         className={classes.header}
       >
         <Typography variant="h3">Florist</Typography>
+        <Grid container direction="row" justifyContent="center">
+          {errMsgVis && buyFlowerError ? (
+            <Typography className={classes.errorMsg}>
+              Error buying flower, please try again.
+            </Typography>
+          ) : (
+            <Typography>
+              Welcome to our store, why don't you take a look around?
+            </Typography>
+          )}
+        </Grid>
         <Grid container justifyContent="center" className={classes.flowerList}>
           <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
-            {buyFlowerError && (
-              <Typography className={classes.errorMsg}>
-                Error buying flower, please try again.
-              </Typography>
-            )}
             {allFlowers.map((flower) => {
               const isBought = bought.includes(flower._id);
               return isBought ? (
