@@ -46,7 +46,7 @@ export const DailyGardening = () => {
   const completedTasks = useMemo(() => {
     const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
     if (completedTaskApi.response) {
-      currentCompletedTasks.push(completedTaskApi.response);
+      currentCompletedTasks.push(completedTaskApi.response.completedTask);
       return currentCompletedTasks;
     }
     return currentCompletedTasks;
@@ -157,6 +157,8 @@ export const DailyGardening = () => {
               />
               View Details
               {rules.map((rule) => {
+                console.log(isRuleCompleted(rule._id));
+
                 return (
                   <Card variant="outlined" key={rule._id}>
                     <Chip
