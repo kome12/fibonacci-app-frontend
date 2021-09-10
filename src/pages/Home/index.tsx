@@ -6,6 +6,16 @@ import { useUserState } from "../../store/user/useUserState";
 import { ReactComponent as Niwa } from "./assets/niwa.svg";
 import { ReactComponent as MyNiwaLogo } from "../../components/Header/assets/myniwa.svg";
 import "./home.css";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    loginButton: {
+      margin: "4%",
+      backgroundColor: theme.palette.text.primary,
+      color: theme.palette.background.default
+    }
+  }))
 
 export const Home = () => {
   const { userData } = useUserState();
@@ -15,6 +25,7 @@ export const Home = () => {
     history.push(page);
   };
 
+  const classes = useStyles();
   // // Sample code of how to use the useApi hook in a component
   // // If you want to check useApi: src/utils/api/useApi.ts
   // // How to define the apiHelper(getGardens): src/helpers/api/gardens/getGardens.ts
@@ -43,6 +54,7 @@ export const Home = () => {
             variant="contained"
             color="secondary"
             onClick={() => linkHandler("/about")}
+            size="large"
           >
             What is my niwa?
           </Button>
@@ -50,10 +62,11 @@ export const Home = () => {
             {userData.isLoggedIn ? (
               <Button
                 variant="contained"
-                color="primary"
                 onClick={() => linkHandler("/user/myniwa")}
+                size="large"
+                className={classes.loginButton}
               >
-                Get me to my Gardens!
+                Get me to my Garden!
               </Button>
             ) : (
               <div>
