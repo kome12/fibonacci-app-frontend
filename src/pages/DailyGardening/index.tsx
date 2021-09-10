@@ -157,8 +157,6 @@ export const DailyGardening = () => {
               />
               View Details
               {rules.map((rule) => {
-                console.log(isRuleCompleted(rule._id));
-
                 return (
                   <Card variant="outlined" key={rule._id}>
                     <Chip
