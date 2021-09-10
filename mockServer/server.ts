@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { Express } from "express";
+import completedTaskRouter from "./routes/completedTask";
 import flowersRouter from "./routes/flowers";
 import flowerStoreRouter from "./routes/flowerStore";
 import gardenCategoriesRouter from "./routes/gardenCategories";
@@ -19,6 +20,7 @@ app.use("/api/v1/gardens", gardensRouter);
 app.use("/api/v1/gardenCategories", gardenCategoriesRouter);
 app.use("/api/v1/rules", rulesRouter);
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/completedTasks", completedTaskRouter);
 
 app.listen(3001, () => {
   console.log("Start on port http://localhost:3001");
