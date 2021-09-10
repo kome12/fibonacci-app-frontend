@@ -1,5 +1,6 @@
 .splash-page {
   height: 100vh;
+  width: 100vw;
   text-align: center;
   background-color: #6ac697;
   display: flex;
@@ -14,17 +15,21 @@
 }
 
 .ni-wa-character {
-  width: 375px;
-  margin: auto;
+  width: 100%;
 }
 
 .ni-wa {
-  font-size: 5rem;
+  margin-top: 0%;
+  font-size: 3rem;
   color: #172f4a;
-  margin: 0;
 }
 
 .ni-wa-definition {
-  margin-left: 0%;
   color: #172f4a;
+  margin-left: 0%;
+}
+
+.my-niwa-logo {
+  width: 80%;
+  height: 5rem;
 }
