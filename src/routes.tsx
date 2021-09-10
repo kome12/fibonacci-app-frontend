@@ -29,6 +29,11 @@ const NotFound = React.lazy(() =>
     default: NotFound,
   }))
 );
+const Florist = React.lazy(() =>
+  import("./pages/Florist").then(({ Florist }) => ({
+    default: Florist,
+  }))
+);
 
 export const Routes = () => {
   const location = useLocation();
@@ -56,6 +61,7 @@ export const Routes = () => {
                     component={CreateGarden}
                     exact
                   />
+                  <Route path="/user/store" component={Florist} exact />
                 </UserViewLayout>
               </Route>
               <Route path="/about" component={About} exact />
