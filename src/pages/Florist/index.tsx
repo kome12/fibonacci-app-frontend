@@ -20,12 +20,22 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       width: "90%",
       marginLeft: "2.5%",
-      padding: "5%",
+      padding: "0 5%",
     },
     header: {
       margin: "2%",
       marginLeft: "5%",
       width: "100%",
+    },
+    title: {
+      margin: "1rem 0",
+    },
+    subtitle: {
+      margin: "2%",
+      textAlign: "center",
+    },
+    welcomeText: {
+      marginBottom: "2%",
     },
     flowerList: {
       width: "100%",
@@ -160,16 +170,23 @@ export const Florist = () => {
         justifyContent="center"
         className={classes.header}
       >
-        <Typography variant="h3">Florist</Typography>
+        <Grid container justifyContent="flex-start">
+          <h1 className={classes.title}>Florist</h1>
+        </Grid>
         <Grid container direction="row" justifyContent="center">
           {errMsgVis && buyFlowerError ? (
             <Typography className={classes.errorMsg}>
               Error buying flower, please try again.
             </Typography>
           ) : (
-            <Typography>
-              Welcome to our store, why don't you take a look around?
-            </Typography>
+            <Grid className={classes.subtitle}>
+              <Typography variant="h6">
+                Welcome to our store. 
+              </Typography>
+              <Typography variant="body1" className={classes.welcomeText}>
+                Why don't you take a look around?
+              </Typography>
+            </Grid>
           )}
         </Grid>
         <Grid container justifyContent="center" className={classes.flowerList}>
