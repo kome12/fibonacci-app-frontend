@@ -13,7 +13,6 @@ import { buyFlower } from "../../helpers/api/flowers/buyFlower";
 import { getFlowers } from "../../helpers/api/flowers/getFlowers";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
-import QuestionMark from "./assets/questionMark.png";
 import styles from "./Florist.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,6 +46,18 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
       backgroundColor: "#6ac69780",
+      borderRadius: "4px"
+    },
+    boughtName: {
+      minHeight: "40px",
+      textAlign: "center",
+      marginTop: "5%",
+      fontWeight: "bold"
+    },
+    notBoughtName: {
+      minHeight: "20px",
+      textAlign: "center",
+      marginTop: "5%",
     },
     buyButton: {
       marginBottom: "0.125rem",
@@ -108,14 +119,6 @@ export const Florist = () => {
           flowerCollections: [...newFlowerCollection, ...[lastBought]],
         };
       });
-      // MEMO: Conall not sure about this logic so if needed uncomment it else remove it
-      // setBought((prev) => {
-      //   if (!bought.includes(lastBought)) {
-      //     return [...prev, lastBought];
-      //   } else {
-      //     return prev;
-      //   }
-      // });
     }
 
     if (buyFlowerAPIState.status === "failed") {
@@ -182,7 +185,7 @@ export const Florist = () => {
                   className={classes.cardBought}
                   key={flower._id}
                 >
-                  <Typography variant="caption">{flower.name}</Typography>
+                  <Typography variant="caption" className={classes.boughtName}>{flower.name}</Typography>
                   <img
                     src={flower.imageURL}
                     alt={`${flower.name} pic`}
@@ -204,11 +207,11 @@ export const Florist = () => {
                       buyFlowerAPIState.status === "loading"
                     }
                   >
-                    <Typography variant="caption">???</Typography>
+                    <Typography variant="caption" className={classes.notBoughtName}>???</Typography>
                     <img
-                      src={QuestionMark}
+                      src={flower.imageURL}
                       alt={"secret flower pic"}
-                      className={styles.pic}
+                      className={styles.notBoughtPic}
                     />
                     <Button
                       variant="contained"
