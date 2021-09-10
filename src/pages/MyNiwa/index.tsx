@@ -13,6 +13,7 @@ import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
+import { getCategories } from "../../helpers/api/gardens/getCategories";
 import gardenImage from "./assets/garden1.jpg";
 import "./MyNiwa.css";
 
@@ -59,12 +60,32 @@ export const MyNiwa = () => {
 
   const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
 
+  const [categoriesApi, getGardenCategories] = useApi(getCategories);
+
+  const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
+
+  useEffect(() => {
+    getGardenCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
       getUserGardens(userData.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
+
+  const getImage = (categoryId: string) => {
+    const result = categories?.filter(
+      (category) => category._id === categoryId
+    );
+    console.log(result?.[0]);
+    if (result?.[0]?.imageURL) {
+      return result[0]?.imageURL;
+    }
+    return gardenImage;
+  };
 
   const history = useHistory();
   const goToCreateGarden = () => {
@@ -103,7 +124,7 @@ export const MyNiwa = () => {
                     <CardActionArea>
                       <CardMedia
                         className={classes.media}
-                        image={gardenImage}
+                        image={getImage(garden.gardenCategoryId)}
                         title="Contemplative Reptile"
                       />
                       <CardContent>

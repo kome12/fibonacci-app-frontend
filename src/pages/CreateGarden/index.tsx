@@ -86,11 +86,18 @@ export const CreateGarden = () => {
   // Garden input state
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
+  const [category, setCategory] = useState("");
   const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(() => e.target.value);
   };
   const descChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDesc(e.target.value);
+  };
+  const categoryChangeHandler = (
+    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) => {
+    console.log("current category is: ", e.target.value);
+    setCategory(e.target.value as string);
   };
 
   // Garden rules input state
@@ -130,7 +137,7 @@ export const CreateGarden = () => {
       name: name,
       description: desc,
       fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
-      gardenCategoryId: "TODO: ADD gardenCategoryID when implementing it",
+      gardenCategoryId: category || "",
     };
 
     await createNewGarden(newGarden);
@@ -183,6 +190,8 @@ export const CreateGarden = () => {
                   name={name}
                   descChangeHandler={descChangeHandler}
                   desc={desc}
+                  categoryChangeHandler={categoryChangeHandler}
+                  category={category}
                   animDirection={animDirection}
                 />
               )}
@@ -203,6 +212,7 @@ export const CreateGarden = () => {
                   loading={isApiProcessing}
                   gardenName={name}
                   gardenDesc={desc}
+                  gardenCategory={category}
                   userRules={userRules}
                   createGardenHandler={createGardenHandler}
                   animDirection={animDirection}
