@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 140,
     },
     myNiwaHeader: {
-      width: "100%",
+      width: "90%",
+      marginLeft: "5%",
     },
     createGarden: {
       backgroundColor: theme.palette.primary.main,

@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     opacity: 0.8,
   },
   media: {
-    height: 300,
+    height: "40vh",
   },
 });
 
