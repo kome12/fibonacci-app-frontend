@@ -4,5 +4,5 @@ export type UserAccount = {
   balance: number;
   flowerCollections: string[];
   createdDate: string;
-  updateDate: string;
+  lastUpdate: string;
 };
