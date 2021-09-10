@@ -66,7 +66,7 @@ export const Home = () => {
                 size="large"
                 className={classes.loginButton}
               >
-                Get me to my Garden!
+                Get me to My Niwa!
               </Button>
             ) : (
               <div>
