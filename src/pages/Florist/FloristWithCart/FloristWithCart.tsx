@@ -18,6 +18,9 @@ import { getFlowers } from "../../../helpers/api/flowers/getFlowers";
 import { useApi } from "../../../utils/api/useApi";
 import { LoadingWrapper } from "../../../components/LoadingWrapper";
 
+// Previous component for using the store page with a cart, 
+// could possibly use in the future so currently not deleted.
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -65,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Florist = () => {
+export const FloristWithCart = () => {
   const [flowersAPIState, getAllFlowers] = useApi(getFlowers);
   const allFlowers = useMemo(
     () => flowersAPIState.response ?? [],
