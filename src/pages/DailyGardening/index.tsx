@@ -101,7 +101,6 @@ export const DailyGardening = () => {
         date: utcDate.toISOString(),
         rewardTypeId: "61274429d20570644762b99b",
       };
-
       sendCompletedTaskData(completedTask);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,7 +157,8 @@ export const DailyGardening = () => {
               View Details
               {rules.map((rule) => {
                 return (
-                  <Card variant="outlined" key={rule._id}>
+                  <Card variant="outlined" key={rule._id} color="background">
+                    <LoadingWrapper isLoading={completedTaskApi.status === "loading"}>
                     <Chip
                       icon={
                         isRuleCompleted(rule._id) ? <DoneIcon /> : <CloseIcon />
@@ -179,6 +179,7 @@ export const DailyGardening = () => {
                         {showDescriptions && rule.description}
                       </p>
                     )}
+                    </LoadingWrapper>
                   </Card>
                 );
               })}
