@@ -46,7 +46,7 @@ export const DailyGardening = () => {
   const completedTasks = useMemo(() => {
     const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
     if (completedTaskApi.response) {
-      currentCompletedTasks.push(completedTaskApi.response);
+      currentCompletedTasks.push(completedTaskApi.response.completedTask);
       return currentCompletedTasks;
     }
     return currentCompletedTasks;
