@@ -56,13 +56,13 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
       backgroundColor: "#6ac69780",
-      borderRadius: "4px"
+      borderRadius: "4px",
     },
     boughtName: {
       minHeight: "40px",
       textAlign: "center",
       marginTop: "5%",
-      fontWeight: "bold"
+      fontWeight: "bold",
     },
     notBoughtName: {
       minHeight: "20px",
@@ -180,12 +180,16 @@ export const Florist = () => {
             </Typography>
           ) : (
             <Grid className={classes.subtitle}>
-              <Typography variant="h6">
-                Welcome to our store. 
-              </Typography>
-              <Typography variant="body1" className={classes.welcomeText}>
-                Why don't you take a look around?
-              </Typography>
+              <Typography variant="h6">Welcome to our store.</Typography>
+              {!userData.balance ? (
+                <Typography variant="body1" className={classes.welcomeText}>
+                  To purchase flowers, let grew up flower and get coin!
+                </Typography>
+              ) : (
+                <Typography variant="body1" className={classes.welcomeText}>
+                  Why don't you take a look around?
+                </Typography>
+              )}
             </Grid>
           )}
         </Grid>
@@ -202,7 +206,9 @@ export const Florist = () => {
                   className={classes.cardBought}
                   key={flower._id}
                 >
-                  <Typography variant="caption" className={classes.boughtName}>{flower.name}</Typography>
+                  <Typography variant="caption" className={classes.boughtName}>
+                    {flower.name}
+                  </Typography>
                   <img
                     src={flower.imageURL}
                     alt={`${flower.name} pic`}
@@ -224,7 +230,12 @@ export const Florist = () => {
                       buyFlowerAPIState.status === "loading"
                     }
                   >
-                    <Typography variant="caption" className={classes.notBoughtName}>???</Typography>
+                    <Typography
+                      variant="caption"
+                      className={classes.notBoughtName}
+                    >
+                      ???
+                    </Typography>
                     <img
                       src={flower.imageURL}
                       alt={"secret flower pic"}
