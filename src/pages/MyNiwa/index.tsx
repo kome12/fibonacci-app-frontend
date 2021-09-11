@@ -10,10 +10,10 @@ import { motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
+import { getCategories } from "../../helpers/api/gardens/getCategories";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
-import { getCategories } from "../../helpers/api/gardens/getCategories";
 import gardenImage from "./assets/garden1.jpg";
 import "./MyNiwa.css";
 
@@ -58,9 +58,9 @@ export const MyNiwa = () => {
   const { userData } = useUserState();
   // const [categoryImages, setCategoryImages] = useState([]);
   const [gardensApi, getUserGardens] = useApi(getGardens);
-  const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
-
   const [categoriesApi, getGardenCategories] = useApi(getCategories);
+
+  const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
   const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
 
   useEffect(() => {
@@ -119,7 +119,9 @@ export const MyNiwa = () => {
             </IconButton>
           </Tooltip>
         </Grid>
-        <LoadingWrapper isLoading={!gardensApi.isLoaded}>
+        <LoadingWrapper
+          isLoading={!gardensApi.isLoaded || !categoriesApi.isLoaded}
+        >
           <div className="gardens-view">
             {gardens.map((garden, index) => {
               return (
