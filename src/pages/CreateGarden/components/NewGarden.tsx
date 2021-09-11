@@ -8,23 +8,22 @@ import {
 } from "@material-ui/core";
 import { motion } from "framer-motion";
 import React from "react";
-import { useMemo, useEffect } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { getCategories } from "../../../helpers/api/gardens/getCategories";
-import { useApi } from "../../../utils/api/useApi";
+import { Category } from "../../../models/category.model";
 
 interface NewGardenProps {
   nameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
   name: string;
   descChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
   desc: string;
-  categoryChangeHandler: (
+  categories: Category[] | undefined;
+  categoryIdChangeHandler: (
     e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => void;
-  category: string;
+  categoryId: string;
   animDirection: "left" | "right";
 }
 
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formControl: {
       margin: "auto",
-      minWidth: 120,
+      minWidth: 320,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -66,23 +65,14 @@ export const NewGarden: React.FC<NewGardenProps> = ({
   name,
   descChangeHandler,
   desc,
-  categoryChangeHandler,
-  category,
+  categories,
+  categoryIdChangeHandler,
+  categoryId,
   animDirection,
 }) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   const classes = useStyles();
-
-  const [categoriesApi, getGardenCategories] = useApi(getCategories);
-
-  const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
-
-  useEffect(() => {
-    console.log(categories);
-    getGardenCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Grid
@@ -126,12 +116,12 @@ export const NewGarden: React.FC<NewGardenProps> = ({
         label="Description:"
       />
       <FormControl className={classes.formControl}>
-        <InputLabel id="category-select-label">Category</InputLabel>
+        <InputLabel id="category-select-label">Select a Category</InputLabel>
         <Select
           labelId="category-select-label"
           id="category-select"
-          value={category}
-          onChange={categoryChangeHandler}
+          value={categoryId}
+          onChange={categoryIdChangeHandler}
           required
         >
           {categories?.map((category, index) => {
