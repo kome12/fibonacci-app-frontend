@@ -32,6 +32,8 @@ export const DailyGardening = () => {
   // TODO: Revisit when delete api is implemented
   // const [deletedTaskApi, deleteTask] = useApi(deleteCompletedTask);
 
+  const [lastClicked, setLastClicked] = useState("");
+
   const userId = useMemo(
     () => (userData.isLoggedIn ? userData.id : ""),
     [userData]
@@ -83,6 +85,9 @@ export const DailyGardening = () => {
 
   const completeTaskHandler = useCallback(
     async (rule: Rule) => {
+      if (rule._id) {
+        setLastClicked(rule._id)
+      };
       const localeDate = new Date();
       const utcDate = new Date(
         Date.UTC(
@@ -158,7 +163,7 @@ export const DailyGardening = () => {
               {rules.map((rule) => {
                 return (
                   <Card variant="outlined" key={rule._id} color="background">
-                    <LoadingWrapper isLoading={completedTaskApi.status === "loading"}>
+                    <LoadingWrapper isLoading={lastClicked === rule._id && completedTaskApi.status === "loading"}>
                     <Chip
                       icon={
                         isRuleCompleted(rule._id) ? <DoneIcon /> : <CloseIcon />
