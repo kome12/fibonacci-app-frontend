@@ -105,6 +105,7 @@ export const CreateGarden = () => {
       )?.name;
     }
     setCategoryName(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId]);
 
   const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
