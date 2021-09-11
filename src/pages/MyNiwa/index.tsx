@@ -72,8 +72,6 @@ export const MyNiwa = () => {
       getUserGardens(userData.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    console.log("gardens", gardens.length);
   }, [userData]);
 
   const getImage = (categoryId: string) => {
