@@ -1,9 +1,10 @@
+import { Grid, Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
+import { createStyles, makeStyles } from "@material-ui/styles";
 import { formatISO, isSameDay } from "date-fns";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -21,7 +22,16 @@ import { Rule } from "../../models/rule.model";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import wateringAnimation from "./assets/watering.gif";
-import "./DailyGardening.css";
+import styles from "./DailyGardening.module.css";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    returnButton: {
+      backgroundColor: theme.palette.text.primary,
+      color: theme.palette.background.default
+    }
+  })
+);
 
 export const DailyGardening = () => {
   const history = useHistory();
@@ -134,6 +144,7 @@ export const DailyGardening = () => {
     return bool ? "primary" : "secondary";
   };
 
+  const classes = useStyles();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -141,29 +152,32 @@ export const DailyGardening = () => {
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      <div className="garden-parent-container">
+      <div className={styles.gardenParentContainer}>
         <h1>Daily Gardening</h1>
         <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
-          <div className="garden-view-container">
-            <div className="watering-animation-container">
+          <div className={styles.gardenViewContainer}>
+            <div className={styles.wateringAnimation}>
               <img
                 src={wateringAnimation}
                 alt="watering animation"
                 className="watering-animation"
               />
             </div>
-            <div className="rules-container">
-              <h2>Daily Goals:</h2>
+            <div className={styles.rulesContainer}>
+              <h2 className={styles.subtitle}>Daily Goals:</h2>
+              <Grid container alignItems="center">
               <Switch
                 checked={showDescriptions}
+                color="primary"
                 onChange={() => setShowDescriptions((status) => !status)}
                 name="detailView"
               />
-              View Details
+              <h5>View Details</h5>
+              </Grid>
+              <div className={styles.taskButtonContainer}>
               {rules.map((rule) => {
                 return (
-                  <Card variant="outlined" key={rule._id} color="background">
-                    <LoadingWrapper isLoading={lastClicked === rule._id && completedTaskApi.status === "loading"}>
+                    <LoadingWrapper key={rule._id} isLoading={lastClicked === rule._id && completedTaskApi.status === "loading"}>
                     <Chip
                       icon={
                         isRuleCompleted(rule._id) ? <DoneIcon /> : <CloseIcon />
@@ -179,20 +193,20 @@ export const DailyGardening = () => {
                       // onDelete={() => handleDelete(rule)}
                       // deleteIcon={<UndoIcon />}
                     />
-                    {rule.description && (
+                    {rule.description && showDescriptions && (
                       <p className="rule-description">
                         {showDescriptions && rule.description}
                       </p>
                     )}
                     </LoadingWrapper>
-                  </Card>
                 );
               })}
+              </div>
             </div>
-            <div className="centered">
+            <div className={styles.centered}>
               <Button
                 variant="contained"
-                color="secondary"
+                className={classes.returnButton}
                 onClick={() => history.push("/user/myniwa")}
               >
                 Go back to My Gardens
