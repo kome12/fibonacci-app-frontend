@@ -3,4 +3,6 @@ export type UserAccount = {
   fireBaseUserId: string;
   balance: number;
   flowerCollections: string[];
+  createdDate: string;
+  lastUpdate: string;
 };
