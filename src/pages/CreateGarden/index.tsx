@@ -26,6 +26,7 @@ import { useApi } from "../../utils/api/useApi";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
 import { NewGarden } from "./components/NewGarden";
+import { getCategories } from "../../helpers/api/gardens/getCategories";
 
 export interface NewUserRule {
   name: string;
@@ -86,18 +87,36 @@ export const CreateGarden = () => {
   // Garden input state
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+
+  // Get Categories
+  const [categoriesApi, getGardenCategories] = useApi(getCategories);
+  const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
+  useEffect(() => {
+    getGardenCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    let result;
+    if (categoryId) {
+      result = categories?.find(
+        (category) => category._id === categoryId
+      )?.name;
+    }
+    setCategoryName(result);
+  }, [categoryId]);
+
   const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(() => e.target.value);
   };
   const descChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDesc(e.target.value);
   };
-  const categoryChangeHandler = (
+  const categoryIdChangeHandler = (
     e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
   ) => {
-    console.log("current category is: ", e.target.value);
-    setCategory(e.target.value as string);
+    setCategoryId(e.target.value as string);
   };
 
   // Garden rules input state
@@ -137,7 +156,7 @@ export const CreateGarden = () => {
       name: name,
       description: desc,
       fireBaseUserId: (userData.isLoggedIn && userData.id) || "",
-      gardenCategoryId: category || "",
+      gardenCategoryId: categoryId || "",
     };
 
     await createNewGarden(newGarden);
@@ -190,8 +209,9 @@ export const CreateGarden = () => {
                   name={name}
                   descChangeHandler={descChangeHandler}
                   desc={desc}
-                  categoryChangeHandler={categoryChangeHandler}
-                  category={category}
+                  categories={categories}
+                  categoryIdChangeHandler={categoryIdChangeHandler}
+                  categoryId={categoryId}
                   animDirection={animDirection}
                 />
               )}
@@ -212,7 +232,7 @@ export const CreateGarden = () => {
                   loading={isApiProcessing}
                   gardenName={name}
                   gardenDesc={desc}
-                  gardenCategory={category}
+                  gardenCategoryName={categoryName}
                   userRules={userRules}
                   createGardenHandler={createGardenHandler}
                   animDirection={animDirection}
@@ -236,7 +256,8 @@ export const CreateGarden = () => {
                 disabled={
                   activeStep === 2 ||
                   name.length < 1 ||
-                  (activeStep === 1 && userRules.length < 1)
+                  (activeStep === 1 && userRules.length < 1) ||
+                  !categoryId
                 }
               >
                 Next

@@ -63,22 +63,20 @@ export const MyNiwa = () => {
   const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
 
   useEffect(() => {
-    getGardenCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
       getUserGardens(userData.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
+  useEffect(() => {
+    getGardenCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const getImage = (categoryId: string) => {
     const result = categories?.filter(
       (category) => category._id === categoryId
     );
-    console.log(result?.[0]);
     if (result?.[0]?.imageURL) {
       return result[0]?.imageURL;
     }
