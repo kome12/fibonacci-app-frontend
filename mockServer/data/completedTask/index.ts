@@ -2,7 +2,7 @@ export const completedTask = {
   user: {
     _id: "61345599d78d1dd0b2291c38",
     fireBaseUserId: "hkhO0N16audfgJXiq2NUT3lSbam1",
-    balance: 13,
+    balance: 40001,
     flowerCollections: [
       "612789b765c2e6a7e7e76bd3",
       "612789b765c2e6a7e7e76bd3",
