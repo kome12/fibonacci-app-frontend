@@ -1,4 +1,4 @@
-.splash-page {
+.splashPage {
   height: 100%;
   width: 100vw;
   text-align: center;
@@ -8,29 +8,29 @@
   justify-content: center;
 }
 
-.ni-wa-container {
+.niWaContainer {
   max-width: 480px;
   padding: auto;
   margin: 0 auto;
 }
 
-.ni-wa-character {
+.niWaCharacter {
   width: 100%;
   height: 20vh;
 }
 
-.ni-wa {
+.niWa {
   margin: 0%;
   font-size: 3rem;
   color: #172f4a;
 }
 
-.ni-wa-definition {
+.niWaDefinition {
   color: #172f4a;
   margin-left: 0;
 }
 
-.my-niwa-logo {
+.myNiwaLogo {
   width: 80%;
   height: 10vh;
 }
