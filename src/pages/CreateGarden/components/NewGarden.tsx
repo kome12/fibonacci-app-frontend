@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formControl: {
       margin: "auto",
-      minWidth: 120,
+      minWidth: 320,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -128,7 +128,7 @@ export const NewGarden: React.FC<NewGardenProps> = ({
         label="Description:"
       />
       <FormControl className={classes.formControl}>
-        <InputLabel id="category-select-label">Category</InputLabel>
+        <InputLabel id="category-select-label">Select a Category</InputLabel>
         <Select
           labelId="category-select-label"
           id="category-select"

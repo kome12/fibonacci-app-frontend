@@ -257,7 +257,8 @@ export const CreateGarden = () => {
                 disabled={
                   activeStep === 2 ||
                   name.length < 1 ||
-                  (activeStep === 1 && userRules.length < 1)
+                  (activeStep === 1 && userRules.length < 1) ||
+                  !categoryId
                 }
               >
                 Next
