@@ -22,6 +22,7 @@ import {
   NewGardenRule,
 } from "../../helpers/api/gardens/createGardenRules";
 import { useUserState } from "../../store/user/useUserState";
+import { usePageState } from "../../store/page/usePageState";
 import { useApi } from "../../utils/api/useApi";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const CreateGarden = () => {
   const { userData } = useUserState();
+  const { setCurrentPage } = usePageState();
   const history = useHistory();
   const classes = useStyles();
 
@@ -171,6 +173,7 @@ export const CreateGarden = () => {
         gardenId,
       }));
       await createNewGardenRules(rules);
+      setCurrentPage(`/user/dailyGardening/${gardenId}`);
       history.push(`/user/dailyGardening/${gardenId}`);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

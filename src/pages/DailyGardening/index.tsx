@@ -18,6 +18,7 @@ import {
 } from "../../helpers/api/completedTasks/sendCompletedTask";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
 import { Rule } from "../../models/rule.model";
+import { usePageState } from "../../store/page/usePageState";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import wateringAnimation from "./assets/watering.gif";
@@ -26,7 +27,7 @@ import styles from "./DailyGardening.module.css";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     taskDescription: {
-      width: "100%"
+      width: "100%",
     },
     ruleButton: {
       margin: "2%",
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
     returnButton: {
       backgroundColor: theme.palette.text.primary,
       color: theme.palette.background.default,
-      marginTop: "5%"
+      marginTop: "5%",
     },
   })
 );
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const DailyGardening = () => {
   const history = useHistory();
   const { userData, setUserData } = useUserState();
-
+  const { setCurrentPage } = usePageState();
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
   // TODO: Revisit when delete api is implemented
@@ -235,9 +236,9 @@ export const DailyGardening = () => {
                       </Button>
                       {rule.description && showDescriptions && (
                         <Card className={classes.taskDescription}>
-                        <p className={styles.ruleDescription}>
-                          {showDescriptions && rule.description}
-                        </p>
+                          <p className={styles.ruleDescription}>
+                            {showDescriptions && rule.description}
+                          </p>
                         </Card>
                       )}
                     </LoadingWrapper>
@@ -249,7 +250,10 @@ export const DailyGardening = () => {
               <Button
                 variant="contained"
                 className={classes.returnButton}
-                onClick={() => history.push("/user/myniwa")}
+                onClick={() => {
+                  history.push("/user/myniwa");
+                  setCurrentPage("/user/myniwa");
+                }}
               >
                 Go back to My Gardens
               </Button>
