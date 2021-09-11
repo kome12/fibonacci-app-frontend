@@ -13,7 +13,7 @@ export type ApiResponse<T> =
 async function request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
   try {
     const res = await axios.request<T>({
-      timeout: 10000,
+      timeout: 30000,
       baseURL: process.env.REACT_APP_API_BASE_URL,
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ async function request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
       ...config,
     });
     return { error: undefined, data: res.data };
-  } catch (error) {
+  } catch (error: any) {
     return { error, data: undefined };
   }
 }

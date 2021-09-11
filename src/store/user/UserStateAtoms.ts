@@ -6,6 +6,8 @@ type UserData =
       displayName: string;
       imageUrl: string | null;
       isLoggedIn: true;
+      balance: number | null;
+      flowerCollections: string[];
     }
   | {
       isLoggedIn: false | null;

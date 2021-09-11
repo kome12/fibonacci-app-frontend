@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   createStyles,
   Grid,
   List,
@@ -8,17 +9,19 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
-import { UserRule } from "./UserRule";
-import { NewUserRule } from "..";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { motion } from "framer-motion";
+import { NewUserRule } from "..";
+import { UserRule } from "./UserRule";
 
 interface GardenSummaryProps {
   gardenName: string;
   gardenDesc: string;
+  gardenCategoryName: string;
   userRules: NewUserRule[];
   createGardenHandler: React.MouseEventHandler<HTMLButtonElement>;
   animDirection: "left" | "right";
+  loading: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,15 +64,28 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.primary.main,
       fontWeight: "bold",
     },
+    buttonWrapper: {
+      margin: theme.spacing(1),
+      position: "relative",
+    },
+    buttonProgress: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      marginTop: -12,
+      marginLeft: -12,
+    },
   })
 );
 
 export const GardenSummary: React.FC<GardenSummaryProps> = ({
   gardenName,
   gardenDesc,
+  gardenCategoryName,
   userRules,
   createGardenHandler,
   animDirection,
+  loading,
 }) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
@@ -116,6 +132,22 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
             </Typography>
           </Grid>
         )}
+        {gardenCategoryName && (
+          <Grid
+            container
+            direction="row"
+            className={classes.gardenDetailGrid}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography variant="h6" className={classes.subtitle}>
+              Category:
+            </Typography>
+            <Typography variant="body1" className={classes.gardenDetails}>
+              {gardenCategoryName}
+            </Typography>
+          </Grid>
+        )}
       </Grid>
       <Grid
         container
@@ -134,15 +166,21 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
           ))}
         </List>
       </Grid>
-      <Button
-        size="large"
-        variant="contained"
-        color="primary"
-        onClick={createGardenHandler}
-        startIcon={<AddCircleIcon />}
-      >
-        Flower Bed
-      </Button>
+      <div className={classes.buttonWrapper}>
+        <Button
+          disabled={loading}
+          size="large"
+          variant="contained"
+          color="primary"
+          onClick={createGardenHandler}
+          startIcon={<AddCircleIcon />}
+        >
+          Add Flower Bed
+        </Button>
+        {loading && (
+          <CircularProgress size={28} className={classes.buttonProgress} />
+        )}
+      </div>
     </Grid>
   );
 };

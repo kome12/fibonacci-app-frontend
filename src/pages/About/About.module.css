@@ -1,0 +1,16 @@
+.infoPage {
+  background-color: #6ac697;
+}
+
+.aboutPage {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.toMyNiwa {
+  margin: auto;
+  margin-bottom: 2rem;
+}

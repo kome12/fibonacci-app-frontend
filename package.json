@@ -25,6 +25,7 @@
     "react-scripts": "4.0.3",
     "recoil": "^0.4.0",
     "typescript": "^4.0.3",
+    "use-count-up": "^3.0.1",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
