@@ -1,21 +1,22 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router";
+import { ReactComponent as MyNiwaLogo } from "../../components/Header/assets/myniwa.svg";
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
 import { ReactComponent as Niwa } from "./assets/niwa.svg";
-import { ReactComponent as MyNiwaLogo } from "../../components/Header/assets/myniwa.svg";
 import "./home.css";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     loginButton: {
       margin: "4%",
       backgroundColor: theme.palette.text.primary,
-      color: theme.palette.background.default
-    }
-  }))
+      color: theme.palette.background.default,
+    },
+  })
+);
 
 export const Home = () => {
   const { userData } = useUserState();

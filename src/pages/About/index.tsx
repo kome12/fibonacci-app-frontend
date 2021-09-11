@@ -1,16 +1,16 @@
 import Button from "@material-ui/core/Button";
-import { motion } from "framer-motion";
-import { useHistory } from "react-router";
-import { SignIn } from "../../components/SignIn";
-import { useUserState } from "../../store/user/useUserState";
-import "./About.css";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { motion } from "framer-motion";
+import { useHistory } from "react-router";
+import { SignIn } from "../../components/SignIn";
+import { useUserState } from "../../store/user/useUserState";
+import "./About.css";
 import gardenPhoto from "./assets/garden.gif";
 
 const useStyles = makeStyles({
@@ -53,7 +53,7 @@ export const About = () => {
                 <Typography gutterBottom variant="h5" component="h2">
                   My Niwa is about growing a beautiful garden
                 </Typography>
-                <Typography>
+                <Typography component="div">
                   <ol>
                     <li>
                       Create a flower bed with seeds (good habits you'd like to
