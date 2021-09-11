@@ -9,7 +9,11 @@ router.post("/", (req: Request, res: Response) => {
   setTimeout(() => {
     res.status(200).json({
       user: completedTask.user,
-      completedTask: { ...completedTask.completedTask, date: data.date },
+      completedTask: {
+        ...completedTask.completedTask,
+        date: data.date,
+        ruleId: data.ruleId,
+      },
     });
   }, 1000);
 });
