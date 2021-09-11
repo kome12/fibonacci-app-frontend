@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "5%",
       fontWeight: "bold",
     },
+    noCoin: {
+      marginBottom: "2%",
+      backgroundColor: theme.palette.error.light,
+    },
     notBoughtName: {
       minHeight: "20px",
       textAlign: "center",
@@ -182,8 +186,9 @@ export const Florist = () => {
             <Grid className={classes.subtitle}>
               <Typography variant="h6">Welcome to our store.</Typography>
               {!userData.balance ? (
-                <Typography variant="body1" className={classes.welcomeText}>
-                  To purchase flowers, let grew up flower and get coin!
+                <Typography variant="body1" className={classes.noCoin}>
+                  To purchase flowers you need coins! Plant some seeds and your
+                  wallet will grow.
                 </Typography>
               ) : (
                 <Typography variant="body1" className={classes.welcomeText}>
