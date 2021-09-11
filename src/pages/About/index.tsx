@@ -11,7 +11,6 @@ import { useHistory } from "react-router";
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
 import styles from "./About.module.css";
-// import "./About.css";
 import gardenPhoto from "./assets/garden.gif";
 
 const useStyles = makeStyles({
