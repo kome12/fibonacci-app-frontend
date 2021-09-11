@@ -1,6 +1,5 @@
-import { Grid, Theme } from "@material-ui/core";
+import { Card, Grid, Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
@@ -26,10 +25,17 @@ import styles from "./DailyGardening.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    taskDescription: {
+      width: "100%"
+    },
+    ruleButton: {
+      margin: "2%",
+    },
     returnButton: {
       backgroundColor: theme.palette.text.primary,
-      color: theme.palette.background.default
-    }
+      color: theme.palette.background.default,
+      marginTop: "5%"
+    },
   })
 );
 
@@ -96,8 +102,8 @@ export const DailyGardening = () => {
   const completeTaskHandler = useCallback(
     async (rule: Rule) => {
       if (rule._id) {
-        setLastClicked(rule._id)
-      };
+        setLastClicked(rule._id);
+      }
       const localeDate = new Date();
       const utcDate = new Date(
         Date.UTC(
@@ -156,51 +162,75 @@ export const DailyGardening = () => {
         <h1>Daily Gardening</h1>
         <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
           <div className={styles.gardenViewContainer}>
-            <div className={styles.wateringAnimation}>
+            <div className={styles.wateringAnimationContainer}>
               <img
                 src={wateringAnimation}
                 alt="watering animation"
-                className="watering-animation"
+                className={styles.wateringAnimation}
               />
             </div>
             <div className={styles.rulesContainer}>
-              <h2 className={styles.subtitle}>Daily Goals:</h2>
-              <Grid container alignItems="center">
-              <Switch
-                checked={showDescriptions}
-                color="primary"
-                onChange={() => setShowDescriptions((status) => !status)}
-                name="detailView"
-              />
-              <h5>View Details</h5>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Grid container alignItems="center" xs={6}>
+                  <h2 className={styles.subtitle}>Daily Goals:</h2>
+                </Grid>
+                <Grid
+                  container
+                  alignItems="center"
+                  xs={6}
+                  justifyContent="flex-end"
+                >
+                  <Switch
+                    checked={showDescriptions}
+                    color="primary"
+                    onChange={() => setShowDescriptions((status) => !status)}
+                    name="detailView"
+                  />
+                  <h5>View Details</h5>
+                </Grid>
               </Grid>
               <div className={styles.taskButtonContainer}>
-              {rules.map((rule) => {
-                return (
-                    <LoadingWrapper key={rule._id} isLoading={lastClicked === rule._id && completedTaskApi.status === "loading"}>
-                    <Chip
-                      icon={
-                        isRuleCompleted(rule._id) ? <DoneIcon /> : <CloseIcon />
+                {rules.map((rule) => {
+                  return (
+                    <LoadingWrapper
+                      key={rule._id}
+                      isLoading={
+                        lastClicked === rule._id &&
+                        completedTaskApi.status === "loading"
                       }
-                      label={rule.name}
-                      clickable
-                      color={handleChipColor(isRuleCompleted(rule._id))}
-                      onClick={() => {
-                        !isRuleCompleted(rule._id) && completeTaskHandler(rule);
-                      }}
-                      disabled={completedTaskApi.status === "loading"}
-                      // TODO: Implement UNDO
-                      // onDelete={() => handleDelete(rule)}
-                      // deleteIcon={<UndoIcon />}
-                    />
-                    {rule.description && showDescriptions && (
-                      <p className="rule-description">
-                        {showDescriptions && rule.description}
-                      </p>
-                    )}
+                    >
+                      <Button
+                        startIcon={!isRuleCompleted(rule._id) && <CloseIcon />}
+                        endIcon={isRuleCompleted(rule._id) && <DoneIcon />}
+                        className={classes.ruleButton}
+                        size="large"
+                        variant="contained"
+                        color={handleChipColor(isRuleCompleted(rule._id))}
+                        onClick={() => {
+                          !isRuleCompleted(rule._id) &&
+                            completeTaskHandler(rule);
+                        }}
+                        disabled={completedTaskApi.status === "loading"}
+                        // TODO: Implement UNDO
+                        // onDelete={() => handleDelete(rule)}
+                        // deleteIcon={<UndoIcon />}
+                      >
+                        {rule.name}
+                      </Button>
+                      {rule.description && showDescriptions && (
+                        <Card className={classes.taskDescription}>
+                        <p className={styles.ruleDescription}>
+                          {showDescriptions && rule.description}
+                        </p>
+                        </Card>
+                      )}
                     </LoadingWrapper>
-                );
-              })}
+                  );
+                })}
               </div>
             </div>
             <div className={styles.centered}>
