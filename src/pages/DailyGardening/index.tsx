@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DailyGardening = () => {
   const history = useHistory();
-  const { userData } = useUserState();
+  const { userData, setUserData } = useUserState();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
@@ -61,6 +61,7 @@ export const DailyGardening = () => {
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
   );
+
   const completedTasks = useMemo(() => {
     const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
     if (completedTaskApi.response) {
@@ -122,11 +123,22 @@ export const DailyGardening = () => {
         date: utcDate.toISOString(),
         rewardTypeId: "61274429d20570644762b99b",
       };
+
       sendCompletedTaskData(completedTask);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userData]
   );
+
+  useEffect(() => {
+    if (completedTaskApi.status === "succeeded") {
+      const { balance: newCoinBalance } = completedTaskApi.response.user;
+      setUserData((data) => {
+        return { ...data, balance: newCoinBalance };
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completedTaskApi]);
 
   // TODO: Revisit when delete api is implemented.
   // const handleDelete = useCallback(

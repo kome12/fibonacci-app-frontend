@@ -17,7 +17,7 @@ import { UserRule } from "./UserRule";
 interface GardenSummaryProps {
   gardenName: string;
   gardenDesc: string;
-  gardenCategory: string;
+  gardenCategoryName: string;
   userRules: NewUserRule[];
   createGardenHandler: React.MouseEventHandler<HTMLButtonElement>;
   animDirection: "left" | "right";
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const GardenSummary: React.FC<GardenSummaryProps> = ({
   gardenName,
   gardenDesc,
-  gardenCategory,
+  gardenCategoryName,
   userRules,
   createGardenHandler,
   animDirection,
@@ -132,7 +132,7 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
             </Typography>
           </Grid>
         )}
-        {gardenCategory && (
+        {gardenCategoryName && (
           <Grid
             container
             direction="row"
@@ -144,7 +144,7 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
               Category:
             </Typography>
             <Typography variant="body1" className={classes.gardenDetails}>
-              {gardenCategory}
+              {gardenCategoryName}
             </Typography>
           </Grid>
         )}

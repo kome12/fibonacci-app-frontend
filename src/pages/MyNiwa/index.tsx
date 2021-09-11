@@ -63,22 +63,20 @@ export const MyNiwa = () => {
   const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
 
   useEffect(() => {
-    getGardenCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
       getUserGardens(userData.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
+  useEffect(() => {
+    getGardenCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const getImage = (categoryId: string) => {
     const result = categories?.filter(
       (category) => category._id === categoryId
     );
-    console.log(result?.[0]);
     if (result?.[0]?.imageURL) {
       return result[0]?.imageURL;
     }
@@ -117,33 +115,39 @@ export const MyNiwa = () => {
           isLoading={!gardensApi.isLoaded || !categoriesApi.isLoaded}
         >
           <div className="gardens-view">
-            {gardens.map((garden, index) => {
-              return (
-                <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
-                  <Card className={`garden-card ${classes.root}`}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={getImage(garden.gardenCategoryId)}
-                        title="Contemplative Reptile"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {garden.name}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {garden.description}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Link>
-              );
-            })}
+            {!gardens.length ? (
+              <Typography variant="h4">
+                Use the + button to make a new flower bed! ⤴
+              </Typography>
+            ) : (
+              gardens.map((garden, index) => {
+                return (
+                  <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
+                    <Card className={`garden-card ${classes.root}`}>
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={getImage(garden.gardenCategoryId)}
+                          title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {garden.name}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            {garden.description}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                );
+              })
+            )}
           </div>
         </LoadingWrapper>
       </div>
