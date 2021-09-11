@@ -7,7 +7,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import { motion } from "framer-motion";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
@@ -56,34 +56,42 @@ export const MyNiwa = () => {
   const classes = useStyles();
   const tooltipStyles = useTooltipStyles();
   const { userData } = useUserState();
+  // const [categoryImages, setCategoryImages] = useState([]);
   const [gardensApi, getUserGardens] = useApi(getGardens);
-
   const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
 
   const [categoriesApi, getGardenCategories] = useApi(getCategories);
-
   const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
 
   useEffect(() => {
-    getGardenCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
+      console.log(gardens);
       getUserGardens(userData.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
+  useEffect(() => {
+    getGardenCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const getImage = (categoryId: string) => {
-    const result = categories?.find((category) => category._id === categoryId);
+    const result = categories?.filter(
+      (category) => category._id === categoryId
+    );
     console.log(result?.[0]);
     if (result?.[0]?.imageURL) {
       return result[0]?.imageURL;
     }
     return gardenImage;
   };
+
+  // useEffect(() => {
+  //   const result = [];
+  //   for (const garden of gardens) {
+  //     result.push(getImage(garden?.gardenCategoryId))
+  //   }
+  // }, [categories, gardens]);
 
   const history = useHistory();
   const goToCreateGarden = () => {
