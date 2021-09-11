@@ -118,8 +118,8 @@ export const MyNiwa = () => {
         >
           <div className="gardens-view">
             {!gardens.length ? (
-              <Typography variant="h6">
-                Please create your first Niwa.
+              <Typography variant="h4">
+                Use the + button to make a new flower bed! ⤴
               </Typography>
             ) : (
               gardens.map((garden, index) => {
