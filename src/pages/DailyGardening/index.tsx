@@ -25,7 +25,7 @@ import "./DailyGardening.css";
 
 export const DailyGardening = () => {
   const history = useHistory();
-  const { userData } = useUserState();
+  const { userData, setUserData } = useUserState();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
@@ -45,6 +45,7 @@ export const DailyGardening = () => {
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
   );
+
   const completedTasks = useMemo(() => {
     const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
     if (completedTaskApi.response) {
@@ -86,8 +87,8 @@ export const DailyGardening = () => {
   const completeTaskHandler = useCallback(
     async (rule: Rule) => {
       if (rule._id) {
-        setLastClicked(rule._id)
-      };
+        setLastClicked(rule._id);
+      }
       const localeDate = new Date();
       const utcDate = new Date(
         Date.UTC(
@@ -106,11 +107,22 @@ export const DailyGardening = () => {
         date: utcDate.toISOString(),
         rewardTypeId: "61274429d20570644762b99b",
       };
+
       sendCompletedTaskData(completedTask);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userData]
   );
+
+  useEffect(() => {
+    if (completedTaskApi.status === "succeeded") {
+      const { balance: newCoinBalance } = completedTaskApi.response.user;
+      setUserData((data) => {
+        return { ...data, balance: newCoinBalance };
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completedTaskApi]);
 
   // TODO: Revisit when delete api is implemented.
   // const handleDelete = useCallback(
@@ -163,27 +175,37 @@ export const DailyGardening = () => {
               {rules.map((rule) => {
                 return (
                   <Card variant="outlined" key={rule._id} color="background">
-                    <LoadingWrapper isLoading={lastClicked === rule._id && completedTaskApi.status === "loading"}>
-                    <Chip
-                      icon={
-                        isRuleCompleted(rule._id) ? <DoneIcon /> : <CloseIcon />
+                    <LoadingWrapper
+                      isLoading={
+                        lastClicked === rule._id &&
+                        completedTaskApi.status === "loading"
                       }
-                      label={rule.name}
-                      clickable
-                      color={handleChipColor(isRuleCompleted(rule._id))}
-                      onClick={() => {
-                        !isRuleCompleted(rule._id) && completeTaskHandler(rule);
-                      }}
-                      disabled={completedTaskApi.status === "loading"}
-                      // TODO: Implement UNDO
-                      // onDelete={() => handleDelete(rule)}
-                      // deleteIcon={<UndoIcon />}
-                    />
-                    {rule.description && (
-                      <p className="rule-description">
-                        {showDescriptions && rule.description}
-                      </p>
-                    )}
+                    >
+                      <Chip
+                        icon={
+                          isRuleCompleted(rule._id) ? (
+                            <DoneIcon />
+                          ) : (
+                            <CloseIcon />
+                          )
+                        }
+                        label={rule.name}
+                        clickable
+                        color={handleChipColor(isRuleCompleted(rule._id))}
+                        onClick={() => {
+                          !isRuleCompleted(rule._id) &&
+                            completeTaskHandler(rule);
+                        }}
+                        disabled={completedTaskApi.status === "loading"}
+                        // TODO: Implement UNDO
+                        // onDelete={() => handleDelete(rule)}
+                        // deleteIcon={<UndoIcon />}
+                      />
+                      {rule.description && (
+                        <p className="rule-description">
+                          {showDescriptions && rule.description}
+                        </p>
+                      )}
                     </LoadingWrapper>
                   </Card>
                 );

@@ -117,33 +117,39 @@ export const MyNiwa = () => {
           isLoading={!gardensApi.isLoaded || !categoriesApi.isLoaded}
         >
           <div className="gardens-view">
-            {gardens.map((garden, index) => {
-              return (
-                <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
-                  <Card className={`garden-card ${classes.root}`}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={getImage(garden.gardenCategoryId)}
-                        title="Contemplative Reptile"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {garden.name}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {garden.description}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Link>
-              );
-            })}
+            {!gardens.length ? (
+              <Typography variant="h4">
+                Use the + button to make a new flower bed! ⤴
+              </Typography>
+            ) : (
+              gardens.map((garden, index) => {
+                return (
+                  <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
+                    <Card className={`garden-card ${classes.root}`}>
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={getImage(garden.gardenCategoryId)}
+                          title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {garden.name}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            {garden.description}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                );
+              })
+            )}
           </div>
         </LoadingWrapper>
       </div>
