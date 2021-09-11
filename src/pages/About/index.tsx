@@ -10,7 +10,8 @@ import { motion } from "framer-motion";
 import { useHistory } from "react-router";
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
-import "./About.css";
+import styles from "./About.module.css";
+// import "./About.css";
 import gardenPhoto from "./assets/garden.gif";
 
 const useStyles = makeStyles({
@@ -38,10 +39,10 @@ export const About = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
-      className="info-page"
+      className={styles.infoPage}
     >
-      <div className="about-page">
-        <div className="about-container">
+      <div className={styles.aboutPage}>
+        <div>
           <Card className={classes.root}>
             <CardActionArea>
               <CardMedia
@@ -76,7 +77,7 @@ export const About = () => {
                   color="secondary"
                   size="large"
                   onClick={() => linkHandler()}
-                  className="to-my-niwa"
+                  className={styles.toMyNiwa}
                 >
                   Get me to my niwa!
                 </Button>
