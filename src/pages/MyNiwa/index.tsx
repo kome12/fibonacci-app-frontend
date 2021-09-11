@@ -127,7 +127,7 @@ export const MyNiwa = () => {
                 return (
                   <Link
                     to={`/user/dailyGardening/${garden._id}`}
-                    key={garden._id}
+                    key={`${garden._id}${index}`}
                   >
                     <Card
                       className={`garden-card ${classes.root}`}
