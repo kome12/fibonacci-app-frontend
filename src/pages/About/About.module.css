@@ -1,8 +1,8 @@
-.info-page {
+.infoPage {
   background-color: #6ac697;
 }
 
-.about-page {
+.aboutPage {
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   min-height: 100vh;
 }
 
-.to-my-niwa {
+.toMyNiwa {
   margin: auto;
   margin-bottom: 2rem;
 }

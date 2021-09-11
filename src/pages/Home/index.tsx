@@ -1,21 +1,22 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router";
+import { ReactComponent as MyNiwaLogo } from "../../components/Header/assets/myniwa.svg";
 import { SignIn } from "../../components/SignIn";
 import { useUserState } from "../../store/user/useUserState";
 import { ReactComponent as Niwa } from "./assets/niwa.svg";
-import { ReactComponent as MyNiwaLogo } from "../../components/Header/assets/myniwa.svg";
-import "./home.css";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import styles from "./Home.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     loginButton: {
       margin: "4%",
       backgroundColor: theme.palette.text.primary,
-      color: theme.palette.background.default
-    }
-  }))
+      color: theme.palette.background.default,
+    },
+  })
+);
 
 export const Home = () => {
   const { userData } = useUserState();
@@ -42,14 +43,14 @@ export const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
-      className="splash-page"
+      className={styles.splashPage}
     >
-      <div className="splash-page">
-        <div className="ni-wa-container">
-          <MyNiwaLogo className="my-niwa-logo" />
-          <Niwa className="ni-wa-character" />
-          <h1 className="ni-wa">ni•wa</h1>
-          <h3 className="ni-wa-definition">a garden or courtyard</h3>
+      <div className={styles.splashPage}>
+        <div className={styles.niWaContainer}>
+          <MyNiwaLogo className={styles.myNiwaLogo} />
+          <Niwa className={styles.niWaCharacter} />
+          <h1 className={styles.niWa}>ni•wa</h1>
+          <h3 className={styles.niWaDefinition}>a garden or courtyard</h3>
           <Button
             variant="contained"
             color="secondary"

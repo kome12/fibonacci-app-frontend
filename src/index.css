@@ -10,3 +10,11 @@ html {
   color: #172f4a;
   height: 100%;
 }
+
+#root {
+  height: 100%;
+}
+
+.body-content {
+  height: 100%;
+}
