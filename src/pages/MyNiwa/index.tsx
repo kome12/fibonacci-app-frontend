@@ -56,7 +56,6 @@ export const MyNiwa = () => {
   const classes = useStyles();
   const tooltipStyles = useTooltipStyles();
   const { userData } = useUserState();
-  // const [categoryImages, setCategoryImages] = useState([]);
   const [gardensApi, getUserGardens] = useApi(getGardens);
   const [categoriesApi, getGardenCategories] = useApi(getCategories);
 
@@ -83,13 +82,6 @@ export const MyNiwa = () => {
     }
     return gardenImage;
   };
-
-  // useEffect(() => {
-  //   const result = [];
-  //   for (const garden of gardens) {
-  //     result.push(getImage(garden?.gardenCategoryId))
-  //   }
-  // }, [categories, gardens]);
 
   const history = useHistory();
   const goToCreateGarden = () => {
