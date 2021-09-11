@@ -7,7 +7,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
@@ -65,7 +65,6 @@ export const MyNiwa = () => {
 
   useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
-      console.log(gardens);
       getUserGardens(userData.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +78,6 @@ export const MyNiwa = () => {
     const result = categories?.filter(
       (category) => category._id === categoryId
     );
-    console.log(result?.[0]);
     if (result?.[0]?.imageURL) {
       return result[0]?.imageURL;
     }

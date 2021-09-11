@@ -100,7 +100,6 @@ export const CreateGarden = () => {
   useEffect(() => {
     let result;
     if (categoryId) {
-      console.log({ categoryId });
       result = categories?.find(
         (category) => category._id === categoryId
       )?.name;
