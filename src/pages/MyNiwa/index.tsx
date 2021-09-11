@@ -77,9 +77,7 @@ export const MyNiwa = () => {
   }, [userData]);
 
   const getImage = (categoryId: string) => {
-    const result = categories?.filter(
-      (category) => category._id === categoryId
-    );
+    const result = categories?.find((category) => category._id === categoryId);
     console.log(result?.[0]);
     if (result?.[0]?.imageURL) {
       return result[0]?.imageURL;

@@ -74,18 +74,6 @@ export const NewGarden: React.FC<NewGardenProps> = ({
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   const classes = useStyles();
 
-  console.log(categories);
-
-  // const [categoriesApi, getGardenCategories] = useApi(getCategories);
-
-  // const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
-
-  // useEffect(() => {
-  //   console.log(categories);
-  //   getGardenCategories();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   return (
     <Grid
       container={true}
