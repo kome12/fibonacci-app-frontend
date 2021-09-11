@@ -22,17 +22,28 @@ const useStyles = makeStyles(() =>
       top: "auto",
       bottom: 0,
     },
+    root: {
+      padding: "1%"
+    }
   })
 );
 
+const useNavStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      padding: "1%"
+    }
+  })
+);
 export const BottomNav: React.FC<BottomNavProps> = ({
   currentPage,
   handlePageChange,
 }) => {
   const classes = useStyles();
+  const navClasses = useNavStyles();
   return (
-    <AppBar position="fixed" className={classes.appBar}>
-      <BottomNavigation value={currentPage} onChange={handlePageChange}>
+    <AppBar position="static" className={classes.appBar}>
+      <BottomNavigation value={currentPage} onChange={handlePageChange} classes={navClasses}>
         <BottomNavigationAction
           label="Flower Beds"
           showLabel={true}
