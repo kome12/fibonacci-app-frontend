@@ -1,3 +1,4 @@
+import { Category } from "./category.model";
 import { CompletedTask } from "./completedTask.model";
 import { Rule } from "./rule.model";
 
@@ -9,13 +10,11 @@ export interface Garden {
   createdDate: string;
   lastUpdate: string;
   gardenCategoryId: string;
+  gardenCategory: Category;
 }
 
 export interface PopulatedGarden {
-  garden: {
-    _id: string;
-    name: string;
-  };
+  garden: Garden;
   rules: Rule[];
   completedTasks: CompletedTask[];
 }
