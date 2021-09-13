@@ -1,4 +1,4 @@
-import { Grid, IconButton, Tooltip } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,12 +10,13 @@ import { motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
-import { getCategories } from "../../helpers/api/gardens/getCategories";
+import { Section } from "../../components/Section";
+import { SectionTitle } from "../../components/SectionTitle";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
-import "./MyNiwa.css";
+import styles from "./MyNiwa.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,14 +54,13 @@ const useTooltipStyles = makeStyles((theme: Theme) =>
 );
 
 export const MyNiwa = () => {
+  const history = useHistory();
   const classes = useStyles();
   const tooltipStyles = useTooltipStyles();
   const { userData } = useUserState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
-  const [categoriesApi, getGardenCategories] = useApi(getCategories);
 
   const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
-  const categories = useMemo(() => categoriesApi.response, [categoriesApi]);
 
   useEffect(() => {
     if (userData.isLoggedIn && userData.id) {
@@ -69,21 +69,6 @@ export const MyNiwa = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
-  useEffect(() => {
-    getGardenCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const getImage = (categoryId: string) => {
-    const result = categories?.filter(
-      (category) => category._id === categoryId
-    );
-    if (result?.[0]?.imageURL) {
-      return result[0]?.imageURL;
-    }
-    return gardenImage;
-  };
-
-  const history = useHistory();
   const goToCreateGarden = () => {
     history.push("/user/createGarden");
   };
@@ -94,14 +79,8 @@ export const MyNiwa = () => {
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      <div className="my-gardens-container">
-        <Grid
-          container
-          className={classes.myNiwaHeader}
-          direction="row"
-          justifyContent="space-between"
-        >
-          <h1>My Niwa</h1>
+      <Section>
+        <SectionTitle title="My Niwa">
           <Tooltip arrow classes={tooltipStyles} title="Add Flower Bed">
             <IconButton
               className={classes.createGarden}
@@ -110,24 +89,27 @@ export const MyNiwa = () => {
               <AddIcon />
             </IconButton>
           </Tooltip>
-        </Grid>
-        <LoadingWrapper
-          isLoading={!gardensApi.isLoaded || !categoriesApi.isLoaded}
-        >
-          <div className="gardens-view">
-            {!gardens.length ? (
+        </SectionTitle>
+
+        <LoadingWrapper isLoading={!gardensApi.isLoaded}>
+          <div className={styles.gardensView}>
+            {gardens.length === 0 ? (
               <Typography variant="h4">
                 Use the + button to make a new flower bed! ⤴
               </Typography>
             ) : (
-              gardens.map((garden, index) => {
+              gardens.map((garden) => {
                 return (
-                  <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
-                    <Card className={`garden-card ${classes.root}`}>
+                  <Link
+                    to={`/user/dailyGardening/${garden._id}`}
+                    key={garden._id}
+                    className={styles.gardenCard}
+                  >
+                    <Card className={classes.root}>
                       <CardActionArea>
                         <CardMedia
                           className={classes.media}
-                          image={getImage(garden.gardenCategoryId)}
+                          image={garden.gardenCategory?.imageURL || gardenImage}
                           title="Contemplative Reptile"
                         />
                         <CardContent>
@@ -150,7 +132,7 @@ export const MyNiwa = () => {
             )}
           </div>
         </LoadingWrapper>
-      </div>
+      </Section>
     </motion.div>
   );
 };
