@@ -293,9 +293,7 @@ export const Florist = () => {
                   }
                 >
                   <Typography variant="body1" className={classes.welcomeText}>
-                    Would you like to purchase it? test id :{" "}
-                    {selectFlowerData?.name}
-                    price : {selectFlowerData?.price}
+                    Would you like to purchase it?
                   </Typography>
                   <img
                     src={selectFlowerData?.imageURL}
