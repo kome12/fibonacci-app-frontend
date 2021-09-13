@@ -1,10 +1,11 @@
 .gardenViewContainer {
+  margin-top: 10px;
   width: 100%;
 }
 
 .rulesContainer {
   margin: 5% 0;
-  background-color: white;
+  background-color: #fff;
   border-radius: 20px;
 }
 
