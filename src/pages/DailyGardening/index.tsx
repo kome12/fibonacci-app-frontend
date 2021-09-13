@@ -10,6 +10,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
+import { Section } from "../../components/Section";
+import { SectionTitle } from "../../components/SectionTitle";
 // TODO: Revisit when delete api is implemented
 // import { deleteCompletedTask } from "../../helpers/api/completedTasks/deleteCompletedTask";
 import {
@@ -34,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
     returnButton: {
       backgroundColor: theme.palette.text.primary,
       color: theme.palette.background.default,
-      marginTop: "5%",
     },
   })
 );
@@ -169,46 +170,46 @@ export const DailyGardening = () => {
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0 }}
     >
-      <div className={styles.gardenParentContainer}>
-        <h1>Daily Gardening</h1>
-        <button
+      <Section>
+        <SectionTitle title="Daily Gardening" />
+        <Button
+          color="primary"
           onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
         >
           Edit Garden
-        </button>
-        <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
-          <div className={styles.gardenViewContainer}>
-            <div className={styles.wateringAnimationContainer}>
-              <img
-                src={wateringAnimation}
-                alt="watering animation"
-                className={styles.wateringAnimation}
-              />
-            </div>
-            <div className={styles.rulesContainer}>
-              <Grid
-                container
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Grid container alignItems="center" xs={6}>
-                  <h2 className={styles.subtitle}>Daily Goals:</h2>
-                </Grid>
-                <Grid
-                  container
-                  alignItems="center"
-                  xs={6}
-                  justifyContent="flex-end"
-                >
+        </Button>
+        <div className={styles.gardenViewContainer}>
+          <div className={styles.wateringAnimationContainer}>
+            <img
+              src={wateringAnimation}
+              alt="watering animation"
+              className={styles.wateringAnimation}
+            />
+          </div>
+
+          <div className={styles.rulesContainer}>
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="space-between"
+              className={styles.heading}
+            >
+              <h2 className={styles.subtitle}>Daily Goals:</h2>
+
+              {rules.length > 0 && (
+                <div className={styles.switchWrapper}>
                   <Switch
                     checked={showDescriptions}
                     color="primary"
                     onChange={() => setShowDescriptions((status) => !status)}
                     name="detailView"
                   />
-                  <h5>View Details</h5>
-                </Grid>
-              </Grid>
+                  <p>View Details</p>
+                </div>
+              )}
+            </Grid>
+
+            <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
               <div className={styles.taskButtonContainer}>
                 {rules.map((rule) => {
                   return (
@@ -248,19 +249,19 @@ export const DailyGardening = () => {
                   );
                 })}
               </div>
-            </div>
-            <div className={styles.centered}>
-              <Button
-                variant="contained"
-                className={classes.returnButton}
-                onClick={() => history.push("/user/myniwa")}
-              >
-                Go back to My Gardens
-              </Button>
-            </div>
+              <div className={styles.returnButtonWrapper}>
+                <Button
+                  variant="contained"
+                  className={classes.returnButton}
+                  onClick={() => history.push("/user/myniwa")}
+                >
+                  Go back to My Gardens
+                </Button>
+              </div>
+            </LoadingWrapper>
           </div>
-        </LoadingWrapper>
-      </div>
+        </div>
+      </Section>
     </motion.div>
   );
 };
