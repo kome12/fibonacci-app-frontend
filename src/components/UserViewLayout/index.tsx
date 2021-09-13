@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Header } from "../Header";
-import { BottomNav } from "../BottomNav";
-import styles from "./UserViewLayout.module.css";
 import { useHistory } from "react-router-dom";
+import { BottomNav } from "../BottomNav";
+import { Header } from "../Header";
+import styles from "./UserViewLayout.module.css";
 
 interface UserViewLayoutProps {
   showHeader?: boolean;
@@ -31,7 +31,7 @@ export const UserViewLayout: React.FC<UserViewLayoutProps> = ({
       )}
       <div className={styles.content}>{children}</div>
       {showBottomNav && (
-        <div className={styles.nav}>
+        <div>
           <BottomNav
             currentPage={currentPage}
             handlePageChange={handlePageChange}
