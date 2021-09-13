@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import React from "react";
 import styles from "./SectionTitle.module.css";
 

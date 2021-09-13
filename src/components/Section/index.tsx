@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import styles from "./Section.module.css";
 
 export const Section: React.FC = ({ children }) => {

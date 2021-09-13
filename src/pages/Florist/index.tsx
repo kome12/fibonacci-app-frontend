@@ -1,11 +1,7 @@
-import {
-  Button,
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Head } from "../../components/Head";

@@ -1,5 +1,7 @@
-import { Card, Grid, Theme } from "@material-ui/core";
+import { Theme } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
@@ -174,13 +176,14 @@ export const DailyGardening = () => {
         exit={{ opacity: 0 }}
       >
         <Section>
-          <SectionTitle title="Daily Gardening" />
-          <Button
-            color="primary"
-            onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
-          >
-            Edit Garden
-          </Button>
+          <SectionTitle title="Daily Gardening">
+            <Button
+              color="primary"
+              onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
+            >
+              Edit Garden
+            </Button>
+          </SectionTitle>
           <div className={styles.gardenViewContainer}>
             <div className={styles.wateringAnimationContainer}>
               <img
