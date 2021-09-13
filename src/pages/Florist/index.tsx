@@ -11,6 +11,7 @@ import { Redirect } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { buyFlower } from "../../helpers/api/flowers/buyFlower";
 import { getFlowers } from "../../helpers/api/flowers/getFlowers";
+import { Flower } from "../../models/flower.model";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import styles from "./Florist.module.css";
@@ -93,6 +94,9 @@ export const Florist = () => {
 
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
+  const [floristStep, setFloristStep] = useState(0);
+  const [selectFlowerData, setSelectFlowerData] = useState<Flower | null>(null);
+
   const userId = useMemo(
     () => (userData.isLoggedIn && userData.id) || "",
     [userData]
@@ -113,6 +117,7 @@ export const Florist = () => {
           price: flowerPrice,
         });
       }
+      setFloristStep(0);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userId]
@@ -200,69 +205,130 @@ export const Florist = () => {
         </Grid>
         <Grid container justifyContent="center" className={classes.flowerList}>
           <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
-            {allFlowers.map((flower) => {
-              const isBought = boughtFlowers.includes(flower._id);
-              return isBought ? (
-                <Grid
-                  container
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="center"
-                  className={classes.cardBought}
-                  key={flower._id}
-                >
-                  <Typography variant="caption" className={classes.boughtName}>
-                    {flower.name}
-                  </Typography>
-                  <img
-                    src={flower.imageURL}
-                    alt={`${flower.name} pic`}
-                    className={styles.boughtPic}
-                  />
-                </Grid>
-              ) : (
-                <Grid
-                  container
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="center"
-                  className={classes.card}
-                  key={flower._id}
-                >
-                  <LoadingWrapper
-                    isLoading={
-                      flower._id === lastBought &&
-                      buyFlowerAPIState.status === "loading"
-                    }
+            {floristStep === 0 &&
+              allFlowers.map((flower) => {
+                const isBought = boughtFlowers.includes(flower._id);
+                return isBought ? (
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    className={classes.cardBought}
+                    key={flower._id}
                   >
                     <Typography
                       variant="caption"
-                      className={classes.notBoughtName}
+                      className={classes.boughtName}
                     >
-                      ???
+                      {flower.name}
                     </Typography>
                     <img
                       src={flower.imageURL}
-                      alt={"secret flower pic"}
-                      className={styles.notBoughtPic}
+                      alt={`${flower.name} pic`}
+                      className={styles.boughtPic}
                     />
-                    <Button
-                      variant="contained"
-                      onClick={() => buyFlowerHandler(flower._id, flower.price)}
-                      color="primary"
-                      className={classes.buyButton}
-                      disabled={
-                        !userData.balance || flower.price > userData.balance
-                          ? true
-                          : false
+                  </Grid>
+                ) : (
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    className={classes.card}
+                    key={flower._id}
+                  >
+                    <LoadingWrapper
+                      isLoading={
+                        flower._id === lastBought &&
+                        buyFlowerAPIState.status === "loading"
                       }
                     >
-                      Buy: {flower.price}
-                    </Button>
-                  </LoadingWrapper>
-                </Grid>
-              );
-            })}
+                      <Typography
+                        variant="caption"
+                        className={classes.notBoughtName}
+                      >
+                        ???
+                      </Typography>
+                      <img
+                        src={flower.imageURL}
+                        alt={"secret flower pic"}
+                        className={styles.notBoughtPic}
+                      />
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setFloristStep(1);
+                          setSelectFlowerData(flower);
+                          // buyFlowerHandler(flower._id, flower.price);
+                        }}
+                        color="primary"
+                        className={classes.buyButton}
+                        disabled={
+                          !userData.balance || flower.price > userData.balance
+                            ? true
+                            : false
+                        }
+                      >
+                        Buy: {flower.price}
+                      </Button>
+                    </LoadingWrapper>
+                  </Grid>
+                );
+              })}
+            {floristStep === 1 && (
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                className={classes.container}
+              >
+                <LoadingWrapper
+                  isLoading={
+                    selectFlowerData !== null
+                      ? selectFlowerData._id === lastBought &&
+                        buyFlowerAPIState.status === "loading"
+                      : false
+                  }
+                >
+                  <Typography variant="body1" className={classes.welcomeText}>
+                    Would you like to purchase it? test id :{" "}
+                    {selectFlowerData?.name}
+                    price : {selectFlowerData?.price}
+                  </Typography>
+                  <img
+                    src={selectFlowerData?.imageURL}
+                    alt={"secret flower pic"}
+                    className={styles.notBoughtPic}
+                  />
+                  <Button
+                    variant="contained"
+                    color="default"
+                    onClick={() => {
+                      setSelectFlowerData(null);
+                      setFloristStep(0);
+                    }}
+                  >
+                    No
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      selectFlowerData !== null
+                        ? buyFlowerHandler(
+                            selectFlowerData._id,
+                            selectFlowerData.price
+                          )
+                        : setFloristStep(0);
+                    }}
+                  >
+                    Yes
+                  </Button>
+                </LoadingWrapper>
+              </Grid>
+            )}
           </LoadingWrapper>
         </Grid>
       </Grid>
