@@ -9,6 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { motion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
@@ -73,66 +74,75 @@ export const MyNiwa = () => {
     history.push("/user/createGarden");
   };
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      exit={{ opacity: 0 }}
-    >
-      <Section>
-        <SectionTitle title="My Niwa">
-          <Tooltip arrow classes={tooltipStyles} title="Add Flower Bed">
-            <IconButton
-              className={classes.createGarden}
-              onClick={goToCreateGarden}
-            >
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-        </SectionTitle>
+    <>
+      <Head />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        exit={{ opacity: 0 }}
+      >
+        <Section>
+          <SectionTitle title="My Niwa">
+            <Tooltip arrow classes={tooltipStyles} title="Add Flower Bed">
+              <IconButton
+                className={classes.createGarden}
+                onClick={goToCreateGarden}
+              >
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          </SectionTitle>
 
-        <LoadingWrapper isLoading={!gardensApi.isLoaded}>
-          <div className={styles.gardensView}>
-            {gardens.length === 0 ? (
-              <Typography variant="h4">
-                Use the + button to make a new flower bed! ⤴
-              </Typography>
-            ) : (
-              gardens.map((garden) => {
-                return (
-                  <Link
-                    to={`/user/dailyGardening/${garden._id}`}
-                    key={garden._id}
-                    className={styles.gardenCard}
-                  >
-                    <Card className={classes.root}>
-                      <CardActionArea>
-                        <CardMedia
-                          className={classes.media}
-                          image={garden.gardenCategory?.imageURL || gardenImage}
-                          title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {garden.name}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
-                            {garden.description}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </Link>
-                );
-              })
-            )}
-          </div>
-        </LoadingWrapper>
-      </Section>
-    </motion.div>
+          <LoadingWrapper isLoading={!gardensApi.isLoaded}>
+            <div className={styles.gardensView}>
+              {gardens.length === 0 ? (
+                <Typography variant="h4">
+                  Use the + button to make a new flower bed! ⤴
+                </Typography>
+              ) : (
+                gardens.map((garden) => {
+                  return (
+                    <Link
+                      to={`/user/dailyGardening/${garden._id}`}
+                      key={garden._id}
+                      className={styles.gardenCard}
+                    >
+                      <Card className={classes.root}>
+                        <CardActionArea>
+                          <CardMedia
+                            className={classes.media}
+                            image={
+                              garden.gardenCategory?.imageURL || gardenImage
+                            }
+                            title="Contemplative Reptile"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {garden.name}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {garden.description}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Link>
+                  );
+                })
+              )}
+            </div>
+          </LoadingWrapper>
+        </Section>
+      </motion.div>
+    </>
   );
 };

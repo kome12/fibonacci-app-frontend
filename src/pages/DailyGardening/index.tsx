@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
+import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
@@ -164,104 +165,109 @@ export const DailyGardening = () => {
 
   const classes = useStyles();
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      exit={{ opacity: 0 }}
-    >
-      <Section>
-        <SectionTitle title="Daily Gardening" />
-        <Button
-          color="primary"
-          onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
-        >
-          Edit Garden
-        </Button>
-        <div className={styles.gardenViewContainer}>
-          <div className={styles.wateringAnimationContainer}>
-            <img
-              src={wateringAnimation}
-              alt="watering animation"
-              className={styles.wateringAnimation}
-            />
-          </div>
+    <>
+      <Head title="Daily Gardening" />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        exit={{ opacity: 0 }}
+      >
+        <Section>
+          <SectionTitle title="Daily Gardening" />
+          <Button
+            color="primary"
+            onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
+          >
+            Edit Garden
+          </Button>
+          <div className={styles.gardenViewContainer}>
+            <div className={styles.wateringAnimationContainer}>
+              <img
+                src={wateringAnimation}
+                alt="watering animation"
+                className={styles.wateringAnimation}
+              />
+            </div>
 
-          <div className={styles.rulesContainer}>
-            <Grid
-              container
-              alignItems="center"
-              justifyContent="space-between"
-              className={styles.heading}
-            >
-              <h2 className={styles.subtitle}>Daily Goals:</h2>
+            <div className={styles.rulesContainer}>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+                className={styles.heading}
+              >
+                <h2 className={styles.subtitle}>Daily Goals:</h2>
 
-              {rules.length > 0 && (
-                <div className={styles.switchWrapper}>
-                  <Switch
-                    checked={showDescriptions}
-                    color="primary"
-                    onChange={() => setShowDescriptions((status) => !status)}
-                    name="detailView"
-                  />
-                  <p>View Details</p>
-                </div>
-              )}
-            </Grid>
+                {rules.length > 0 && (
+                  <div className={styles.switchWrapper}>
+                    <Switch
+                      checked={showDescriptions}
+                      color="primary"
+                      onChange={() => setShowDescriptions((status) => !status)}
+                      name="detailView"
+                    />
+                    <p>View Details</p>
+                  </div>
+                )}
+              </Grid>
 
-            <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
-              <div className={styles.taskButtonContainer}>
-                {rules.map((rule) => {
-                  return (
-                    <LoadingWrapper
-                      key={rule._id}
-                      isLoading={
-                        lastClicked === rule._id &&
-                        completedTaskApi.status === "loading"
-                      }
-                    >
-                      <Button
-                        startIcon={!isRuleCompleted(rule._id) && <CloseIcon />}
-                        endIcon={isRuleCompleted(rule._id) && <DoneIcon />}
-                        className={classes.ruleButton}
-                        size="large"
-                        variant="contained"
-                        color={handleChipColor(isRuleCompleted(rule._id))}
-                        onClick={() => {
-                          !isRuleCompleted(rule._id) &&
-                            completeTaskHandler(rule);
-                        }}
-                        disabled={completedTaskApi.status === "loading"}
-                        // TODO: Implement UNDO
-                        // onDelete={() => handleDelete(rule)}
-                        // deleteIcon={<UndoIcon />}
+              <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
+                <div className={styles.taskButtonContainer}>
+                  {rules.map((rule) => {
+                    return (
+                      <LoadingWrapper
+                        key={rule._id}
+                        isLoading={
+                          lastClicked === rule._id &&
+                          completedTaskApi.status === "loading"
+                        }
                       >
-                        {rule.name}
-                      </Button>
-                      {rule.description && showDescriptions && (
-                        <Card className={classes.taskDescription}>
-                          <p className={styles.ruleDescription}>
-                            {showDescriptions && rule.description}
-                          </p>
-                        </Card>
-                      )}
-                    </LoadingWrapper>
-                  );
-                })}
-              </div>
-              <div className={styles.returnButtonWrapper}>
-                <Button
-                  variant="contained"
-                  className={classes.returnButton}
-                  onClick={() => history.push("/user/myniwa")}
-                >
-                  Go back to My Gardens
-                </Button>
-              </div>
-            </LoadingWrapper>
+                        <Button
+                          startIcon={
+                            !isRuleCompleted(rule._id) && <CloseIcon />
+                          }
+                          endIcon={isRuleCompleted(rule._id) && <DoneIcon />}
+                          className={classes.ruleButton}
+                          size="large"
+                          variant="contained"
+                          color={handleChipColor(isRuleCompleted(rule._id))}
+                          onClick={() => {
+                            !isRuleCompleted(rule._id) &&
+                              completeTaskHandler(rule);
+                          }}
+                          disabled={completedTaskApi.status === "loading"}
+                          // TODO: Implement UNDO
+                          // onDelete={() => handleDelete(rule)}
+                          // deleteIcon={<UndoIcon />}
+                        >
+                          {rule.name}
+                        </Button>
+                        {rule.description && showDescriptions && (
+                          <Card className={classes.taskDescription}>
+                            <p className={styles.ruleDescription}>
+                              {showDescriptions && rule.description}
+                            </p>
+                          </Card>
+                        )}
+                      </LoadingWrapper>
+                    );
+                  })}
+                </div>
+                <div className={styles.returnButtonWrapper}>
+                  <Button
+                    variant="contained"
+                    className={classes.returnButton}
+                    onClick={() => history.push("/user/myniwa")}
+                  >
+                    Go back to My Gardens
+                  </Button>
+                </div>
+              </LoadingWrapper>
+            </div>
           </div>
-        </div>
-      </Section>
-    </motion.div>
+        </Section>
+      </motion.div>
+    </>
   );
 };
