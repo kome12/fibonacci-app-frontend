@@ -1,0 +1,36 @@
+.splashPage {
+  height: 100%;
+  width: 100vw;
+  text-align: center;
+  background-color: #6ac697;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.niWaContainer {
+  max-width: 480px;
+  padding: auto;
+  margin: 0 auto;
+}
+
+.niWaCharacter {
+  width: 100%;
+  height: 20vh;
+}
+
+.niWa {
+  margin: 0%;
+  font-size: 3rem;
+  color: #172f4a;
+}
+
+.niWaDefinition {
+  color: #172f4a;
+  margin-left: 0;
+}
+
+.myNiwaLogo {
+  width: 80%;
+  height: 10vh;
+}

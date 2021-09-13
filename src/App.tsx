@@ -9,7 +9,7 @@ import { MyNiwaTheme } from "./utils/UITheme";
 
 const App = () => {
   return (
-    <div>
+    <div className="body-content">
       <RecoilRoot>
         <AppWrapper>
           <Router>

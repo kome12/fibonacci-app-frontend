@@ -8,12 +8,22 @@ import {
 } from "@material-ui/core";
 import { motion } from "framer-motion";
 import React from "react";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { Category } from "../../../models/category.model";
 
 interface NewGardenProps {
   nameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
   name: string;
   descChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
   desc: string;
+  categories: Category[] | undefined;
+  categoryIdChangeHandler: (
+    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) => void;
+  categoryId: string;
   animDirection: "left" | "right";
 }
 
@@ -40,6 +50,13 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "90%",
       marginLeft: "5%",
     },
+    formControl: {
+      margin: "auto",
+      minWidth: 320,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
   })
 );
 
@@ -48,11 +65,15 @@ export const NewGarden: React.FC<NewGardenProps> = ({
   name,
   descChangeHandler,
   desc,
+  categories,
+  categoryIdChangeHandler,
+  categoryId,
   animDirection,
 }) => {
   const initDir = animDirection === "left" ? "5vw" : "-5vw";
   const exitDir = animDirection === "left" ? "-5vw" : "5vw";
   const classes = useStyles();
+
   return (
     <Grid
       container={true}
@@ -94,6 +115,24 @@ export const NewGarden: React.FC<NewGardenProps> = ({
         variant="outlined"
         label="Description:"
       />
+      <FormControl className={classes.formControl}>
+        <InputLabel id="category-select-label">Select a Category</InputLabel>
+        <Select
+          labelId="category-select-label"
+          id="category-select"
+          value={categoryId}
+          onChange={categoryIdChangeHandler}
+          required
+        >
+          {categories?.map((category, index) => {
+            return (
+              <MenuItem value={category._id} key={index}>
+                {category.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
     </Grid>
   );
 };

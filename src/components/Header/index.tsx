@@ -27,10 +27,11 @@ const useStyles = makeStyles(() =>
 
 export const Header = () => {
   const history = useHistory();
+  const classes = useStyles();
   const { userData } = useUserState();
 
   const coinBalance = useMemo(
-    () => (userData.isLoggedIn && userData.numCoins) || null,
+    () => (userData.isLoggedIn && userData.balance) || null,
     [userData]
   );
 
@@ -50,8 +51,6 @@ export const Header = () => {
     history.push("/");
   }, [history]);
 
-  const classes = useStyles();
-
   return (
     <AppBar
       position="static"
@@ -69,7 +68,7 @@ export const Header = () => {
             <h3>
               {coinBalance ? (
                 <CountUp
-                  isCounting={!!coinBalance}
+                  isCounting
                   end={coinBalance}
                   duration={1.5}
                   thousandsSeparator=","
