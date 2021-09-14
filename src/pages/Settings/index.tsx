@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { formatISO } from "date-fns";
 import { motion } from "framer-motion";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
@@ -10,6 +10,9 @@ import { SectionTitle } from "../../components/SectionTitle";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
+import { GardenDataWrapper } from "./components/GardenDataWrapper";
+import { NameInput } from "./components/NameInput";
+import styles from "./Settings.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     media: {
       height: 140,
     },
-    myNiwaHeader: {
+    nameInput: {
       width: "100%",
     },
   })
@@ -34,10 +37,27 @@ export const MyNiwaSettings = () => {
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
+  const initialGardenName = garden?.name ?? "";
 
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
+  );
+
+  // Garden Name Input
+  const [showNameInput, setShowNameInput] = useState(false);
+  const [gardenName, setGardenName] = useState<string | undefined>(undefined);
+  const currentGardenName = useMemo(() => {
+    return (gardenName !== undefined ? gardenName : garden?.name) ?? "-";
+  }, [gardenName, garden?.name]);
+
+  const onNameInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const { value } = e.currentTarget;
+
+      setGardenName(value);
+    },
+    []
   );
 
   useEffect(() => {
@@ -63,22 +83,33 @@ export const MyNiwaSettings = () => {
           <SectionTitle title="My Niwa Settings" />
 
           <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
-            <section>
-              <section>
-                <h1>{garden?.name ?? "-"}</h1>
-              </section>
+            <section className={styles.gardenDataInputs}>
+              <GardenDataWrapper
+                showInput={showNameInput}
+                currentData={currentGardenName}
+                editData={() => setShowNameInput(true)}
+              >
+                <NameInput
+                  garden={garden ? { ...garden, _id: gardenId } : undefined}
+                  initialGardenName={initialGardenName}
+                  currentGardenName={currentGardenName}
+                  onNameInputChange={onNameInputChange}
+                  setShowNameInput={setShowNameInput}
+                  setGardenName={setGardenName}
+                />
+              </GardenDataWrapper>
+            </section>
 
-              <section>
-                <ul>
-                  {rules?.map((rule) => (
-                    <li key={rule._id}>
-                      {rule.name}
-                      <br />
-                      {rule.description}
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            <section>
+              <ul>
+                {rules?.map((rule) => (
+                  <li key={rule._id}>
+                    {rule.name}
+                    <br />
+                    {rule.description}
+                  </li>
+                ))}
+              </ul>
             </section>
           </LoadingWrapper>
         </Section>
