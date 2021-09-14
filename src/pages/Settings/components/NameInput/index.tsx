@@ -53,7 +53,8 @@ export const NameInput: React.FC<Props> = memo(
     const disableUpdate = useMemo(
       () =>
         initialGardenName === currentGardenName ||
-        updateGardenApi.status === "loading",
+        updateGardenApi.status === "loading" ||
+        currentGardenName.length === 0,
       [initialGardenName, currentGardenName, updateGardenApi.status]
     );
 
@@ -83,7 +84,7 @@ export const NameInput: React.FC<Props> = memo(
     useEffect(() => {
       if (updateGardenApi.status === "succeeded") {
         setShowNameInput(false);
-        setGardenName(updateGardenApi.response.name);
+        setGardenName(updateGardenApi.response.name || "-");
       }
     }, [setGardenName, setShowNameInput, updateGardenApi]);
 

@@ -139,6 +139,7 @@ export const MyNiwaSettings = () => {
             </section>
 
             <section>
+              <h2>Rules:</h2>
               <ul>
                 {rules?.map((rule) => (
                   <li key={rule._id}>
