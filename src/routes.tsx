@@ -34,6 +34,11 @@ const Florist = React.lazy(() =>
     default: Florist,
   }))
 );
+const MyGrowth = React.lazy(() =>
+import("./pages/MyGrowth").then(({ MyGrowth }) => ({
+  default: MyGrowth,
+}))
+);
 
 export const Routes = () => {
   const location = useLocation();
@@ -62,6 +67,7 @@ export const Routes = () => {
                     exact
                   />
                   <Route path="/user/store" component={Florist} exact />
+                  <Route path="/user/myGrowth" component={MyGrowth} exact />
                 </UserViewLayout>
               </Route>
               <Route path="/about" component={About} exact />
