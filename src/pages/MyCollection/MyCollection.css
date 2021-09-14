@@ -1,0 +1,60 @@
+.myCollectionPage {
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+  display: flex;
+}
+
+.background-image {
+  margin: auto;
+}
+
+.flower-image {
+  height: 200px;
+  position: relative;
+  left: 0px;
+  top: -260px;
+  z-index: 1;
+}
+
+.flower-animation {
+  -webkit-animation-name: steam;
+  -webkit-animation-duration: 10s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: steam;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@-webkit-keyframes steam {
+  0%,
+  100% {
+    -webkit-transform: skewX(0deg);
+    opacity: 1;
+  }
+  10% {
+    -webkit-transform: skewX(5deg);
+    opacity: 0.8;
+  }
+  75% {
+    -webkit-transform: skewX(-5deg);
+    opacity: 0.8;
+  }
+}
+@keyframes steam {
+  0%,
+  100% {
+    transform: skewX(0deg);
+    opacity: 1;
+  }
+  10% {
+    transform: skewX(5deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: skewX(-5deg);
+    opacity: 0.8;
+  }
+}
