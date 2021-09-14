@@ -1,43 +1,44 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { formatISO } from "date-fns";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
-import { useUserState } from "../../store/user/useUserState";
+// import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
+import { DescriptionInput } from "./components/DescriptionInput";
 import { GardenDataWrapper } from "./components/GardenDataWrapper";
 import { NameInput } from "./components/NameInput";
 import styles from "./Settings.module.css";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      maxWidth: 845,
-    },
-    media: {
-      height: 140,
-    },
-    nameInput: {
-      width: "100%",
-    },
-  })
-);
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     root: {
+//       maxWidth: 845,
+//     },
+//     media: {
+//       height: 140,
+//     },
+//     nameInput: {
+//       width: "100%",
+//     },
+//   })
+// );
 
 export const MyNiwaSettings = () => {
-  const history = useHistory();
-  const { userData } = useUserState();
+  // const history = useHistory();
+  // const { userData } = useUserState();
+  // const classes = useStyles();
   const { gardenId } = useParams<{ gardenId: string }>();
-  const classes = useStyles();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
   const initialGardenName = garden?.name ?? "";
+  const initialGardenDescription = garden?.description ?? "";
 
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
@@ -51,11 +52,33 @@ export const MyNiwaSettings = () => {
     return (gardenName !== undefined ? gardenName : garden?.name) ?? "-";
   }, [gardenName, garden?.name]);
 
+  // Garden Description Input
+  const [showDescriptionInput, setShowDescriptionInput] = useState(false);
+  const [gardenDescription, setGardenDescription] = useState<
+    string | undefined
+  >(undefined);
+  const currentGardenDescription = useMemo(() => {
+    return (
+      (gardenDescription !== undefined
+        ? gardenDescription
+        : garden?.description) ?? "-"
+    );
+  }, [gardenDescription, garden?.description]);
+
   const onNameInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       const { value } = e.currentTarget;
 
       setGardenName(value);
+    },
+    []
+  );
+
+  const onDescriptionInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const { value } = e.currentTarget;
+
+      setGardenDescription(value);
     },
     []
   );
@@ -96,6 +119,21 @@ export const MyNiwaSettings = () => {
                   onNameInputChange={onNameInputChange}
                   setShowNameInput={setShowNameInput}
                   setGardenName={setGardenName}
+                />
+              </GardenDataWrapper>
+
+              <GardenDataWrapper
+                showInput={showDescriptionInput}
+                currentData={currentGardenDescription}
+                editData={() => setShowDescriptionInput(true)}
+              >
+                <DescriptionInput
+                  garden={garden ? { ...garden, _id: gardenId } : undefined}
+                  initialGardenDescription={initialGardenDescription}
+                  currentGardenDescription={currentGardenDescription}
+                  onDescriptionInputChange={onDescriptionInputChange}
+                  setShowDescriptionInput={setShowDescriptionInput}
+                  setGardenDescription={setGardenDescription}
                 />
               </GardenDataWrapper>
             </section>
