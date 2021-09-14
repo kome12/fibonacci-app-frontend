@@ -35,9 +35,9 @@ const Florist = React.lazy(() =>
   }))
 );
 const MyGrowth = React.lazy(() =>
-import("./pages/MyGrowth").then(({ MyGrowth }) => ({
-  default: MyGrowth,
-}))
+  import("./pages/MyGrowth").then(({ MyGrowth }) => ({
+    default: MyGrowth,
+  }))
 );
 
 export const Routes = () => {

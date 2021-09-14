@@ -8,7 +8,7 @@ import {
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist";
 import StorefrontIcon from "@material-ui/icons/Storefront";
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 
 // TODO: fix any type when we can work out what it is supposed to be
 interface BottomNavProps {
@@ -23,16 +23,16 @@ const useStyles = makeStyles(() =>
       bottom: 0,
     },
     root: {
-      padding: "1%"
-    }
+      padding: "1%",
+    },
   })
 );
 
 const useNavStyles = makeStyles(() =>
   createStyles({
     root: {
-      padding: "1%"
-    }
+      padding: "1%",
+    },
   })
 );
 export const BottomNav: React.FC<BottomNavProps> = ({
@@ -43,7 +43,11 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   const navClasses = useNavStyles();
   return (
     <AppBar position="static" className={classes.appBar}>
-      <BottomNavigation value={currentPage} onChange={handlePageChange} classes={navClasses}>
+      <BottomNavigation
+        value={currentPage}
+        onChange={handlePageChange}
+        classes={navClasses}
+      >
         <BottomNavigationAction
           label="Flower Beds"
           showLabel={true}

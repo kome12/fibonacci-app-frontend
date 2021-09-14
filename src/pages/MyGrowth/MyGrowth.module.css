@@ -1,0 +1,8 @@
+.tabPanel {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
