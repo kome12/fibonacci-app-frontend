@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Header } from "../Header";
 import { BottomNav } from "../BottomNav";
 import styles from "./UserViewLayout.module.css";
 import { useHistory } from "react-router-dom";
-
+import { usePageState } from "../../store/page/usePageState";
 interface UserViewLayoutProps {
   showHeader?: boolean;
   showBottomNav?: boolean;
@@ -14,7 +14,7 @@ export const UserViewLayout: React.FC<UserViewLayoutProps> = ({
   showHeader,
   showBottomNav,
 }) => {
-  const [currentPage, setCurrentPage] = useState("/user/myniwa");
+  const { currentPage, setCurrentPage } = usePageState();
   const history = useHistory();
   const handlePageChange = (_event, newValue: string) => {
     if (newValue !== "more") {

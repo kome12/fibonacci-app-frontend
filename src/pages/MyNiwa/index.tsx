@@ -12,6 +12,7 @@ import { Link, useHistory } from "react-router-dom";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { getCategories } from "../../helpers/api/gardens/getCategories";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
+import { usePageState } from "../../store/page/usePageState";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
@@ -56,6 +57,7 @@ export const MyNiwa = () => {
   const classes = useStyles();
   const tooltipStyles = useTooltipStyles();
   const { userData } = useUserState();
+  const { setCurrentPage } = usePageState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
   const [categoriesApi, getGardenCategories] = useApi(getCategories);
 
@@ -85,6 +87,7 @@ export const MyNiwa = () => {
 
   const history = useHistory();
   const goToCreateGarden = () => {
+    setCurrentPage("/user/createGarden");
     history.push("/user/createGarden");
   };
   return (
@@ -122,8 +125,16 @@ export const MyNiwa = () => {
             ) : (
               gardens.map((garden, index) => {
                 return (
-                  <Link to={`/user/dailyGardening/${garden._id}`} key={index}>
-                    <Card className={`garden-card ${classes.root}`}>
+                  <Link
+                    to={`/user/dailyGardening/${garden._id}`}
+                    key={`${garden._id}${index}`}
+                  >
+                    <Card
+                      className={`garden-card ${classes.root}`}
+                      onClick={() =>
+                        setCurrentPage(`/user/dailyGardening/${garden._id}`)
+                      }
+                    >
                       <CardActionArea>
                         <CardMedia
                           className={classes.media}
