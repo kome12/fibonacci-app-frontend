@@ -15,6 +15,7 @@ import { Flower } from "../../models/flower.model";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import styles from "./Florist.module.css";
+import { AlertDialog } from "./component/dialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -122,6 +123,10 @@ export const Florist = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userId]
   );
+
+  const cancelHandler = () => {
+    setFloristStep(0);
+  };
 
   useEffect(() => {
     if (buyFlowerAPIState.status === "succeeded" && lastBought) {
@@ -260,7 +265,6 @@ export const Florist = () => {
                         onClick={() => {
                           setFloristStep(1);
                           setSelectFlowerData(flower);
-                          // buyFlowerHandler(flower._id, flower.price);
                         }}
                         color="primary"
                         className={classes.buyButton}
@@ -276,56 +280,12 @@ export const Florist = () => {
                   </Grid>
                 );
               })}
-            {floristStep === 1 && (
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                className={classes.container}
-              >
-                <LoadingWrapper
-                  isLoading={
-                    selectFlowerData !== null
-                      ? selectFlowerData._id === lastBought &&
-                        buyFlowerAPIState.status === "loading"
-                      : false
-                  }
-                >
-                  <Typography variant="body1" className={classes.welcomeText}>
-                    Would you like to purchase it?
-                  </Typography>
-                  <img
-                    src={selectFlowerData?.imageURL}
-                    alt={"secret flower pic"}
-                    className={styles.notBoughtPic}
-                  />
-                  <Button
-                    variant="contained"
-                    color="default"
-                    onClick={() => {
-                      setSelectFlowerData(null);
-                      setFloristStep(0);
-                    }}
-                  >
-                    No
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      selectFlowerData !== null
-                        ? buyFlowerHandler(
-                            selectFlowerData._id,
-                            selectFlowerData.price
-                          )
-                        : setFloristStep(0);
-                    }}
-                  >
-                    Yes
-                  </Button>
-                </LoadingWrapper>
-              </Grid>
+            {floristStep === 1 && selectFlowerData !== null && (
+              <AlertDialog
+                selectFlower={selectFlowerData}
+                purchaseFunction={buyFlowerHandler}
+                cancelFunction={cancelHandler}
+              />
             )}
           </LoadingWrapper>
         </Grid>
