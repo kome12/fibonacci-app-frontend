@@ -17,7 +17,7 @@ export const UserViewLayout: React.FC<UserViewLayoutProps> = ({
 }) => {
   const { currentPage, setCurrentPage } = usePageState();
   const history = useHistory();
-  const handlePageChange = (newValue: string) => {
+  const handlePageChange = (_e: React.ChangeEvent<{}>, newValue: string) => {
     setCurrentPage(newValue);
     history.push(newValue);
   };

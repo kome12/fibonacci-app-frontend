@@ -9,11 +9,12 @@ import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
 import LocalFloristIcon from "@material-ui/icons/LocalFlorist";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import TrendingUpIcon from "@material-ui/icons/TrendingUp";
+import React from "react";
 
 // TODO: fix any type when we can work out what it is supposed to be
 interface BottomNavProps {
   currentPage: string;
-  handlePageChange: (val: string) => void;
+  handlePageChange: (e: React.ChangeEvent<{}>, val: string) => void;
 }
 
 const useStyles = makeStyles(() =>

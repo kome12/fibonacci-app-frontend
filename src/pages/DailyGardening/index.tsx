@@ -263,7 +263,10 @@ export const DailyGardening = () => {
                   <Button
                     variant="contained"
                     className={classes.returnButton}
-                    onClick={() => history.push("/user/myniwa")}
+                    onClick={() => {
+                      history.push("/user/myniwa");
+                      setCurrentPage("/user/myniwa");
+                    }}
                   >
                     Go back to My Gardens
                   </Button>
