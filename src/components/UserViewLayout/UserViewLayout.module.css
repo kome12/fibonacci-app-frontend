@@ -13,3 +13,10 @@
   padding: 2rem 0 6rem;
   overflow-y: auto;
 }
+
+.nav {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}

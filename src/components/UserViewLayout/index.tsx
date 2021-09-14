@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
+import { usePageState } from "../../store/page/usePageState";
 import { BottomNav } from "../BottomNav";
 import { Header } from "../Header";
 import styles from "./UserViewLayout.module.css";
@@ -14,13 +15,11 @@ export const UserViewLayout: React.FC<UserViewLayoutProps> = ({
   showHeader,
   showBottomNav,
 }) => {
-  const [currentPage, setCurrentPage] = useState("/user/myniwa");
+  const { currentPage, setCurrentPage } = usePageState();
   const history = useHistory();
-  const handlePageChange = (_event, newValue: string) => {
-    if (newValue !== "more") {
-      setCurrentPage(newValue);
-      history.push(newValue);
-    }
+  const handlePageChange = (newValue: string) => {
+    setCurrentPage(newValue);
+    history.push(newValue);
   };
   return (
     <div className={styles.layout}>
@@ -31,7 +30,7 @@ export const UserViewLayout: React.FC<UserViewLayoutProps> = ({
       )}
       <div className={styles.content}>{children}</div>
       {showBottomNav && (
-        <div>
+        <div className={styles.nav}>
           <BottomNav
             currentPage={currentPage}
             handlePageChange={handlePageChange}

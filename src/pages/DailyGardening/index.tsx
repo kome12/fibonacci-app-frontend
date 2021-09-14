@@ -23,6 +23,7 @@ import {
 } from "../../helpers/api/completedTasks/sendCompletedTask";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
 import { Rule } from "../../models/rule.model";
+import { usePageState } from "../../store/page/usePageState";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import wateringAnimation from "./assets/watering.gif";
@@ -51,6 +52,7 @@ export const DailyGardening = () => {
   // TODO: Please uncomment below line for delete!
   // const [completedTasks, setCompletedTasks] = useState(Array<CompletedTask>());
 
+  const { setCurrentPage } = usePageState();
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
   const [completedTaskApi, sendCompletedTaskData] = useApi(sendCompletedTask);
   // TODO: Revisit when delete api is implemented

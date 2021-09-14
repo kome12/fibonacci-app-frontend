@@ -18,7 +18,7 @@ import { getFlowers } from "../../../helpers/api/flowers/getFlowers";
 import { useApi } from "../../../utils/api/useApi";
 import { LoadingWrapper } from "../../../components/LoadingWrapper";
 
-// Previous component for using the store page with a cart, 
+// Previous component for using the store page with a cart,
 // could possibly use in the future so currently not deleted.
 
 const useStyles = makeStyles((theme: Theme) =>

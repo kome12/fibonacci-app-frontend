@@ -15,6 +15,7 @@ import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
+import { usePageState } from "../../store/page/usePageState";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import gardenImage from "./assets/garden1.jpg";
@@ -56,6 +57,7 @@ export const MyNiwa = () => {
   const classes = useStyles();
   const tooltipStyles = useTooltipStyles();
   const { userData } = useUserState();
+  const { setCurrentPage } = usePageState();
   const [gardensApi, getUserGardens] = useApi(getGardens);
 
   const gardens = useMemo(() => gardensApi.response ?? [], [gardensApi]);
@@ -68,6 +70,7 @@ export const MyNiwa = () => {
   }, [userData]);
 
   const goToCreateGarden = () => {
+    setCurrentPage("/user/createGarden");
     history.push("/user/createGarden");
   };
   return (
