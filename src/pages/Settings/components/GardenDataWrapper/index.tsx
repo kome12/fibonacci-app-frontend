@@ -24,7 +24,7 @@ export const GardenDataWrapper: React.FC<Props> = ({
     </div>
   ) : (
     <Grid
-      className={styles.titleContainer}
+      className={styles.inputContainer}
       container
       direction="row"
       alignItems="center"
