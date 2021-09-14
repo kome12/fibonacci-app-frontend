@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import pixelGrass from "./assets/pixelgrass.png";
 import grassyField from "./assets/grassyfield.png";
 import "./MyCollection.css";
 
@@ -19,10 +19,16 @@ export const MyCollection = () => {
         <div className="collection-box">
           <img className="background-image" src={grassyField} alt="field" />
           <img
-            className="flower-animation flower-image"
+            className="flower-animation flower-image1"
             src="https://res.cloudinary.com/dyvrke6ml/image/upload/v1631103161/icons/marigold_timpbu.gif"
             alt="flower"
           />
+          <img
+            className="flower-animation flower-image2"
+            src="https://res.cloudinary.com/dyvrke6ml/image/upload/v1631103160/icons/cosmos_isdopf.gif"
+            alt="flower"
+          />
+          <img className="foreground-grass" src={pixelGrass} alt="field" />
         </div>
       </div>
     </motion.div>

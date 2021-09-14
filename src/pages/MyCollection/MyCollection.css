@@ -10,25 +10,40 @@
   margin: auto;
 }
 
-.flower-image {
+.flower-image1 {
   height: 200px;
   position: relative;
-  left: 0px;
-  top: -260px;
+  left: -500px;
+  top: -60px;
   z-index: 1;
 }
 
+.flower-image2 {
+  height: 200px;
+  position: relative;
+  left: -55 0px;
+  top: -60px;
+  z-index: 1;
+}
+
+.foreground-grass {
+  z-index: 10;
+  position: relative;
+  top: -140px;
+  width: 1055px;
+}
+
 .flower-animation {
-  -webkit-animation-name: steam;
+  -webkit-animation-name: wind;
   -webkit-animation-duration: 10s;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
-  animation-name: steam;
+  animation-name: wind;
   animation-duration: 10s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-@-webkit-keyframes steam {
+@-webkit-keyframes wind {
   0%,
   100% {
     -webkit-transform: skewX(0deg);
@@ -43,7 +58,7 @@
     opacity: 0.8;
   }
 }
-@keyframes steam {
+@keyframes wind {
   0%,
   100% {
     transform: skewX(0deg);
