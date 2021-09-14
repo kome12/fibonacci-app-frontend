@@ -1,0 +1,11 @@
+.descriptionInput {
+  width: 100%;
+}
+
+.descriptionInputButtons {
+  margin: 10px 0 0 auto;
+}
+
+.descriptionInputButtons > button:first-of-type {
+  margin-right: 15px;
+}
