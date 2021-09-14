@@ -8,22 +8,33 @@ import { useUserState } from "./store/user/useUserState";
 const About = React.lazy(() =>
   import("./pages/About").then(({ About }) => ({ default: About }))
 );
+
 const Home = React.lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
 );
+
 const MyNiwa = React.lazy(() =>
   import("./pages/MyNiwa").then(({ MyNiwa }) => ({ default: MyNiwa }))
 );
+
+const MyNiwaSettings = React.lazy(() =>
+  import("./pages/Settings").then(({ MyNiwaSettings }) => ({
+    default: MyNiwaSettings,
+  }))
+);
+
 const DailyGardening = React.lazy(() =>
   import("./pages/DailyGardening").then(({ DailyGardening }) => ({
     default: DailyGardening,
   }))
 );
+
 const CreateGarden = React.lazy(() =>
   import("./pages/CreateGarden").then(({ CreateGarden }) => ({
     default: CreateGarden,
   }))
 );
+
 const NotFound = React.lazy(() =>
   import("./pages/NotFound").then(({ NotFound }) => ({
     default: NotFound,
@@ -56,6 +67,11 @@ export const Routes = () => {
               <Route path="/user">
                 <UserViewLayout showHeader showBottomNav>
                   <Route path="/user/myniwa" component={MyNiwa} exact />
+                  <Route
+                    path="/user/myniwa/:gardenId/settings"
+                    component={MyNiwaSettings}
+                    exact
+                  />
                   <Route
                     path="/user/dailyGardening/:gardenId"
                     component={DailyGardening}
