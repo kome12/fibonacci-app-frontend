@@ -269,8 +269,6 @@ export const Florist = () => {
                         className={classes.buyButton}
                         disabled={
                           !userData.balance || flower.price > userData.balance
-                            ? true
-                            : false
                         }
                       >
                         Buy: {flower.price}
