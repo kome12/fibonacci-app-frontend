@@ -28,8 +28,26 @@ export const MyCollection = () => {
       <div>
         <div
           className="collection-box"
-          style={{ width: "" + (100 + allFlowers.length * 90) + "px" }}
+          style={{
+            width:
+              "" + (allFlowers ? 100 + allFlowers.length * 90 : 2000) + "px",
+          }}
         >
+          <div className="bird-container bird-container--one">
+            <div className="bird bird--one"></div>
+          </div>
+
+          <div className="bird-container bird-container--two">
+            <div className="bird bird--two"></div>
+          </div>
+
+          <div className="bird-container bird-container--three">
+            <div className="bird bird--three"></div>
+          </div>
+
+          <div className="bird-container bird-container--four">
+            <div className="bird bird--four"></div>
+          </div>
           {allFlowers.map((flower, index) => {
             return (
               flower.isActive && (
