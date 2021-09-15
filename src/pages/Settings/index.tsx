@@ -96,9 +96,9 @@ export const MyNiwaSettings = () => {
     return (
       (gardenCategoryId !== undefined
         ? gardenCategoryId
-        : garden?.gardenCategoryId) ?? "-"
+        : initialGardenCategoryId) ?? "-"
     );
-  }, [gardenCategoryId, garden?.gardenCategoryId]);
+  }, [gardenCategoryId, initialGardenCategoryId]);
 
   const onNameInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
