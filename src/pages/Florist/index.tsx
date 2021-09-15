@@ -280,8 +280,8 @@ export const Florist = () => {
             {dialogStatus && selectFlowerData !== null && (
               <AlertDialog
                 selectFlower={selectFlowerData}
-                purchaseFunction={buyFlowerHandler}
-                cancelFunction={cancelHandler}
+                buyFlowerHandler={buyFlowerHandler}
+                cancelHandler={cancelHandler}
               />
             )}
           </LoadingWrapper>

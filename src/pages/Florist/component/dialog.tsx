@@ -14,10 +14,13 @@ import {
 import { Flower } from "../../../models/flower.model";
 import styles from "../Florist.module.css";
 
+type BuyFlowerHandler = (flowerid: string, flowerprice: number) => void;
+type CancelHandler = () => void;
+
 interface AlertDialogProps {
   selectFlower: Flower;
-  purchaseFunction: Function;
-  cancelFunction: Function;
+  buyFlowerHandler: BuyFlowerHandler;
+  cancelHandler: CancelHandler;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,8 +42,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AlertDialog: React.FC<AlertDialogProps> = ({
   selectFlower,
-  purchaseFunction,
-  cancelFunction,
+  buyFlowerHandler,
+  cancelHandler,
 }) => {
   const classes = useStyles();
 
@@ -48,13 +51,13 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
 
   const handleClose = () => {
     setOpen(false);
-    cancelFunction();
+    cancelHandler();
   };
 
   const purchase = () => {
-    purchaseFunction(selectFlower._id, selectFlower.price);
+    buyFlowerHandler(selectFlower._id, selectFlower.price);
     setOpen(false);
-    cancelFunction();
+    cancelHandler();
   };
 
   return (
