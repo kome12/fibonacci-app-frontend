@@ -118,7 +118,6 @@ export const Florist = () => {
           price: flowerPrice,
         });
       }
-      setFloristStep(0);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userId]
