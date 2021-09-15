@@ -29,8 +29,7 @@ export const MyCollection = () => {
         <div
           className="collection-box"
           style={{
-            width:
-              "" + (allFlowers ? 100 + allFlowers.length * 90 : 2000) + "px",
+            width: "" + (100 + 21 * 90) + "px",
           }}
         >
           <div className="bird-container bird-container--one">
@@ -61,10 +60,7 @@ export const MyCollection = () => {
               )
             );
           })}
-          <div
-            className="foreground-grass flower-animation"
-            style={{ width: "" + (100 + allFlowers.length * 90) + "px" }}
-          ></div>
+          <div className="foreground-grass flower-animation"></div>
         </div>
       </div>
     </motion.div>
