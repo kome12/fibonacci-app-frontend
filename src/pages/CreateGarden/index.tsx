@@ -23,8 +23,8 @@ import {
   NewGardenRule,
 } from "../../helpers/api/gardens/createGardenRules";
 import { getCategories } from "../../helpers/api/gardens/getCategories";
-import { useUserState } from "../../store/user/useUserState";
 import { usePageState } from "../../store/page/usePageState";
+import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import { AddRules } from "./components/AddRules";
 import { GardenSummary } from "./components/GardenSummary";

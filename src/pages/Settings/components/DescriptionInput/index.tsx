@@ -7,7 +7,6 @@ import {
   GardenUpdateParams,
   updateGardenData,
 } from "../../../../helpers/api/gardens/updateGardenData";
-import { Garden } from "../../../../models/garden.model";
 import { useApi } from "../../../../utils/api/useApi";
 import styles from "./DescriptionInput.module.css";
 
@@ -23,7 +22,8 @@ type Props = {
     React.SetStateAction<string | undefined>
   >;
   updateInitVal: React.Dispatch<React.SetStateAction<string | undefined>>;
-  garden: Required<Garden> | undefined;
+  gardenId: string;
+  updateData: GardenUpdateParams["data"];
 };
 
 const useStyles = makeStyles(() =>
@@ -31,6 +31,7 @@ const useStyles = makeStyles(() =>
     buttonWrapper: {
       position: "relative",
       display: "inline-block",
+      marginLeft: 15,
     },
     buttonProgress: {
       position: "absolute",
@@ -49,7 +50,8 @@ export const DescriptionInput: React.FC<Props> = memo(
     onDescriptionInputChange,
     setShowDescriptionInput,
     setGardenDescription,
-    garden,
+    gardenId,
+    updateData,
     showInput,
     updateInitVal,
   }) => {
@@ -69,20 +71,13 @@ export const DescriptionInput: React.FC<Props> = memo(
 
     const updateGarden = useCallback(
       async () => {
-        if (!garden) return;
-
-        const data: GardenUpdateParams["data"] = {
-          description: currentGardenDescription,
-          fireBaseUserId: garden.fireBaseUserId,
-          gardenCategoryId: garden.gardenCategoryId,
-        };
         updateGardenInfo({
-          gardenId: garden._id,
-          data,
+          gardenId,
+          data: { ...updateData, description: currentGardenDescription },
         });
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [garden, currentGardenDescription]
+      [gardenId, currentGardenDescription, updateData]
     );
 
     const onCancel = useCallback(() => {
@@ -120,6 +115,7 @@ export const DescriptionInput: React.FC<Props> = memo(
           value={currentGardenDescription}
           onChange={onDescriptionInputChange}
           disabled={updateGardenApi.status === "loading"}
+          placeholder="Add a Garden Description"
           InputProps={{
             readOnly: !showInput,
           }}

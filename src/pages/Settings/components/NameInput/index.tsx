@@ -7,7 +7,6 @@ import {
   GardenUpdateParams,
   updateGardenData,
 } from "../../../../helpers/api/gardens/updateGardenData";
-import { Garden } from "../../../../models/garden.model";
 import { useApi } from "../../../../utils/api/useApi";
 import styles from "./NameInput.module.css";
 
@@ -21,7 +20,8 @@ type Props = {
   setShowNameInput: React.Dispatch<React.SetStateAction<boolean>>;
   setGardenName: React.Dispatch<React.SetStateAction<string | undefined>>;
   updateInitVal: React.Dispatch<React.SetStateAction<string | undefined>>;
-  garden: Required<Garden> | undefined;
+  gardenId: string;
+  updateData: GardenUpdateParams["data"];
 };
 
 const useStyles = makeStyles(() =>
@@ -29,6 +29,7 @@ const useStyles = makeStyles(() =>
     buttonWrapper: {
       position: "relative",
       display: "inline-block",
+      marginLeft: 15,
     },
     buttonProgress: {
       position: "absolute",
@@ -47,7 +48,8 @@ export const NameInput: React.FC<Props> = memo(
     onNameInputChange,
     setShowNameInput,
     setGardenName,
-    garden,
+    gardenId,
+    updateData,
     showInput,
     updateInitVal,
   }) => {
@@ -64,20 +66,13 @@ export const NameInput: React.FC<Props> = memo(
 
     const updateGarden = useCallback(
       async () => {
-        if (!garden) return;
-
-        const data: GardenUpdateParams["data"] = {
-          name: currentGardenName,
-          fireBaseUserId: garden.fireBaseUserId,
-          gardenCategoryId: garden.gardenCategoryId,
-        };
         updateGardenInfo({
-          gardenId: garden._id,
-          data,
+          gardenId,
+          data: { ...updateData, name: currentGardenName },
         });
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [garden, currentGardenName]
+      [gardenId, currentGardenName]
     );
 
     const onCancel = useCallback(() => {
@@ -105,6 +100,7 @@ export const NameInput: React.FC<Props> = memo(
           className={styles.nameInput}
           value={currentGardenName}
           onChange={onNameInputChange}
+          placeholder="Add a Garden Name"
           InputProps={{
             readOnly: !showInput,
           }}
