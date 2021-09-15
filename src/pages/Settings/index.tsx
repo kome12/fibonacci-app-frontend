@@ -35,10 +35,18 @@ export const MyNiwaSettings = () => {
   const { gardenId } = useParams<{ gardenId: string }>();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
+  const [initName, setInitName] = useState<string | undefined>(undefined);
+  const [initDesc, setInitDesc] = useState<string | undefined>(undefined);
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
-  const initialGardenName = garden?.name ?? "";
-  const initialGardenDescription = garden?.description ?? "";
+  const initialGardenName = useMemo(
+    () => (initName || garden?.name) ?? "",
+    [garden?.name, initName]
+  );
+  const initialGardenDescription = useMemo(
+    () => (initDesc || garden?.description) ?? "",
+    [garden?.description, initDesc]
+  );
 
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
@@ -107,33 +115,29 @@ export const MyNiwaSettings = () => {
 
           <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
             <section className={styles.gardenDataInputs}>
-              <GardenDataWrapper
-                showInput={showNameInput}
-                currentData={currentGardenName}
-                editData={() => setShowNameInput(true)}
-              >
+              <GardenDataWrapper>
                 <NameInput
+                  showInput={showNameInput}
                   garden={garden ? { ...garden, _id: gardenId } : undefined}
                   initialGardenName={initialGardenName}
                   currentGardenName={currentGardenName}
                   onNameInputChange={onNameInputChange}
                   setShowNameInput={setShowNameInput}
                   setGardenName={setGardenName}
+                  updateInitVal={setInitName}
                 />
               </GardenDataWrapper>
 
-              <GardenDataWrapper
-                showInput={showDescriptionInput}
-                currentData={currentGardenDescription}
-                editData={() => setShowDescriptionInput(true)}
-              >
+              <GardenDataWrapper>
                 <DescriptionInput
+                  showInput={showDescriptionInput}
                   garden={garden ? { ...garden, _id: gardenId } : undefined}
                   initialGardenDescription={initialGardenDescription}
                   currentGardenDescription={currentGardenDescription}
                   onDescriptionInputChange={onDescriptionInputChange}
                   setShowDescriptionInput={setShowDescriptionInput}
                   setGardenDescription={setGardenDescription}
+                  updateInitVal={setInitDesc}
                 />
               </GardenDataWrapper>
             </section>
