@@ -57,7 +57,7 @@ export const Header = () => {
       className={styles.header}
       classes={{ root: classes.root }}
     >
-      <Link to="/" className={styles.logoWrapper}>
+      <Link to="/user/myniwa" className={styles.logoWrapper}>
         <img className={styles.logo} src={MyNiwaLogo} alt="my niwa logo" />
       </Link>
 

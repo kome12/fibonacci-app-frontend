@@ -9,11 +9,14 @@
 }
 
 .content {
-  height: 80vh;
-  margin: 1rem 0;
+  height: 100%;
+  padding: 2rem 0 3rem;
   overflow-y: auto;
 }
 
 .nav {
   height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }

@@ -15,7 +15,7 @@ export type BuyFlower = {
 
 export type BuyFlowerResponse = {
   _id: string;
-    fireBaseUserId: string;
-    balance: number;
-    flowerCollections: string[];
-}
+  fireBaseUserId: string;
+  balance: number;
+  flowerCollections: string[];
+};

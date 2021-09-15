@@ -8,9 +8,10 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
 } from "@material-ui/core";
 
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import { withStyles } from "@material-ui/core/styles";
 import { Flower } from "../../../models/flower.model";
 import styles from "../Florist.module.css";
 
@@ -22,8 +23,14 @@ interface AlertDialogProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    form: {
+      width: "fit-content",
+    },
     dialog: {
       textAlign: "center",
+    },
+    confirmText: {
+      fontSize: "0.5rem",
     },
     priceText: {
       textAlign: "center",
@@ -36,6 +43,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+const DialogTitle = withStyles((theme: Theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogTitle);
 
 export const AlertDialog: React.FC<AlertDialogProps> = ({
   selectFlower,
@@ -64,7 +77,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle id="alert-dialog-title" className={classes.confirmText}>
         "Would you like to purchase it?"
       </DialogTitle>
       <DialogContent className={classes.dialog}>
