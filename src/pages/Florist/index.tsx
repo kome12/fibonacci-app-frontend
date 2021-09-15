@@ -95,7 +95,7 @@ export const Florist = () => {
 
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
-  const [floristStep, setFloristStep] = useState(0);
+  const [dialogStatus, setDialogStatus] = useState(false);
   const [selectFlowerData, setSelectFlowerData] = useState<Flower | null>(null);
 
   const userId = useMemo(
@@ -124,7 +124,7 @@ export const Florist = () => {
   );
 
   const cancelHandler = () => {
-    setFloristStep(0);
+    setDialogStatus(false);
   };
 
   useEffect(() => {
@@ -209,7 +209,7 @@ export const Florist = () => {
         </Grid>
         <Grid container justifyContent="center" className={classes.flowerList}>
           <LoadingWrapper isLoading={!flowersAPIState.isLoaded}>
-            {floristStep === 0 &&
+            {!dialogStatus &&
               allFlowers.map((flower) => {
                 const isBought = boughtFlowers.includes(flower._id);
                 return isBought ? (
@@ -262,7 +262,7 @@ export const Florist = () => {
                       <Button
                         variant="contained"
                         onClick={() => {
-                          setFloristStep(1);
+                          setDialogStatus(true);
                           setSelectFlowerData(flower);
                         }}
                         color="primary"
@@ -279,7 +279,7 @@ export const Florist = () => {
                   </Grid>
                 );
               })}
-            {floristStep === 1 && selectFlowerData !== null && (
+            {dialogStatus && selectFlowerData !== null && (
               <AlertDialog
                 selectFlower={selectFlowerData}
                 purchaseFunction={buyFlowerHandler}
