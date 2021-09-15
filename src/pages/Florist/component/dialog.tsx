@@ -14,13 +14,10 @@ import {
 import { Flower } from "../../../models/flower.model";
 import styles from "../Florist.module.css";
 
-type BuyFlowerHandler = (flowerid: string, flowerprice: number) => void;
-type CancelHandler = () => void;
-
 interface AlertDialogProps {
   selectFlower: Flower;
-  buyFlowerHandler: BuyFlowerHandler;
-  cancelHandler: CancelHandler;
+  buyFlowerHandler: (flowerid: string, flowerprice: number) => void;
+  cancelHandler: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -68,7 +65,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {"Would you like to purchase it?"}
+        "Would you like to purchase it?"
       </DialogTitle>
       <DialogContent className={classes.dialog}>
         <img
