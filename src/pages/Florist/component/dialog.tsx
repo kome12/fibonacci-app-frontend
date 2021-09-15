@@ -22,8 +22,17 @@ interface AlertDialogProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    price: {
+    dialog: {
       textAlign: "center",
+    },
+    priceText: {
+      textAlign: "center",
+      fontWeight: "bold",
+      fontSize: "1.3rem",
+    },
+    confirmButton: {
+      alignItems: "center",
+      justifyContent: "space-around",
     },
   })
 );
@@ -58,21 +67,26 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
       <DialogTitle id="alert-dialog-title">
         {"Would you like to purchase it?"}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.dialog}>
         <img
           src={selectFlower.imageURL}
           alt={"secret flower pic"}
-          className={styles.boughtPic}
+          className={styles.notBoughtPicDialog}
         />
-        <DialogContentText className={classes.price}>
+        <DialogContentText className={classes.priceText}>
           price : {selectFlower.price}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions className={classes.confirmButton}>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={purchase} color="primary" autoFocus>
+        <Button
+          variant="contained"
+          onClick={purchase}
+          color="primary"
+          autoFocus
+        >
           Purchase
         </Button>
       </DialogActions>
