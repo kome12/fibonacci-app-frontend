@@ -6,6 +6,6 @@
   margin: 10px 0 0 auto;
 }
 
-.descriptionInputButtons > button:first-of-type {
-  margin-right: 15px;
+.descriptionInputButtons > button:not(:first-of-type) {
+  margin-left: 15px;
 }
