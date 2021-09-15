@@ -4,7 +4,7 @@ export const gardenData = {
     name: "Fat Cat's garden",
     description: "Garden for my Fat Cat",
     fireBaseUserId: "jEazVdPDhqec0tnEOG7vM5wbDyU2",
-    gardenCategoryId: "61262d8686f74f225c1dd0a",
+    gardenCategoryId: "6135efd9dfa3e63350b0ddc9",
     createdDate: "2021-09-05T05:28:05.417Z",
     lastUpdate: "2021-09-05T05:28:05.417Z",
   },
