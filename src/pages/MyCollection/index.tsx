@@ -26,21 +26,27 @@ export const MyCollection = () => {
       className="myCollectionPage"
     >
       <div>
-        <div className="collection-box">
+        <div
+          className="collection-box"
+          style={{ width: "" + (100 + allFlowers.length * 90) + "px" }}
+        >
           {allFlowers.map((flower, index) => {
             return (
               flower.isActive && (
                 <img
-                  className="flower-animation flower-image1"
+                  className="flower-animation flower-image"
                   src={flower.imageURL}
                   key={flower._id}
                   alt={flower.name}
-                  style={{ left: "" + (50 + index * 90) + "px" }}
+                  style={{ left: "" + (20 + index * 90) + "px" }}
                 />
               )
             );
           })}
-          <div className="foreground-grass"></div>
+          <div
+            className="foreground-grass flower-animation"
+            style={{ width: "" + (100 + allFlowers.length * 90) + "px" }}
+          ></div>
         </div>
       </div>
     </motion.div>

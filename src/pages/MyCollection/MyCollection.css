@@ -1,7 +1,5 @@
 .myCollectionPage {
   margin: 0 auto;
-  align-items: center;
-  justify-content: center;
   min-height: 10vh;
   display: flex;
 }
@@ -9,7 +7,7 @@
 .collection-box {
   background-image: url("./assets/grassyfield.png");
   height: 592px;
-  width: 2050px;
+  min-width: 550px;
   position: relative;
 }
 
@@ -17,7 +15,7 @@
   margin: auto;
 }
 
-.flower-image1 {
+.flower-image {
   height: 150px;
   position: absolute;
   left: 50;
@@ -29,7 +27,7 @@
   z-index: 10;
   background-image: url("./assets/tallgrass.png");
   position: absolute;
-  top: 450px;
+  top: 462px;
   height: 128px;
   width: 2050px;
 }
