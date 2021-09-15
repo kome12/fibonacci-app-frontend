@@ -1,4 +1,3 @@
-import { Grid } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import { useMemo, useState, useEffect } from "react";
@@ -8,6 +7,21 @@ import { TabPanel } from "./components/TabPanel";
 import { useUserState } from "../../store/user/useUserState";
 import { getGardens } from "../../helpers/api/gardens/getGardens";
 import { TabData } from "./components/TabData";
+import { Head } from "../../components/Head";
+import { Section } from "../../components/Section";
+import { SectionTitle } from "../../components/SectionTitle";
+import { createStyles, makeStyles, Paper, Theme } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    tabBar: {
+      backgroundColor: theme.palette.primary.main,
+      // display: "flex",
+      // flex: "0 0 100%",
+      marginTop: "0.5rem"
+    }
+  })
+);
 
 export const MyGrowth = () => {
   const { userData } = useUserState();
@@ -47,29 +61,21 @@ export const MyGrowth = () => {
       );
     });
   };
-
+  const classes = useStyles();
   return (
-    <Grid container direction="column" justifyContent="center">
-      <h1>My Growth</h1>
-      {/* <AppBar> */}
-      <Tabs onChange={handleChangeTab} value={currentTab} variant="scrollable"
-          scrollButtons="on">
-        {tabLabels()} 
-      </Tabs>
-      {tabPanels(currentTab)}
-      {/* <TabPanel value={currentTab} index={0}>
-
-        </TabPanel> */}
-      {/* </AppBar> */}
-      {/* <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}></TabPanel>
-        Item Three
-      </TabPanel> */}
-    </Grid>
+    <>
+      <Head title="MyGrowth" />
+      <Section>
+        <SectionTitle title="My Growth" />
+      </Section>
+      <Section>
+        <Paper className={classes.tabBar}>
+          <Tabs onChange={handleChangeTab} value={currentTab} variant="fullWidth">
+            {tabLabels()} 
+          </Tabs>
+        </Paper>
+        {tabPanels(currentTab)}
+      </Section>
+    </>
   );
 };

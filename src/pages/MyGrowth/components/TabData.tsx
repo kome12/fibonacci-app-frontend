@@ -11,11 +11,17 @@ import {
   isSameDay,
   startOfWeek,
   sub,
+  // getMonth,
+  endOfWeek,
+  startOfMonth,
+  format,
+  isSameMonth,
 } from "date-fns";
 import { Rule } from "../../../models/rule.model";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import styles from "../MyGrowth.module.css";
+import { LoadingWrapper } from "../../../components/LoadingWrapper";
 
 interface ICompletedTasksByRuleId {
   [ruleId: string]: Array<CompletedTask>;
@@ -30,36 +36,17 @@ export const TabData: React.FC<TabDataProps> = ({
 }) => {
   // TODO: fix this to state if we want to change state and end dates
   const startDate = sub(new Date(), { weeks: 4 });
+  const tableStartDate = sub(new Date(), { days: 6 });
   const endDate = new Date();
-
-  const heatMapOptions: ApexOptions = {
-    chart: {
-      height: 350,
-      type: "heatmap",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    colors: ["#008FFB"],
-    xaxis: {
-      type: "category",
-      categories: [
-        "",
-        "",
-        "",
-        "",
-      ],
-    },
-  };
   
   const [gardenProgressDataApi, getGardenProgressData] = useApi(
     getGardenByGardenIdWithDates
   );
-
-    const gardenProgress = useMemo(
-    () => gardenProgressDataApi.response?.garden,
-    [gardenProgressDataApi]
-  );
+  // Unused??
+  //   const gardenProgress = useMemo(
+  //   () => gardenProgressDataApi.response?.garden,
+  //   [gardenProgressDataApi]
+  // );
 
   const rules = useMemo(
     () => gardenProgressDataApi.response?.rules ?? [],
@@ -73,7 +60,8 @@ export const TabData: React.FC<TabDataProps> = ({
 
     const tableHeader = useMemo(() => {
     const labels: Array<string> = [];
-    let date = startDate;
+    // let date = startDate;
+    let date = tableStartDate;
     while (isBefore(date, endDate) || isSameDay(date, endDate)) {
       labels.push(
         formatISO(date, {
@@ -134,31 +122,31 @@ export const TabData: React.FC<TabDataProps> = ({
       data: Array<number>;
     }> = [
       {
-        name: "Saturday",
+        name: "Sat",
         data: [],
       },
       {
-        name: "Friday",
+        name: "Fri",
         data: [],
       },
       {
-        name: "Thursday",
+        name: "Thu",
         data: [],
       },
       {
-        name: "Wednesday",
+        name: "Wed",
         data: [],
       },
       {
-        name: "Tuesday",
+        name: "Tue",
         data: [],
       },
       {
-        name: "Monday",
+        name: "Mon",
         data: [],
       },
       {
-        name: "Sunday",
+        name: "Sun",
         data: [],
       },
     ];
@@ -176,6 +164,41 @@ export const TabData: React.FC<TabDataProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gardenProgressDataApi]);
 
+  const heatMapOptions: ApexOptions = useMemo(() => {
+    let date = startOfWeek(startDate);
+    // const startMonth = getMonth(date);
+    const categories: Array<string> = [];
+    if (isSameDay(date, startOfMonth(date))) {
+      categories.push(format(date, "LLL"));
+      date = addDays(date, 7);
+    }
+    while (isBefore(date, endDate) || isSameDay(date, endDate)) {
+      const endOfWeekDay = endOfWeek(date);
+      if (isSameMonth(date, endOfWeekDay)) { 
+        categories.push("");
+      } else {
+        categories.push(format(endOfWeekDay, "LLL"))
+      }
+      date = addDays(date, 7);
+    }
+    const options: ApexOptions =   {
+      chart: {
+        height: 350,
+        type: "heatmap",
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      colors: ["#6ac697"],
+      xaxis: {
+        type: "category",
+        categories: categories,
+      },
+    };
+    return options;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gardenProgressDataApi])
+
   useEffect(() => {
     if (gardenId) {
       const startDateISO: string = formatISO(startDate, {
@@ -191,24 +214,27 @@ export const TabData: React.FC<TabDataProps> = ({
 
   return (
     <>
+    <LoadingWrapper isLoading={gardenProgressDataApi.status === "loading"}>
+      <Grid container>
+        <Typography className={styles.gardenDescription} variant="h5">This weeks Seeds</Typography>
+      </Grid>
       <Grid className={ styles.tableContainer }>
-          <Typography>Table Version</Typography>
           <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Rule</TableCell>
-                  {tableHeader.map((header) => (
-                    <TableCell>{header}</TableCell>
+                  <TableCell>Seeds</TableCell>
+                  {tableHeader.reverse().map((header) => (
+                    <TableCell key={header}>{header.slice(5)}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {dataRows.map((row) => (
-                  <TableRow key={row.ruleId}>
+                  <TableRow key={row.ruleId}> 
                     <TableCell>{row.ruleName}</TableCell>
                     {tableHeader.map((header) => (
-                      <TableCell key={row.ruleId + "_"+ row.ruleName}>{row[header] ? "◯" : "✖︎"}</TableCell>
+                      <TableCell key={row.ruleId + "_"+ header} className={row[header] ? styles.complete : styles.incomplete}>{row[header] ? "◯" : "✖︎"}</TableCell>
                     ))}
                   </TableRow>
                 ))}
@@ -216,16 +242,19 @@ export const TabData: React.FC<TabDataProps> = ({
             </Table>
           </TableContainer>
       </Grid>
-      <Grid className={ styles.tableContainer }>
-        <Typography>Heat Map version</Typography>
+      <Grid container>
+        <Typography className={styles.heatMapDescription} variant="h5">Previous 4 weeks</Typography>
+      </Grid>
+      <Grid className={ styles.heatMapContainer }>
         <Chart
           options={heatMapOptions}
           series={series}
           type="heatmap"
-          width={500}
-          height={320}
+          // width={"80%"}
+          height={400}
         />
       </Grid>
+      </LoadingWrapper>
     </>
   )
 }
