@@ -6,31 +6,32 @@
   display: flex;
 }
 
+.collection-box {
+  background-image: url("./assets/grassyfield.png");
+  height: 592px;
+  width: 2050px;
+  position: relative;
+}
+
 .background-image {
   margin: auto;
 }
 
 .flower-image1 {
-  height: 200px;
-  position: relative;
-  left: -500px;
-  top: -60px;
-  z-index: 1;
-}
-
-.flower-image2 {
-  height: 200px;
-  position: relative;
-  left: -55 0px;
-  top: -60px;
+  height: 150px;
+  position: absolute;
+  left: 50;
+  top: 382px;
   z-index: 1;
 }
 
 .foreground-grass {
   z-index: 10;
-  position: relative;
-  top: -140px;
-  width: 1055px;
+  background-image: url("./assets/tallgrass.png");
+  position: absolute;
+  top: 450px;
+  height: 128px;
+  width: 2050px;
 }
 
 .flower-animation {
@@ -49,7 +50,7 @@
     -webkit-transform: skewX(0deg);
     opacity: 1;
   }
-  10% {
+  20% {
     -webkit-transform: skewX(5deg);
     opacity: 0.8;
   }
@@ -64,7 +65,7 @@
     transform: skewX(0deg);
     opacity: 1;
   }
-  10% {
+  20% {
     transform: skewX(5deg);
     opacity: 0.8;
   }

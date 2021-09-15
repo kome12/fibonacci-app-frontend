@@ -1,9 +1,22 @@
 import { motion } from "framer-motion";
-import pixelGrass from "./assets/pixelgrass.png";
-import grassyField from "./assets/grassyfield.png";
 import "./MyCollection.css";
+import { useEffect, useMemo } from "react";
+import { useApi } from "../../utils/api/useApi";
+import { getFlowers } from "../../helpers/api/flowers/getFlowers";
 
 export const MyCollection = () => {
+  const [flowersAPIState, getAllFlowers] = useApi(getFlowers);
+
+  const allFlowers = useMemo(
+    () => flowersAPIState.response ?? [],
+    [flowersAPIState]
+  );
+
+  useEffect(() => {
+    getAllFlowers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -13,22 +26,21 @@ export const MyCollection = () => {
       className="myCollectionPage"
     >
       <div>
-        <div>
-          <h1>This is my Collection</h1>
-        </div>
         <div className="collection-box">
-          <img className="background-image" src={grassyField} alt="field" />
-          <img
-            className="flower-animation flower-image1"
-            src="https://res.cloudinary.com/dyvrke6ml/image/upload/v1631103161/icons/marigold_timpbu.gif"
-            alt="flower"
-          />
-          <img
-            className="flower-animation flower-image2"
-            src="https://res.cloudinary.com/dyvrke6ml/image/upload/v1631103160/icons/cosmos_isdopf.gif"
-            alt="flower"
-          />
-          <img className="foreground-grass" src={pixelGrass} alt="field" />
+          {allFlowers.map((flower, index) => {
+            return (
+              flower.isActive && (
+                <img
+                  className="flower-animation flower-image1"
+                  src={flower.imageURL}
+                  key={flower._id}
+                  alt={flower.name}
+                  style={{ left: "" + (50 + index * 90) + "px" }}
+                />
+              )
+            );
+          })}
+          <div className="foreground-grass"></div>
         </div>
       </div>
     </motion.div>
