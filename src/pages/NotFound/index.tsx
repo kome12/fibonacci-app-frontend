@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import { motion } from "framer-motion";
 import { useHistory } from "react-router-dom";
+import { Head } from "../../components/Head";
 import Gif1 from "./assets/not-found1.gif";
 import Gif2 from "./assets/not-found2.gif";
 import styles from "./NotFound.module.css";
@@ -12,28 +13,31 @@ export const NotFound = () => {
   const notFoundGif = gifs[index];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      exit={{ opacity: 0 }}
-      className={styles.wrapper}
-    >
-      <h1>
-        Oops!
-        <br />
-        This page doesn't exist
-      </h1>
-      <img src={notFoundGif} alt="" />
-
-      <Button
-        className={styles.button}
-        variant="contained"
-        color="primary"
-        onClick={() => history.push("/")}
+    <>
+      <Head title="Not Found 😕" />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        exit={{ opacity: 0 }}
+        className={styles.wrapper}
       >
-        Go Back To Top Page
-      </Button>
-    </motion.div>
+        <h1>
+          Oops!
+          <br />
+          This page doesn't exist
+        </h1>
+        <img src={notFoundGif} alt="" />
+
+        <Button
+          className={styles.button}
+          variant="contained"
+          color="primary"
+          onClick={() => history.push("/")}
+        >
+          Go Back To Top Page
+        </Button>
+      </motion.div>
+    </>
   );
 };

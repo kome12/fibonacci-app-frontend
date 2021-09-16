@@ -1,0 +1,20 @@
+.gardensView {
+  width: 100%;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.gardenCard {
+  display: block;
+}
+
+.gardenCard + .gardenCard {
+  margin-top: 35px;
+}
+
+@media screen and (min-device-width: 600px) {
+  .gardensView {
+    width: 80%;
+    margin: 35px auto 0;
+  }
+}

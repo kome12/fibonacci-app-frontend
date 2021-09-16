@@ -17,6 +17,19 @@ router.post("/", (_req: Request, res: Response) => {
   }, 1000);
 });
 
+router.put("/:id", (req: Request, res: Response) => {
+  const data = req.body;
+
+  setTimeout(() => {
+    res.status(200).json({
+      ...newGardenData,
+      name: data.name,
+      description: data.description,
+      gardenCategoryId: data.gardenCategoryId,
+    });
+  }, 1000);
+});
+
 router.get("/userid/:id", (_req: Request, res: Response) => {
   setTimeout(() => {
     res.status(200).json(gardensData);
