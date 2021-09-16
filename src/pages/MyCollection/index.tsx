@@ -48,6 +48,10 @@ export const MyCollection = () => {
             <div className="bird bird--four"></div>
           </div>
 
+          <div className="bird-container bird-container--five">
+            <div className="bird bird--five"></div>
+          </div>
+
           {allFlowers.map((flower, index) => {
             return (
               flower.isActive && (
