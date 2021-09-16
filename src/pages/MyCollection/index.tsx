@@ -60,7 +60,7 @@ export const MyCollection = () => {
               )
             );
           })}
-          <div className="foreground-grass flower-animation"></div>
+          <div className="foreground-grass grass-animation"></div>
         </div>
       </div>
     </motion.div>

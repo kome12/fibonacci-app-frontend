@@ -7,7 +7,7 @@
 .collection-box {
   background-image: url("./assets/grassyfield.png");
   height: 592px;
-  min-width: 2190px;
+  min-width: 3200px;
   position: relative;
 }
 
@@ -29,10 +29,51 @@
   position: absolute;
   top: 462px;
   height: 128px;
-  width: 2190px;
+  width: 3200px;
 }
 
 .flower-animation {
+  -webkit-animation-name: wind;
+  -webkit-animation-duration: 10s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: flower-wind;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@-webkit-keyframes flower-wind {
+  0%,
+  100% {
+    -webkit-transform: skewX(3deg);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: skewX(-3deg);
+    opacity: 0.8;
+  }
+  75% {
+    -webkit-transform: skewX(0deg);
+    opacity: 0.8;
+  }
+}
+@keyframes flower-wind {
+  0%,
+  100% {
+    transform: skewX(3deg);
+    opacity: 1;
+  }
+  50% {
+    transform: skewX(-3deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: skewX(0deg);
+    opacity: 0.8;
+  }
+}
+
+.grass-animation {
   -webkit-animation-name: wind;
   -webkit-animation-duration: 10s;
   -webkit-animation-iteration-count: infinite;
@@ -52,6 +93,14 @@
     -webkit-transform: skewX(5deg);
     opacity: 0.8;
   }
+  30% {
+    -webkit-transform: skewX(4deg);
+    opacity: 0.8;
+  }
+  35% {
+    -webkit-transform: skewX(5deg);
+    opacity: 0.8;
+  }
   75% {
     -webkit-transform: skewX(-5deg);
     opacity: 0.8;
@@ -65,6 +114,14 @@
   }
   20% {
     transform: skewX(5deg);
+    opacity: 0.8;
+  }
+  30% {
+    -webkit-transform: skewX(4deg);
+    opacity: 0.8;
+  }
+  35% {
+    -webkit-transform: skewX(5deg);
     opacity: 0.8;
   }
   75% {
