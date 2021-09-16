@@ -195,8 +195,8 @@ export const Florist = () => {
                 <Typography variant="h6">Welcome to our store.</Typography>
                 {!userData.balance ? (
                   <Typography variant="body1" className={classes.noCoin}>
-                    To purchase flowers you need coins! Plant some seeds and
-                    your wallet will grow.
+                    To buy flowers you need coins! Plant some seeds and your
+                    wallet will grow.
                   </Typography>
                 ) : (
                   <Typography variant="body1" className={classes.welcomeText}>

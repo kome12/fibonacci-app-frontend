@@ -64,7 +64,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
     cancelHandler();
   };
 
-  const purchase = () => {
+  const buy = () => {
     buyFlowerHandler(selectFlower._id, selectFlower.price);
     setOpen(false);
     cancelHandler();
@@ -78,7 +78,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title" className={classes.confirmText}>
-        "Would you like to purchase it?"
+        Would you like to buy it?
       </DialogTitle>
       <DialogContent className={classes.dialog}>
         <img
@@ -94,13 +94,8 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button
-          variant="contained"
-          onClick={purchase}
-          color="primary"
-          autoFocus
-        >
-          Purchase
+        <Button variant="contained" onClick={buy} color="primary" autoFocus>
+          Buy
         </Button>
       </DialogActions>
     </Dialog>
