@@ -65,24 +65,26 @@ export const DailyGardening = () => {
     () => (userData.isLoggedIn ? userData.id : ""),
     [userData]
   );
-  const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
+  const [currentCompletedTasks, setCurrentCompletedTasks] = useState<
+    CompletedTask[]
+  >([]);
+
+  const garden = useMemo(() => {
+    if (gardenDataApi.response?.completedTasks) {
+      setCurrentCompletedTasks(gardenDataApi.response?.completedTasks);
+    }
+    return gardenDataApi.response?.garden;
+  }, [gardenDataApi]);
   console.log("TODO: Use garden data:", { garden });
 
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
   );
-  const [currentCompletedTasks, setCurrentCompletedTasks] = useState<
-    CompletedTask[]
-  >([]);
 
   const completedTasks = useMemo(() => {
-    return (
-      (currentCompletedTasks.length > 0
-        ? currentCompletedTasks
-        : gardenDataApi.response?.completedTasks) ?? []
-    );
-  }, [gardenDataApi, currentCompletedTasks]);
+    return currentCompletedTasks;
+  }, [currentCompletedTasks]);
 
   const isRuleCompleted = useCallback(
     (ruleId?: string) => {
