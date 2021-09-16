@@ -5,7 +5,8 @@
 }
 
 .collection-box {
-  background-image: url("./assets/grassyfield.png");
+  background-image: url("./assets/croppedbg2.jpg");
+  background-size: contain;
   height: 592px;
   min-width: 3200px;
   position: relative;
