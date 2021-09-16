@@ -5,7 +5,7 @@
 }
 
 .collection-box {
-  background-image: url("./assets/croppedbg2.jpg");
+  background-image: url("./assets/croppedbg.jpg");
   background-size: contain;
   height: 592px;
   min-width: 3200px;
@@ -21,7 +21,7 @@
   height: 150px;
   position: absolute;
   left: 50;
-  top: 384px;
+  top: 380px;
   z-index: 1;
 }
 
