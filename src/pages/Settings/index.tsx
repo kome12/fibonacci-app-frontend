@@ -6,9 +6,11 @@ import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
+import { getCategories } from "../../helpers/api/gardens/getCategories";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
 // import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
+import { CategorySelector } from "./components/CategorySelector";
 import { DescriptionInput } from "./components/DescriptionInput";
 import { GardenDataWrapper } from "./components/GardenDataWrapper";
 import { NameInput } from "./components/NameInput";
@@ -27,7 +29,7 @@ import styles from "./Settings.module.css";
 //     },
 //   })
 // );
-
+const descriptionPlaceholder = "Add a Garden Description";
 export const MyNiwaSettings = () => {
   // const history = useHistory();
   // const { userData } = useUserState();
@@ -35,22 +37,44 @@ export const MyNiwaSettings = () => {
   const { gardenId } = useParams<{ gardenId: string }>();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
+  const [initName, setInitName] = useState<string | undefined>(undefined);
+  const [initDesc, setInitDesc] = useState<string | undefined>(undefined);
+  const [initCategory, setInitCategory] = useState<string | undefined>(
+    undefined
+  );
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
-  const initialGardenName = garden?.name ?? "";
-  const initialGardenDescription = garden?.description ?? "";
+  const initialGardenName = useMemo(
+    () => initName || garden?.name || "",
+    [garden?.name, initName]
+  );
+  const initialGardenDescription = useMemo(
+    () => initDesc || garden?.description || descriptionPlaceholder,
+    [garden?.description, initDesc]
+  );
+  const initialGardenCategoryId = useMemo(
+    () => initCategory || garden?.gardenCategoryId || "",
+    [garden?.gardenCategoryId, initCategory]
+  );
 
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
   );
 
+  // Get Categories
+  const [categoriesApi] = useApi(getCategories, { autoCall: true });
+  const categoryList = useMemo(
+    () => categoriesApi.response ?? [],
+    [categoriesApi]
+  );
+
   // Garden Name Input
   const [showNameInput, setShowNameInput] = useState(false);
   const [gardenName, setGardenName] = useState<string | undefined>(undefined);
   const currentGardenName = useMemo(() => {
-    return (gardenName !== undefined ? gardenName : garden?.name) ?? "-";
-  }, [gardenName, garden?.name]);
+    return (gardenName !== undefined ? gardenName : initialGardenName) ?? "-";
+  }, [gardenName, initialGardenName]);
 
   // Garden Description Input
   const [showDescriptionInput, setShowDescriptionInput] = useState(false);
@@ -58,12 +82,23 @@ export const MyNiwaSettings = () => {
     string | undefined
   >(undefined);
   const currentGardenDescription = useMemo(() => {
+    return gardenDescription !== undefined
+      ? gardenDescription
+      : initialGardenDescription;
+  }, [gardenDescription, initialGardenDescription]);
+
+  // Garden Category Input
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
+  const [gardenCategoryId, setGardenCategoryId] = useState<string | undefined>(
+    undefined
+  );
+  const currentGardenCategoryId = useMemo(() => {
     return (
-      (gardenDescription !== undefined
-        ? gardenDescription
-        : garden?.description) ?? "-"
+      (gardenCategoryId !== undefined
+        ? gardenCategoryId
+        : initialGardenCategoryId) ?? "-"
     );
-  }, [gardenDescription, garden?.description]);
+  }, [gardenCategoryId, initialGardenCategoryId]);
 
   const onNameInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -81,6 +116,30 @@ export const MyNiwaSettings = () => {
       setGardenDescription(value);
     },
     []
+  );
+
+  const onCategoryInputChange = (
+    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) => {
+    setGardenCategoryId(e.target.value as string);
+  };
+
+  const updateGardenData = useMemo(
+    () => ({
+      name: initialGardenName,
+      description:
+        initialGardenDescription === descriptionPlaceholder
+          ? ""
+          : initialGardenDescription,
+      fireBaseUserId: garden?.fireBaseUserId ?? "",
+      gardenCategoryId: initialGardenCategoryId,
+    }),
+    [
+      garden?.fireBaseUserId,
+      initialGardenCategoryId,
+      initialGardenDescription,
+      initialGardenName,
+    ]
   );
 
   useEffect(() => {
@@ -103,37 +162,52 @@ export const MyNiwaSettings = () => {
         exit={{ opacity: 0 }}
       >
         <Section>
-          <SectionTitle title="My Niwa Settings" />
+          <SectionTitle title="Flower Bed Settings" />
 
-          <LoadingWrapper isLoading={!gardenDataApi.isLoaded}>
+          <LoadingWrapper
+            isLoading={!gardenDataApi.isLoaded || !categoriesApi.isLoaded}
+          >
             <section className={styles.gardenDataInputs}>
-              <GardenDataWrapper
-                showInput={showNameInput}
-                currentData={currentGardenName}
-                editData={() => setShowNameInput(true)}
-              >
+              <GardenDataWrapper>
                 <NameInput
-                  garden={garden ? { ...garden, _id: gardenId } : undefined}
+                  showInput={showNameInput}
+                  gardenId={gardenId}
+                  updateData={updateGardenData}
                   initialGardenName={initialGardenName}
                   currentGardenName={currentGardenName}
                   onNameInputChange={onNameInputChange}
                   setShowNameInput={setShowNameInput}
                   setGardenName={setGardenName}
+                  updateInitVal={setInitName}
                 />
               </GardenDataWrapper>
 
-              <GardenDataWrapper
-                showInput={showDescriptionInput}
-                currentData={currentGardenDescription}
-                editData={() => setShowDescriptionInput(true)}
-              >
+              <GardenDataWrapper>
                 <DescriptionInput
-                  garden={garden ? { ...garden, _id: gardenId } : undefined}
+                  showInput={showDescriptionInput}
+                  gardenId={gardenId}
+                  updateData={updateGardenData}
                   initialGardenDescription={initialGardenDescription}
                   currentGardenDescription={currentGardenDescription}
                   onDescriptionInputChange={onDescriptionInputChange}
                   setShowDescriptionInput={setShowDescriptionInput}
                   setGardenDescription={setGardenDescription}
+                  updateInitVal={setInitDesc}
+                />
+              </GardenDataWrapper>
+
+              <GardenDataWrapper>
+                <CategorySelector
+                  categories={categoryList}
+                  showSelector={showCategoryInput}
+                  gardenId={gardenId}
+                  updateData={updateGardenData}
+                  initialGardenCategoryId={initialGardenCategoryId}
+                  currentGardenCategoryId={currentGardenCategoryId}
+                  onCategoryInputChange={onCategoryInputChange}
+                  setShowCategoryInput={setShowCategoryInput}
+                  setGardenCategoryId={setGardenCategoryId}
+                  updateInitVal={setInitCategory}
                 />
               </GardenDataWrapper>
             </section>

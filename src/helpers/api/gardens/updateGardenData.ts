@@ -3,8 +3,10 @@ import { api } from "../../../utils/api";
 
 export type GardenUpdateParams = {
   gardenId: string;
-  data: Partial<Pick<Garden, "name" | "description">> &
-    Pick<Garden, "fireBaseUserId" | "gardenCategoryId">;
+  data: Pick<
+    Garden,
+    "fireBaseUserId" | "gardenCategoryId" | "name" | "description"
+  >;
 };
 
 export type UpdatedGardenResponse = Garden;
