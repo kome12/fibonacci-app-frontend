@@ -47,6 +47,7 @@ export const MyCollection = () => {
           <div className="bird-container bird-container--four">
             <div className="bird bird--four"></div>
           </div>
+
           {allFlowers.map((flower, index) => {
             return (
               flower.isActive && (
@@ -60,7 +61,13 @@ export const MyCollection = () => {
               )
             );
           })}
-          <div className="foreground-grass grass-animation"></div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ type: "spring", duration: 0.8 }}
+          >
+            <div className="foreground-grass grass-animation"></div>
+          </motion.div>
         </div>
       </div>
     </motion.div>
