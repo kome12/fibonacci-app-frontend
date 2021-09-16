@@ -25,6 +25,7 @@ router.put("/:id", (req: Request, res: Response) => {
       ...newGardenData,
       name: data.name,
       description: data.description,
+      gardenCategoryId: data.gardenCategoryId,
     });
   }, 1000);
 });
