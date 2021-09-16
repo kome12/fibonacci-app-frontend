@@ -8,9 +8,11 @@ import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { buyFlower } from "../../helpers/api/flowers/buyFlower";
 import { getFlowers } from "../../helpers/api/flowers/getFlowers";
+import { Flower } from "../../models/flower.model";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import styles from "./Florist.module.css";
+import { AlertDialog } from "./component/dialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,6 +92,9 @@ export const Florist = () => {
 
   const [buyFlowerAPIState, buyFlowerReq] = useApi(buyFlower);
 
+  const [dialogStatus, setDialogStatus] = useState(false);
+  const [selectFlowerData, setSelectFlowerData] = useState<Flower | null>(null);
+
   const userId = useMemo(
     () => (userData.isLoggedIn && userData.id) || "",
     [userData]
@@ -114,6 +119,10 @@ export const Florist = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [userId]
   );
+
+  const cancelHandler = () => {
+    setDialogStatus(false);
+  };
 
   useEffect(() => {
     if (buyFlowerAPIState.status === "succeeded" && lastBought) {
@@ -186,8 +195,8 @@ export const Florist = () => {
                 <Typography variant="h6">Welcome to our store.</Typography>
                 {!userData.balance ? (
                   <Typography variant="body1" className={classes.noCoin}>
-                    To purchase flowers you need coins! Plant some seeds and
-                    your wallet will grow.
+                    To buy flowers you need coins! Plant some seeds and your
+                    wallet will grow.
                   </Typography>
                 ) : (
                   <Typography variant="body1" className={classes.welcomeText}>
@@ -254,15 +263,14 @@ export const Florist = () => {
                       />
                       <Button
                         variant="contained"
-                        onClick={() =>
-                          buyFlowerHandler(flower._id, flower.price)
-                        }
+                        onClick={() => {
+                          setDialogStatus(true);
+                          setSelectFlowerData(flower);
+                        }}
                         color="primary"
                         className={classes.buyButton}
                         disabled={
                           !userData.balance || flower.price > userData.balance
-                            ? true
-                            : false
                         }
                       >
                         Buy: {flower.price}
@@ -271,6 +279,13 @@ export const Florist = () => {
                   </Grid>
                 );
               })}
+              {dialogStatus && selectFlowerData !== null && (
+                <AlertDialog
+                  selectFlower={selectFlowerData}
+                  buyFlowerHandler={buyFlowerHandler}
+                  cancelHandler={cancelHandler}
+                />
+              )}
             </LoadingWrapper>
           </Grid>
         </Grid>

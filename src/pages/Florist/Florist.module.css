@@ -9,3 +9,10 @@
   -webkit-filter: hue-rotate(0deg) saturate(0%) brightness(0%);
   filter: hue-rotate(0deg) saturate(0%) brightness(0%);
 }
+
+.notBoughtPicDialog {
+  width: 40%;
+  height: 40%;
+  -webkit-filter: hue-rotate(0deg) saturate(0%) brightness(0%);
+  filter: hue-rotate(0deg) saturate(0%) brightness(0%);
+}
