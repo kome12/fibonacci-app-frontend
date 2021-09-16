@@ -5,7 +5,3 @@
 .nameInputButtons {
   margin: 10px 0 0 auto;
 }
-
-.nameInputButtons > button:first-of-type {
-  margin-right: 15px;
-}

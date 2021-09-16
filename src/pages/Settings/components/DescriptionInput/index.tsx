@@ -7,11 +7,11 @@ import {
   GardenUpdateParams,
   updateGardenData,
 } from "../../../../helpers/api/gardens/updateGardenData";
-import { Garden } from "../../../../models/garden.model";
 import { useApi } from "../../../../utils/api/useApi";
 import styles from "./DescriptionInput.module.css";
 
 type Props = {
+  showInput: boolean;
   currentGardenDescription: string;
   initialGardenDescription: string;
   onDescriptionInputChange: (
@@ -21,7 +21,9 @@ type Props = {
   setGardenDescription: React.Dispatch<
     React.SetStateAction<string | undefined>
   >;
-  garden: Required<Garden> | undefined;
+  updateInitVal: React.Dispatch<React.SetStateAction<string | undefined>>;
+  gardenId: string;
+  updateData: GardenUpdateParams["data"];
 };
 
 const useStyles = makeStyles(() =>
@@ -29,6 +31,7 @@ const useStyles = makeStyles(() =>
     buttonWrapper: {
       position: "relative",
       display: "inline-block",
+      marginLeft: 15,
     },
     buttonProgress: {
       position: "absolute",
@@ -47,7 +50,10 @@ export const DescriptionInput: React.FC<Props> = memo(
     onDescriptionInputChange,
     setShowDescriptionInput,
     setGardenDescription,
-    garden,
+    gardenId,
+    updateData,
+    showInput,
+    updateInitVal,
   }) => {
     const classes = useStyles();
     const [updateGardenApi, updateGardenInfo] = useApi(updateGardenData);
@@ -65,20 +71,13 @@ export const DescriptionInput: React.FC<Props> = memo(
 
     const updateGarden = useCallback(
       async () => {
-        if (!garden) return;
-
-        const data: GardenUpdateParams["data"] = {
-          description: currentGardenDescription,
-          fireBaseUserId: garden.fireBaseUserId,
-          gardenCategoryId: garden.gardenCategoryId,
-        };
         updateGardenInfo({
-          gardenId: garden._id,
-          data,
+          gardenId,
+          data: { ...updateData, description: currentGardenDescription },
         });
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [garden, currentGardenDescription]
+      [gardenId, currentGardenDescription, updateData]
     );
 
     const onCancel = useCallback(() => {
@@ -90,45 +89,70 @@ export const DescriptionInput: React.FC<Props> = memo(
       setShowDescriptionInput,
     ]);
 
+    const onEdit = useCallback(() => {
+      setShowDescriptionInput(true);
+    }, [setShowDescriptionInput]);
+
     useEffect(() => {
       if (updateGardenApi.status === "succeeded") {
         setShowDescriptionInput(false);
         setGardenDescription(updateGardenApi.response.description || "-");
+        updateInitVal(updateGardenApi.response.description || "-");
       }
-    }, [setGardenDescription, setShowDescriptionInput, updateGardenApi]);
+    }, [
+      setGardenDescription,
+      setShowDescriptionInput,
+      updateGardenApi,
+      updateInitVal,
+    ]);
 
     return (
       <>
         <TextField
           label="Garden Description"
-          variant="outlined"
+          variant={showInput ? "outlined" : undefined}
           className={styles.descriptionInput}
           value={currentGardenDescription}
           onChange={onDescriptionInputChange}
           disabled={updateGardenApi.status === "loading"}
+          placeholder="Add a Garden Description"
+          InputProps={{
+            readOnly: !showInput,
+          }}
         />
         <div className={styles.descriptionInputButtons}>
-          <Button
-            variant="outlined"
-            onClick={onCancel}
-            disabled={updateGardenApi.status === "loading"}
-          >
-            Cancel
-          </Button>
+          {showInput ? (
+            <>
+              <Button
+                variant="outlined"
+                onClick={onCancel}
+                disabled={updateGardenApi.status === "loading"}
+              >
+                Cancel
+              </Button>
 
-          <div className={classes.buttonWrapper}>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={updateGarden}
-              disabled={disableUpdate}
-            >
-              Update
+              <div className={classes.buttonWrapper}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={updateGarden}
+                  disabled={disableUpdate}
+                >
+                  Update
+                </Button>
+                {updateGardenApi.status === "loading" && (
+                  <CircularProgress
+                    size={28}
+                    className={classes.buttonProgress}
+                  />
+                )}
+              </div>
+            </>
+          ) : (
+            <Button color="primary" variant="contained" onClick={onEdit}>
+              Edit
             </Button>
-            {updateGardenApi.status === "loading" && (
-              <CircularProgress size={28} className={classes.buttonProgress} />
-            )}
-          </div>
+          )}
         </div>
       </>
     );
