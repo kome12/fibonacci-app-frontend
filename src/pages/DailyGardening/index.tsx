@@ -22,6 +22,7 @@ import {
   sendCompletedTask,
 } from "../../helpers/api/completedTasks/sendCompletedTask";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
+import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { usePageState } from "../../store/page/usePageState";
 import { useUserState } from "../../store/user/useUserState";
@@ -71,15 +72,17 @@ export const DailyGardening = () => {
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
   );
+  const [currentCompletedTasks, setCurrentCompletedTasks] = useState<
+    CompletedTask[]
+  >([]);
 
   const completedTasks = useMemo(() => {
-    const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
-    if (completedTaskApi.response) {
-      currentCompletedTasks.push(completedTaskApi.response.completedTask);
-      return currentCompletedTasks;
-    }
-    return currentCompletedTasks;
-  }, [gardenDataApi, completedTaskApi]);
+    return (
+      (currentCompletedTasks.length > 0
+        ? currentCompletedTasks
+        : gardenDataApi.response?.completedTasks) ?? []
+    );
+  }, [gardenDataApi, currentCompletedTasks]);
 
   const isRuleCompleted = useCallback(
     (ruleId?: string) => {
@@ -138,6 +141,10 @@ export const DailyGardening = () => {
   useEffect(() => {
     if (completedTaskApi.status === "succeeded") {
       const { balance: newCoinBalance } = completedTaskApi.response.user;
+      setCurrentCompletedTasks((v) => [
+        ...v,
+        completedTaskApi.response.completedTask,
+      ]);
       setUserData((data) => {
         return { ...data, balance: newCoinBalance };
       });
