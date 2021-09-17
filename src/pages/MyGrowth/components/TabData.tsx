@@ -181,14 +181,25 @@ export const TabData: React.FC<TabDataProps> = ({
       chart: {
         height: 350,
         type: "heatmap",
+        foreColor: "#172F4A"
       },
       dataLabels: {
         enabled: true,
       },
-      colors: ["#6ac697"],
       xaxis: {
         type: "category",
         categories: categories,
+      },
+      plotOptions: {
+        heatmap: {
+          radius: 4
+        }
+      },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: "#6ac697",
+        },
       },
     };
     return options;
@@ -212,7 +223,7 @@ export const TabData: React.FC<TabDataProps> = ({
     <>
     <LoadingWrapper isLoading={gardenProgressDataApi.status === "loading"}>
       <Grid container>
-        <Typography className={styles.gardenDescription} variant="h5">This week's Seeds</Typography>
+        <Typography className={styles.gardenDescription} variant="h5">This week's Seeds:</Typography>
       </Grid>
       <Grid className={ styles.tableContainer }>
           <TableContainer>
@@ -230,7 +241,6 @@ export const TabData: React.FC<TabDataProps> = ({
                   <TableRow key={row.ruleId}> 
                     <TableCell>{row.ruleName}</TableCell>
                     {tableHeader.map((header) => (
-                      // <TableCell key={row.ruleId + "_"+ header} className={row[header] ? styles.complete : styles.incomplete}>{row[header] ? "◯" : "✖︎"}</TableCell>
                       <TableCell key={row.ruleId + "_"+ header} className={row[header] ? styles.complete : styles.incomplete}>{row[header] ? <CheckIcon /> : <ClearIcon />}</TableCell>
                     ))}
                   </TableRow>
@@ -240,14 +250,13 @@ export const TabData: React.FC<TabDataProps> = ({
           </TableContainer>
       </Grid>
       <Grid container>
-        <Typography className={styles.heatMapDescription} variant="h5">Previous 4 weeks</Typography>
+        <Typography className={styles.heatMapDescription} variant="h5">Last 4 weeks:</Typography>
       </Grid>
       <Grid className={ styles.heatMapContainer }>
         <Chart
           options={heatMapOptions}
           series={series}
           type="heatmap"
-          // width={"80%"}
           height={400}
         />
       </Grid>
