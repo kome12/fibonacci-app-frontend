@@ -16,8 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     tabBar: {
       backgroundColor: theme.palette.primary.main,
-      // display: "flex",
-      // flex: "0 0 100%",
       marginTop: "0.5rem",
       width: "100%",
     },
