@@ -22,6 +22,8 @@ import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import styles from "../MyGrowth.module.css";
 import { LoadingWrapper } from "../../../components/LoadingWrapper";
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 
 interface ICompletedTasksByRuleId {
   [ruleId: string]: Array<CompletedTask>;
@@ -42,11 +44,6 @@ export const TabData: React.FC<TabDataProps> = ({
   const [gardenProgressDataApi, getGardenProgressData] = useApi(
     getGardenByGardenIdWithDates
   );
-  // Unused??
-  //   const gardenProgress = useMemo(
-  //   () => gardenProgressDataApi.response?.garden,
-  //   [gardenProgressDataApi]
-  // );
 
   const rules = useMemo(
     () => gardenProgressDataApi.response?.rules ?? [],
@@ -60,7 +57,6 @@ export const TabData: React.FC<TabDataProps> = ({
 
     const tableHeader = useMemo(() => {
     const labels: Array<string> = [];
-    // let date = startDate;
     let date = tableStartDate;
     while (isBefore(date, endDate) || isSameDay(date, endDate)) {
       labels.push(
@@ -216,7 +212,7 @@ export const TabData: React.FC<TabDataProps> = ({
     <>
     <LoadingWrapper isLoading={gardenProgressDataApi.status === "loading"}>
       <Grid container>
-        <Typography className={styles.gardenDescription} variant="h5">This weeks Seeds</Typography>
+        <Typography className={styles.gardenDescription} variant="h5">This week's Seeds</Typography>
       </Grid>
       <Grid className={ styles.tableContainer }>
           <TableContainer>
@@ -234,7 +230,8 @@ export const TabData: React.FC<TabDataProps> = ({
                   <TableRow key={row.ruleId}> 
                     <TableCell>{row.ruleName}</TableCell>
                     {tableHeader.map((header) => (
-                      <TableCell key={row.ruleId + "_"+ header} className={row[header] ? styles.complete : styles.incomplete}>{row[header] ? "◯" : "✖︎"}</TableCell>
+                      // <TableCell key={row.ruleId + "_"+ header} className={row[header] ? styles.complete : styles.incomplete}>{row[header] ? "◯" : "✖︎"}</TableCell>
+                      <TableCell key={row.ruleId + "_"+ header} className={row[header] ? styles.complete : styles.incomplete}>{row[header] ? <CheckIcon /> : <ClearIcon />}</TableCell>
                     ))}
                   </TableRow>
                 ))}
