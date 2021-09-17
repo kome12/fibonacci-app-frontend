@@ -11,8 +11,8 @@ import { getFlowers } from "../../helpers/api/flowers/getFlowers";
 import { Flower } from "../../models/flower.model";
 import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
-import styles from "./Florist.module.css";
 import { AlertDialog } from "./component/dialog";
+import styles from "./Florist.module.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "90%",
       marginLeft: "2.5%",
       padding: "0 5%",
+      height: "auto !important",
     },
     header: {
       margin: "2%",
