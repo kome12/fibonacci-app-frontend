@@ -183,6 +183,7 @@ export const DailyGardening = () => {
               color="primary"
               variant="outlined"
               onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
+              className={styles.settingsButton}
             >
               Edit Garden
             </Button>

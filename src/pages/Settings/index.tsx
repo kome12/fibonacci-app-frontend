@@ -1,3 +1,6 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
 import { formatISO } from "date-fns";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -9,33 +12,31 @@ import { SectionTitle } from "../../components/SectionTitle";
 import { getCategories } from "../../helpers/api/gardens/getCategories";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
 import { Rule } from "../../models/rule.model";
-// import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import { CategorySelector } from "./components/CategorySelector";
+import { CreateSeedModal } from "./components/CreateSeedModal";
 import { DescriptionInput } from "./components/DescriptionInput";
 import { GardenDataWrapper } from "./components/GardenDataWrapper";
 import { NameInput } from "./components/NameInput";
 import { SeedList } from "./components/SeedList";
 import styles from "./Settings.module.css";
 
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       maxWidth: 845,
-//     },
-//     media: {
-//       height: 140,
-//     },
-//     nameInput: {
-//       width: "100%",
-//     },
-//   })
-// );
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    createGardenSeed: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
+      alignSelf: "center",
+      "&:hover": {
+        backgroundColor: theme.palette.primary.dark,
+      },
+    },
+  })
+);
+
 const descriptionPlaceholder = "Add a Garden Description";
-export const MyNiwaSettings = () => {
-  // const history = useHistory();
-  // const { userData } = useUserState();
-  // const classes = useStyles();
+export const Settings = () => {
+  const classes = useStyles();
   const { gardenId } = useParams<{ gardenId: string }>();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
@@ -183,6 +184,8 @@ export const MyNiwaSettings = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gardenId]);
 
+  const [openCreateSeedModal, setOpenCreateSeedModal] = useState(false);
+
   return (
     <>
       <Head title="Settings ⚙️" />
@@ -244,7 +247,23 @@ export const MyNiwaSettings = () => {
             </section>
 
             <section className={styles.seedListSection}>
-              <SectionTitle title="Seeds 🌱:" />
+              <SectionTitle title="Seeds 🌱">
+                <IconButton
+                  className={classes.createGardenSeed}
+                  onClick={() => setOpenCreateSeedModal(true)}
+                >
+                  <AddIcon />
+                </IconButton>
+              </SectionTitle>
+
+              <CreateSeedModal
+                initSeeds={initialGardenSeeds}
+                updateInitSeeds={setInitSeeds}
+                handleModal={setOpenCreateSeedModal}
+                showModal={openCreateSeedModal}
+                gardenId={gardenId}
+              />
+
               <SeedList
                 initSeeds={initialGardenSeeds}
                 seeds={currentGardenSeeds}

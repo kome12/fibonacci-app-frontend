@@ -45,8 +45,11 @@
   margin-bottom: 10px;
   margin-right: 10px;
   flex: 1;
+  font-weight: bold;
 }
 
 .inputsWrapper > label > input {
+  font-weight: 400;
+  font-size: 1rem;
   height: 25px;
 }
