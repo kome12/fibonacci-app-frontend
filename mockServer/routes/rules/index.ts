@@ -9,6 +9,20 @@ router.post("/bulk", (req: Request, res: Response) => {
   }, 1000);
 });
 
+router.post("/", (req: Request, res: Response) => {
+  const data = req.body;
+
+  setTimeout(() => {
+    res.status(200).json({
+      ...rulesData[0],
+      name: data.name,
+      description: data.description,
+      gardenId: data.gardenId,
+      // isRemoved: data.isRemoved,
+    });
+  }, 1000);
+});
+
 router.put("/:id", (req: Request, res: Response) => {
   const data = req.body;
 

@@ -17,9 +17,9 @@ const MyNiwa = React.lazy(() =>
   import("./pages/MyNiwa").then(({ MyNiwa }) => ({ default: MyNiwa }))
 );
 
-const MyNiwaSettings = React.lazy(() =>
-  import("./pages/Settings").then(({ MyNiwaSettings }) => ({
-    default: MyNiwaSettings,
+const Settings = React.lazy(() =>
+  import("./pages/Settings").then(({ Settings }) => ({
+    default: Settings,
   }))
 );
 
@@ -64,7 +64,7 @@ export const Routes = () => {
                   <Route path="/user/myniwa" component={MyNiwa} exact />
                   <Route
                     path="/user/myniwa/:gardenId/settings"
-                    component={MyNiwaSettings}
+                    component={Settings}
                     exact
                   />
                   <Route
