@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowX: "hidden",
     },
     container: {
-      height: "85%",
+      height: "90%",
     },
     card: {
       textAlign: "center",
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
     stepper: {
       height: "10%",
       alignSelf: "flex-end",
-      paddingBottom: "6%",
+      padding: 0,
     },
   })
 );

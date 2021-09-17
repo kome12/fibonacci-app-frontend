@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { NewUserRule } from "..";
 import { UserRule } from "./UserRule";
+import { CGTitle } from "./CGTitle";
 
 interface AddRulesProps {
   ruleNameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "5%",
       overflowY: "auto",
       scrollBehavior: "smooth",
-      height: "40%",
+      height: "35%",
     },
     noRules: {
       color: theme.palette.error.main,
@@ -65,6 +66,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     ruleLi: {
       marginTop: "0.25rem",
+      marginBottom: "0.25rem",
+    },
+    addSeeds: {
       marginBottom: "0.25rem",
     },
     closeIcon: {
@@ -102,9 +106,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>
-        Plant Seeds
-      </Typography>
+      <CGTitle title="Plant Seeds" />
       <Typography variant="h5" className={classes.subtitle}>
         Current Seeds:
       </Typography>
@@ -116,7 +118,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
       >
         {userRules.length < 1 ? (
           <Container>
-            <Typography variant="h5" className={classes.noRules}>
+            <Typography variant="h6" className={classes.noRules}>
               You haven't sown any Seeds in this garden yet...
             </Typography>
           </Container>
@@ -167,6 +169,7 @@ export const AddRules: React.FC<AddRulesProps> = ({
           size="large"
           variant="contained"
           color="primary"
+          className={classes.addSeeds}
           onClick={addRuleHandler}
           startIcon={<AddCircleIcon />}
           disabled={ruleName.length < 1}
