@@ -122,6 +122,7 @@ const ListItem: React.FC<{
                   onChange={(e) => onSeedInputChange(e, seedIndex)}
                   name="name"
                   value={seed.name}
+                  disabled={updateGardenRuleApi.status === "loading"}
                 />
               </label>
 
@@ -132,6 +133,7 @@ const ListItem: React.FC<{
                   onChange={(e) => onSeedInputChange(e, seedIndex)}
                   name="description"
                   value={seed.description}
+                  disabled={updateGardenRuleApi.status === "loading"}
                 />
               </label>
             </div>
