@@ -8,12 +8,14 @@ import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
 import { getCategories } from "../../helpers/api/gardens/getCategories";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
+import { Rule } from "../../models/rule.model";
 // import { useUserState } from "../../store/user/useUserState";
 import { useApi } from "../../utils/api/useApi";
 import { CategorySelector } from "./components/CategorySelector";
 import { DescriptionInput } from "./components/DescriptionInput";
 import { GardenDataWrapper } from "./components/GardenDataWrapper";
 import { NameInput } from "./components/NameInput";
+import { SeedList } from "./components/SeedList";
 import styles from "./Settings.module.css";
 
 // const useStyles = makeStyles((theme: Theme) =>
@@ -42,6 +44,7 @@ export const MyNiwaSettings = () => {
   const [initCategory, setInitCategory] = useState<string | undefined>(
     undefined
   );
+  const [initSeeds, setInitSeeds] = useState<Rule[] | undefined>(undefined);
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
   const initialGardenName = useMemo(
@@ -60,6 +63,11 @@ export const MyNiwaSettings = () => {
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
+  );
+
+  const initialGardenSeeds = useMemo(
+    () => initSeeds || rules || [],
+    [rules, initSeeds]
   );
 
   // Get Categories
@@ -86,6 +94,12 @@ export const MyNiwaSettings = () => {
       ? gardenDescription
       : initialGardenDescription;
   }, [gardenDescription, initialGardenDescription]);
+
+  // Garden Seeds Input
+  const [gardenSeeds, setGardenSeeds] = useState<Rule[] | undefined>(undefined);
+  const currentGardenSeeds = useMemo(() => {
+    return gardenSeeds !== undefined ? gardenSeeds : initialGardenSeeds;
+  }, [gardenSeeds, initialGardenSeeds]);
 
   // Garden Category Input
   const [showCategoryInput, setShowCategoryInput] = useState(false);
@@ -118,11 +132,28 @@ export const MyNiwaSettings = () => {
     []
   );
 
-  const onCategoryInputChange = (
-    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => {
-    setGardenCategoryId(e.target.value as string);
-  };
+  const onCategoryInputChange = useCallback(
+    (e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+      setGardenCategoryId(e.target.value as string);
+    },
+    []
+  );
+
+  const onSeedInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, seedIndex: number) => {
+      const { value, name } = e.currentTarget;
+
+      setGardenSeeds((seeds) => {
+        const currentSeeds = [...(seeds ?? initialGardenSeeds)];
+        let seed = currentSeeds[seedIndex];
+        seed = { ...seed, [name]: value };
+        currentSeeds[seedIndex] = seed;
+
+        return currentSeeds;
+      });
+    },
+    [initialGardenSeeds]
+  );
 
   const updateGardenData = useMemo(
     () => ({
@@ -212,17 +243,15 @@ export const MyNiwaSettings = () => {
               </GardenDataWrapper>
             </section>
 
-            <section>
-              <h2>Rules:</h2>
-              <ul>
-                {rules?.map((rule) => (
-                  <li key={rule._id}>
-                    {rule.name}
-                    <br />
-                    {rule.description}
-                  </li>
-                ))}
-              </ul>
+            <section className={styles.seedListSection}>
+              <SectionTitle title="Seeds 🌱:" />
+              <SeedList
+                initSeeds={initialGardenSeeds}
+                seeds={currentGardenSeeds}
+                setGardenSeeds={setGardenSeeds}
+                setInitSeeds={setInitSeeds}
+                onSeedInputChange={onSeedInputChange}
+              />
             </section>
           </LoadingWrapper>
         </Section>
