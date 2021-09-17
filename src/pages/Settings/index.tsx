@@ -4,7 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { formatISO } from "date-fns";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
@@ -196,6 +196,12 @@ export const Settings = () => {
         exit={{ opacity: 0 }}
       >
         <Section>
+          <Link
+            to={`/user/dailyGardening/${gardenId}`}
+            className={styles.backLink}
+          >
+            Go Back to Daily Gardening
+          </Link>
           <SectionTitle title="Flower Bed Settings" />
 
           <LoadingWrapper
