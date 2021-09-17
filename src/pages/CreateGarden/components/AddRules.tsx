@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "5%",
       overflowY: "auto",
       scrollBehavior: "smooth",
-      height: "40%",
+      height: "35%",
     },
     noRules: {
       color: theme.palette.error.main,
