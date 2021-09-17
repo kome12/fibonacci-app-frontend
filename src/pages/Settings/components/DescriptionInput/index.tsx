@@ -96,15 +96,9 @@ export const DescriptionInput: React.FC<Props> = memo(
     useEffect(() => {
       if (updateGardenApi.status === "succeeded") {
         setShowDescriptionInput(false);
-        setGardenDescription(updateGardenApi.response.description || "-");
         updateInitVal(updateGardenApi.response.description || "-");
       }
-    }, [
-      setGardenDescription,
-      setShowDescriptionInput,
-      updateGardenApi,
-      updateInitVal,
-    ]);
+    }, [setShowDescriptionInput, updateGardenApi, updateInitVal]);
 
     return (
       <>

@@ -87,10 +87,9 @@ export const NameInput: React.FC<Props> = memo(
     useEffect(() => {
       if (updateGardenApi.status === "succeeded") {
         setShowNameInput(false);
-        setGardenName(updateGardenApi.response.name || "-");
         updateInitVal(updateGardenApi.response.name || "-");
       }
-    }, [setGardenName, setShowNameInput, updateGardenApi, updateInitVal]);
+    }, [setShowNameInput, updateGardenApi, updateInitVal]);
 
     return (
       <>
