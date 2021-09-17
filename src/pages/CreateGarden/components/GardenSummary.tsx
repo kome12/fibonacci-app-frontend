@@ -13,6 +13,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { motion } from "framer-motion";
 import { NewUserRule } from "..";
 import { UserRule } from "./UserRule";
+import { CGTitle } from "./CGTitle";
 
 interface GardenSummaryProps {
   gardenName: string;
@@ -32,11 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       backgroundColor: theme.palette.background.default,
     },
-    title: {
-      fontWeight: "bold",
-      color: theme.palette.primary.main,
-      marginTop: "1rem",
-    },
     subtitle: {
       color: theme.palette.primary.dark,
     },
@@ -55,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gardenRules: {
       overflowY: "auto",
-      height: "50%",
+      height: "35%",
       width: "90%",
       marginLeft: "5%",
     },
@@ -67,6 +63,9 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonWrapper: {
       margin: theme.spacing(1),
       position: "relative",
+    },
+    createButton: {
+      width: "90%",
     },
     buttonProgress: {
       position: "absolute",
@@ -99,20 +98,13 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>
-        Summary
-      </Typography>
+      <CGTitle title="Summary" />
       <Grid container direction="column" className={classes.detailsContainer}>
-        <Grid
-          container
-          direction="row"
-          className={classes.gardenDetailGrid}
-          justifyContent="center"
-        >
+        <Grid container direction="row" className={classes.gardenDetailGrid}>
           <Typography variant="h6" className={classes.subtitle}>
-            Flower Bed Name:
+            Name:
           </Typography>
-          <Typography variant="h5" className={classes.gardenDetails}>
+          <Typography variant="h6" className={classes.gardenDetails}>
             {gardenName}
           </Typography>
         </Grid>
@@ -121,7 +113,6 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
             container
             direction="row"
             className={classes.gardenDetailGrid}
-            justifyContent="center"
             alignItems="center"
           >
             <Typography variant="h6" className={classes.subtitle}>
@@ -137,7 +128,6 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
             container
             direction="row"
             className={classes.gardenDetailGrid}
-            justifyContent="center"
             alignItems="center"
           >
             <Typography variant="h6" className={classes.subtitle}>
@@ -149,15 +139,15 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
           </Grid>
         )}
       </Grid>
+      <Typography variant="subtitle1" className={classes.seedsTitle}>
+        Your seeds:
+      </Typography>
       <Grid
         container
         className={classes.gardenRules}
         direction="row"
         justifyContent="center"
       >
-        <Typography variant="h5" className={classes.seedsTitle}>
-          Your seeds:
-        </Typography>
         <List>
           {userRules.map((rule, idx) => (
             <ListItem className="rule-li" key={`${rule.name}-${idx}`}>
@@ -168,6 +158,7 @@ export const GardenSummary: React.FC<GardenSummaryProps> = ({
       </Grid>
       <div className={classes.buttonWrapper}>
         <Button
+          className={classes.createButton}
           disabled={loading}
           size="large"
           variant="contained"

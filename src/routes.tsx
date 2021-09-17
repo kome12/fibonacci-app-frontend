@@ -45,6 +45,11 @@ const Florist = React.lazy(() =>
     default: Florist,
   }))
 );
+const MyGrowth = React.lazy(() =>
+  import("./pages/MyGrowth").then(({ MyGrowth }) => ({
+    default: MyGrowth,
+  }))
+);
 
 const MyCollection = React.lazy(() =>
   import("./pages/MyCollection").then(({ MyCollection }) => ({
@@ -84,6 +89,7 @@ export const Routes = () => {
                     exact
                   />
                   <Route path="/user/store" component={Florist} exact />
+                  <Route path="/user/myGrowth" component={MyGrowth} exact />
                   <Route
                     path="/user/myCollection"
                     component={MyCollection}

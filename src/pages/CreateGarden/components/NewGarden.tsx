@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { Category } from "../../../models/category.model";
+import { CGTitle } from "./CGTitle";
 
 interface NewGardenProps {
   nameChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
@@ -34,12 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       flexDirection: "column",
       backgroundColor: theme.palette.background.default,
-    },
-    title: {
-      marginTop: "1rem",
-      marginBottom: "1rem",
-      color: theme.palette.primary.main,
-      fontWeight: "bold",
     },
     text: {
       marginTop: "1rem",
@@ -85,9 +80,7 @@ export const NewGarden: React.FC<NewGardenProps> = ({
       transition={{ duration: 0.6 }}
       exit={{ opacity: 0, x: exitDir }}
     >
-      <Typography variant="h3" className={classes.title}>
-        Add Flower Bed
-      </Typography>
+      <CGTitle title="Add Flower Bed" />
       <Typography variant="body1" className={classes.text}>
         Give your Flower Bed a name.
       </Typography>
