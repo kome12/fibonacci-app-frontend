@@ -1,0 +1,48 @@
+.tabPanel {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.gardenDescription {
+  margin-top: 0.5rem;
+}
+
+.heatMapDescription {
+  margin-top: 0.5rem;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1.25rem 0;
+  padding: 0 0.5rem;
+  background-color: #edf4f580;
+  border-radius: 4px;
+}
+
+.heatMapContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1.25rem 0;
+  padding: 0 0.5rem;
+}
+
+@media only screen and (max-width: 900px) {
+  .tabPanelContainer {
+    justify-content: center;
+  }
+}
+
+.complete {
+  background-color: #6ac69740;
+  color: #3b7270;
+  text-align: center;
+  font-weight: bold;
+}
+
+.incomplete {
+  color: red;
+}
