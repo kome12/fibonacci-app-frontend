@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "90%",
       maxWidth: "600px",
       margin: "0 auto",
-      padding: "0 5%",
       height: "auto !important",
     },
     header: {
