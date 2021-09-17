@@ -14,11 +14,15 @@ import { useApi } from "../../utils/api/useApi";
 import { AlertDialog } from "./component/dialog";
 import styles from "./Florist.module.css";
 
+// TODO: Refactor page layout
+// TODO: Add coins to price
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       width: "90%",
-      marginLeft: "2.5%",
+      maxWidth: "600px",
+      margin: "0 auto",
       padding: "0 5%",
       height: "auto !important",
     },
