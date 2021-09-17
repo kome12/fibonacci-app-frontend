@@ -9,7 +9,5 @@ export type GardenUpdateParams = {
   >;
 };
 
-export type UpdatedGardenResponse = Garden;
-
 export const updateGardenData = ({ gardenId, data }: GardenUpdateParams) =>
-  api.put<UpdatedGardenResponse>(`/gardens/${gardenId}`, data);
+  api.put<Garden>(`/gardens/${gardenId}`, data);

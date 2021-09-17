@@ -2,3 +2,13 @@
   margin: 20px 0;
   width: 100%;
 }
+
+.seedListSection {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.backLink {
+  color: #6ac697;
+  margin-bottom: 20px;
+}

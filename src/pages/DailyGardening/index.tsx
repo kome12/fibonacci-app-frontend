@@ -22,6 +22,7 @@ import {
   sendCompletedTask,
 } from "../../helpers/api/completedTasks/sendCompletedTask";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
+import { CompletedTask } from "../../models/completedTask.model";
 import { Rule } from "../../models/rule.model";
 import { usePageState } from "../../store/page/usePageState";
 import { useUserState } from "../../store/user/useUserState";
@@ -64,7 +65,16 @@ export const DailyGardening = () => {
     () => (userData.isLoggedIn ? userData.id : ""),
     [userData]
   );
-  const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
+  const [currentCompletedTasks, setCurrentCompletedTasks] = useState<
+    CompletedTask[]
+  >([]);
+
+  const garden = useMemo(() => {
+    if (gardenDataApi.response?.completedTasks) {
+      setCurrentCompletedTasks(gardenDataApi.response?.completedTasks);
+    }
+    return gardenDataApi.response?.garden;
+  }, [gardenDataApi]);
   console.log("TODO: Use garden data:", { garden });
 
   const rules = useMemo(
@@ -73,13 +83,8 @@ export const DailyGardening = () => {
   );
 
   const completedTasks = useMemo(() => {
-    const currentCompletedTasks = gardenDataApi.response?.completedTasks ?? [];
-    if (completedTaskApi.response) {
-      currentCompletedTasks.push(completedTaskApi.response.completedTask);
-      return currentCompletedTasks;
-    }
     return currentCompletedTasks;
-  }, [gardenDataApi, completedTaskApi]);
+  }, [currentCompletedTasks]);
 
   const isRuleCompleted = useCallback(
     (ruleId?: string) => {
@@ -138,6 +143,10 @@ export const DailyGardening = () => {
   useEffect(() => {
     if (completedTaskApi.status === "succeeded") {
       const { balance: newCoinBalance } = completedTaskApi.response.user;
+      setCurrentCompletedTasks((v) => [
+        ...v,
+        completedTaskApi.response.completedTask,
+      ]);
       setUserData((data) => {
         return { ...data, balance: newCoinBalance };
       });
@@ -181,7 +190,9 @@ export const DailyGardening = () => {
           <SectionTitle title="Daily Gardening">
             <Button
               color="primary"
+              variant="outlined"
               onClick={() => history.push(`/user/myniwa/${gardenId}/settings`)}
+              className={styles.settingsButton}
             >
               Edit Garden
             </Button>

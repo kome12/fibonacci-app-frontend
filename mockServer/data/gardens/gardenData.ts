@@ -12,7 +12,7 @@ export const gardenData = {
     {
       _id: "6127a724102a57c95758e10d",
       name: "Wake up at 7am",
-      description: "",
+      description: "El que madruga Dios le ayuda",
       gardenId: "612789b765c2e6a7e7e76bd2",
       isRemoved: false,
       createdDate: "2021-08-26T14:37:24.157Z",
@@ -21,7 +21,7 @@ export const gardenData = {
     {
       _id: "6127a724102a57c95758e10e",
       name: "Sleep by 11pm",
-      description: "",
+      description: "😪😪😪😪😪😪😪😪",
       gardenId: "612789b765c2e6a7e7e76bd2",
       isRemoved: false,
       createdDate: "2021-08-26T14:37:24.157Z",

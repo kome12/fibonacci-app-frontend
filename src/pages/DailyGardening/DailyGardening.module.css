@@ -26,14 +26,15 @@
   margin: 0;
 }
 
-.wateringAnimation {
+.wateringAnimationContainer {
   width: 70%;
-  border-radius: 4px;
+  margin: 0 auto;
 }
 
-.wateringAnimationContainer {
-  display: flex;
-  justify-content: center;
+.wateringAnimation {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
 
 .taskButtonContainer {
@@ -51,4 +52,10 @@
 .returnButtonWrapper {
   text-align: center;
   margin-top: 25px;
+}
+
+@media screen and (max-device-width: 600px) {
+  .settingsButton {
+    margin-top: 6px;
+  }
 }

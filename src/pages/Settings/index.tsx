@@ -1,39 +1,42 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
 import { formatISO } from "date-fns";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Head } from "../../components/Head";
 import { LoadingWrapper } from "../../components/LoadingWrapper";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
 import { getCategories } from "../../helpers/api/gardens/getCategories";
 import { getGardenByGardenId } from "../../helpers/api/gardens/getGardenByGardenId";
-// import { useUserState } from "../../store/user/useUserState";
+import { Rule } from "../../models/rule.model";
 import { useApi } from "../../utils/api/useApi";
 import { CategorySelector } from "./components/CategorySelector";
+import { CreateSeedModal } from "./components/CreateSeedModal";
 import { DescriptionInput } from "./components/DescriptionInput";
 import { GardenDataWrapper } from "./components/GardenDataWrapper";
 import { NameInput } from "./components/NameInput";
+import { SeedList } from "./components/SeedList";
 import styles from "./Settings.module.css";
 
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       maxWidth: 845,
-//     },
-//     media: {
-//       height: 140,
-//     },
-//     nameInput: {
-//       width: "100%",
-//     },
-//   })
-// );
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    createGardenSeed: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
+      alignSelf: "center",
+      "&:hover": {
+        backgroundColor: theme.palette.primary.dark,
+      },
+    },
+  })
+);
+
 const descriptionPlaceholder = "Add a Garden Description";
-export const MyNiwaSettings = () => {
-  // const history = useHistory();
-  // const { userData } = useUserState();
-  // const classes = useStyles();
+export const Settings = () => {
+  const classes = useStyles();
   const { gardenId } = useParams<{ gardenId: string }>();
 
   const [gardenDataApi, getGardenData] = useApi(getGardenByGardenId);
@@ -42,6 +45,7 @@ export const MyNiwaSettings = () => {
   const [initCategory, setInitCategory] = useState<string | undefined>(
     undefined
   );
+  const [initSeeds, setInitSeeds] = useState<Rule[] | undefined>(undefined);
 
   const garden = useMemo(() => gardenDataApi.response?.garden, [gardenDataApi]);
   const initialGardenName = useMemo(
@@ -60,6 +64,11 @@ export const MyNiwaSettings = () => {
   const rules = useMemo(
     () => gardenDataApi.response?.rules ?? [],
     [gardenDataApi]
+  );
+
+  const initialGardenSeeds = useMemo(
+    () => initSeeds || rules || [],
+    [rules, initSeeds]
   );
 
   // Get Categories
@@ -86,6 +95,12 @@ export const MyNiwaSettings = () => {
       ? gardenDescription
       : initialGardenDescription;
   }, [gardenDescription, initialGardenDescription]);
+
+  // Garden Seeds Input
+  const [gardenSeeds, setGardenSeeds] = useState<Rule[] | undefined>(undefined);
+  const currentGardenSeeds = useMemo(() => {
+    return gardenSeeds !== undefined ? gardenSeeds : initialGardenSeeds;
+  }, [gardenSeeds, initialGardenSeeds]);
 
   // Garden Category Input
   const [showCategoryInput, setShowCategoryInput] = useState(false);
@@ -118,11 +133,28 @@ export const MyNiwaSettings = () => {
     []
   );
 
-  const onCategoryInputChange = (
-    e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
-  ) => {
-    setGardenCategoryId(e.target.value as string);
-  };
+  const onCategoryInputChange = useCallback(
+    (e: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+      setGardenCategoryId(e.target.value as string);
+    },
+    []
+  );
+
+  const onSeedInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, seedIndex: number) => {
+      const { value, name } = e.currentTarget;
+
+      setGardenSeeds((seeds) => {
+        const currentSeeds = [...(seeds ?? initialGardenSeeds)];
+        let seed = currentSeeds[seedIndex];
+        seed = { ...seed, [name]: value };
+        currentSeeds[seedIndex] = seed;
+
+        return currentSeeds;
+      });
+    },
+    [initialGardenSeeds]
+  );
 
   const updateGardenData = useMemo(
     () => ({
@@ -152,6 +184,8 @@ export const MyNiwaSettings = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gardenId]);
 
+  const [openCreateSeedModal, setOpenCreateSeedModal] = useState(false);
+
   return (
     <>
       <Head title="Settings ⚙️" />
@@ -162,6 +196,12 @@ export const MyNiwaSettings = () => {
         exit={{ opacity: 0 }}
       >
         <Section>
+          <Link
+            to={`/user/dailyGardening/${gardenId}`}
+            className={styles.backLink}
+          >
+            Go Back to Daily Gardening
+          </Link>
           <SectionTitle title="Flower Bed Settings" />
 
           <LoadingWrapper
@@ -212,17 +252,31 @@ export const MyNiwaSettings = () => {
               </GardenDataWrapper>
             </section>
 
-            <section>
-              <h2>Rules:</h2>
-              <ul>
-                {rules?.map((rule) => (
-                  <li key={rule._id}>
-                    {rule.name}
-                    <br />
-                    {rule.description}
-                  </li>
-                ))}
-              </ul>
+            <section className={styles.seedListSection}>
+              <SectionTitle title="Seeds 🌱">
+                <IconButton
+                  className={classes.createGardenSeed}
+                  onClick={() => setOpenCreateSeedModal(true)}
+                >
+                  <AddIcon />
+                </IconButton>
+              </SectionTitle>
+
+              <CreateSeedModal
+                initSeeds={initialGardenSeeds}
+                updateInitSeeds={setInitSeeds}
+                handleModal={setOpenCreateSeedModal}
+                showModal={openCreateSeedModal}
+                gardenId={gardenId}
+              />
+
+              <SeedList
+                initSeeds={initialGardenSeeds}
+                seeds={currentGardenSeeds}
+                setGardenSeeds={setGardenSeeds}
+                setInitSeeds={setInitSeeds}
+                onSeedInputChange={onSeedInputChange}
+              />
             </section>
           </LoadingWrapper>
         </Section>

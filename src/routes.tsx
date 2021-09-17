@@ -17,9 +17,9 @@ const MyNiwa = React.lazy(() =>
   import("./pages/MyNiwa").then(({ MyNiwa }) => ({ default: MyNiwa }))
 );
 
-const MyNiwaSettings = React.lazy(() =>
-  import("./pages/Settings").then(({ MyNiwaSettings }) => ({
-    default: MyNiwaSettings,
+const Settings = React.lazy(() =>
+  import("./pages/Settings").then(({ Settings }) => ({
+    default: Settings,
   }))
 );
 
@@ -51,6 +51,12 @@ const MyGrowth = React.lazy(() =>
   }))
 );
 
+const MyCollection = React.lazy(() =>
+  import("./pages/MyCollection").then(({ MyCollection }) => ({
+    default: MyCollection,
+  }))
+);
+
 export const Routes = () => {
   const location = useLocation();
   const { userData } = useUserState();
@@ -69,7 +75,7 @@ export const Routes = () => {
                   <Route path="/user/myniwa" component={MyNiwa} exact />
                   <Route
                     path="/user/myniwa/:gardenId/settings"
-                    component={MyNiwaSettings}
+                    component={Settings}
                     exact
                   />
                   <Route
@@ -84,6 +90,11 @@ export const Routes = () => {
                   />
                   <Route path="/user/store" component={Florist} exact />
                   <Route path="/user/myGrowth" component={MyGrowth} exact />
+                  <Route
+                    path="/user/myCollection"
+                    component={MyCollection}
+                    exact
+                  />
                 </UserViewLayout>
               </Route>
               <Route path="/about" component={About} exact />
