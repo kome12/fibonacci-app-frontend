@@ -99,15 +99,9 @@ export const CategorySelector: React.FC<Props> = ({
   useEffect(() => {
     if (updateGardenApi.status === "succeeded") {
       setShowCategoryInput(false);
-      setGardenCategoryId(updateGardenApi.response.gardenCategoryId || "-");
       updateInitVal(updateGardenApi.response.gardenCategoryId || "-");
     }
-  }, [
-    setGardenCategoryId,
-    setShowCategoryInput,
-    updateGardenApi,
-    updateInitVal,
-  ]);
+  }, [setShowCategoryInput, updateGardenApi, updateInitVal]);
 
   return !showSelector ? (
     <>
