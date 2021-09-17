@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "auto !important",
     },
     header: {
-      margin: "2%",
-      marginLeft: "5%",
       width: "100%",
     },
     title: {
