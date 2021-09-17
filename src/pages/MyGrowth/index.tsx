@@ -1,16 +1,16 @@
+import { createStyles, makeStyles, Paper, Theme } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import { useMemo, useState, useEffect } from "react";
-import { useApi } from "../../utils/api/useApi";
-import { Garden } from "../../models/garden.model";
-import { TabPanel } from "./components/TabPanel";
-import { useUserState } from "../../store/user/useUserState";
-import { getGardens } from "../../helpers/api/gardens/getGardens";
-import { TabData } from "./components/TabData";
+import { useEffect, useMemo, useState } from "react";
 import { Head } from "../../components/Head";
 import { Section } from "../../components/Section";
 import { SectionTitle } from "../../components/SectionTitle";
-import { createStyles, makeStyles, Paper, Theme } from "@material-ui/core";
+import { getGardens } from "../../helpers/api/gardens/getGardens";
+import { Garden } from "../../models/garden.model";
+import { useUserState } from "../../store/user/useUserState";
+import { useApi } from "../../utils/api/useApi";
+import { TabData } from "./components/TabData";
+import { TabPanel } from "./components/TabPanel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.primary.main,
       // display: "flex",
       // flex: "0 0 100%",
-      marginTop: "0.5rem"
-    }
+      marginTop: "0.5rem",
+      width: "100%",
+    },
   })
 );
 
@@ -70,8 +71,13 @@ export const MyGrowth = () => {
       </Section>
       <Section>
         <Paper className={classes.tabBar}>
-          <Tabs onChange={handleChangeTab} value={currentTab} variant="fullWidth">
-            {tabLabels()} 
+          <Tabs
+            onChange={handleChangeTab}
+            value={currentTab}
+            variant="scrollable"
+            scrollButtons="on"
+          >
+            {tabLabels()}
           </Tabs>
         </Paper>
         {tabPanels(currentTab)}
